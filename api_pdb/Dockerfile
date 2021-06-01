@@ -6,7 +6,7 @@ ARG GROUP_ID
 RUN addgroup -g $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID -G user user
 
-ENV RAILS_ROOT /backend
+ENV RAILS_ROOT /api_pdb
 ENV BUNDLE_VERSION 2.1.4
 
 COPY ./docker/dev-entrypoint.sh /usr/local/bin/dev-entrypoint.sh

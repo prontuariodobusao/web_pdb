@@ -31,3 +31,7 @@
 
 /config/credentials/development.key
 
+# env files
+.env.dev
+.env.prod 
+.env.test
