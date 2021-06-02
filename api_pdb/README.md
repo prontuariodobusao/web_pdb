@@ -1,24 +1,36 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- Backend - Projeto prontuário do Busão
 
-Things you may want to cover:
+## Requisitos
+```
+Ruby 3.0.1
+Rails 6.1.3.2
+```
+# Gem ApiPack
 
-* Ruby version
+- A gem ApiPack é uma gem criada por um dos contribuidores deste projeto e seu código estar disponibilizado neste [Link](https://github.com/Jllima/api_pack)
+- Esta gem foi utilizada para as seguintes fucionalidades;
+- Autenticação utilizando JWT
+- Meta generator para links de paginação
+- Tratamentos de erros: 404, 500, 422 e 406
 
-* System dependencies
+ Executar projeto em modo DEV usando o DOCKER
+- Execute as permissões nos scripts
+```
+chmod +x docker/dev-entrypoint
+chmod +x docker/test-entrypoint
+``` 
+- Excutar o script up_dev na raiz do projeto
+```
+sh up_dev.sh 
+```
+- Verificar se todos os serviços foram iniciados
+```
+docker-compose logs -f -t 
+```
 
-* Configuration
+- Visite o endereço
+```
+http://localhost:3003 
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
