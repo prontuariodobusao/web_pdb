@@ -1,5 +1,5 @@
 # web_pdb
-Aplicação Web do Prontuário do Busão.
+Aplicação Web API do Prontuário do Busão.
 
  Executar projeto em modo DEV usando o DOCKER
 - Execute as permissões nos scripts
