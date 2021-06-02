@@ -1,0 +1,14 @@
+{
+  "data": {
+    "id": "file:/user.json#",
+    "type": "object",
+    "required": ["id"],
+    "properties": {
+      "id": { "type": "integer" },
+      "name": { "type": "string" },
+      "username": { "type": "string" },
+      "email": { "type": "string" },
+      "type": { "type": "string" }
+    }
+  }
+}

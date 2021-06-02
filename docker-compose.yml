@@ -1,0 +1,65 @@
+version: '3'
+
+volumes: 
+  gem_cache_dev:
+  data_dev:
+  shared_data:
+  node_modules:
+
+networks:
+  api_pdb_network:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:13.1-alpine
+    container_name: api_pdb_db
+    restart: always
+    volumes:
+      - data_dev:/var/lib/postgresql/data
+      - shared_data:/var/shared
+    env_file: .env.dev
+    ports: 
+      - "5433:5432"
+    networks:
+      - api_pdb_network
+
+  api_pdb_dev:
+    image: api_pdb_dev:latest
+    container_name: api_pdb_dev
+    entrypoint: ./docker/dev-entrypoint.sh
+    volumes:
+      - ./api_pdb:/api_pdb
+      - gem_cache_dev:/usr/local/bundle/gems
+      - shared_data:/var/shared
+    ports:
+      - "3003:3000"
+    depends_on:
+      - db
+    env_file: .env.dev
+    environment:
+      RAILS_ENV: development
+    tty: true
+    stdin_open: true
+    networks:
+      - api_pdb_network
+  
+  api_pdb_test:
+    image: api_pdb_dev:latest
+    container_name: api_pdb_test
+    entrypoint: ./docker/test-entrypoint.sh
+    command: ["rails", "-v"]
+    volumes:
+      - ./api_pdb:/api_pdb
+    ports:
+      - "3002:3000"
+    depends_on:
+      - db
+    env_file: .env.test
+    environment:
+      RAILS_ENV: test
+    tty: true
+    stdin_open: true
+    networks:
+      - api_pdb_network
+
