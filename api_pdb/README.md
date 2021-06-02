@@ -21,11 +21,11 @@ Rails 6.1.3.2
 chmod +x docker/dev-entrypoint
 chmod +x docker/test-entrypoint
 ``` 
-- Excutar o script up_dev na raiz do projeto
+- Excute o script up_dev na raiz do projeto
 ```
 sh up_dev.sh 
 ```
-- Verificar se todos os serviços foram iniciados
+- Verifique se todos os serviços foram iniciados
 ```
 docker-compose logs -f -t 
 ```
