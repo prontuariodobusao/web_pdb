@@ -4,8 +4,8 @@ module ApiHelper
     response = Auth::AuthenticateUser.new(user.email, user.password).call
     {
       Authorization: "Bearer #{response}",
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json'
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
     }
   end
 
@@ -45,20 +45,20 @@ module ApiHelper
 
   def headers_accept
     {
-      Accept: 'application/vnd.api+json'
+      Accept: 'application/json'
     }
   end
 
   def headers_content_type
     {
-      'Content-Type': 'application/vnd.api+json'
+      'Content-Type': 'application/json'
     }
   end
 
   def valid_headers
     {
-      Accept: 'application/vnd.api+json',
-      'Content-Type': 'application/vnd.api+json'
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
     }
   end
 
