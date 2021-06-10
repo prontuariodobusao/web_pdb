@@ -1,6 +1,6 @@
 module ApiHelper
   def authenticate_header
-    user = create(:user_seller)
+    user = create(:user)
     response = Auth::AuthenticateUser.new(user.email, user.password).call
     {
       Authorization: "Bearer #{response}",
@@ -10,7 +10,7 @@ module ApiHelper
   end
 
   def authenticate_user
-    user = create(:user_seller)
+    user = create(:user)
     { username: user.username, password: user.password }
   end
 
