@@ -5,6 +5,7 @@ require 'factory_bot_rails'
 require 'database_cleaner'
 require 'faker'
 require 'pry-rails'
+require 'cpf_faker'
 
 require File.expand_path('../config/environment', __dir__)
 

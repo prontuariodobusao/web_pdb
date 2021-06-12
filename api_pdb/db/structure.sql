@@ -40,10 +40,11 @@ CREATE TABLE public.schema_migrations (
 
 CREATE TABLE public.users (
     id bigint NOT NULL,
-    name character varying,
-    email character varying,
-    identity character varying,
-    password_digest character varying,
+    name character varying NOT NULL,
+    email character varying NOT NULL,
+    identity character varying NOT NULL,
+    cpf character varying NOT NULL,
+    password_digest character varying NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );

@@ -1,9 +1,11 @@
-(1..5).each do |n|
-  User.create(
+(1..6).each do |n|
+  user = User.create(
     name: "Usuario #{n}",
     identity: "user_#{n}",
     email: "user_#{n}@mail.com",
+    cpf: Faker::CPF.pretty,
     password: 'abc123',
     password_confirmation: 'abc123'
   )
+  puts "Usuário #{user.name} criado!"
 end

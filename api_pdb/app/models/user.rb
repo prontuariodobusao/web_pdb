@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
 
-  validates :name, :identity, presence: true
+  validates :name, :identity, :cpf, presence: true
+  validates :cpf, :identity, uniqueness: true
+  validates_cpf_format_of :cpf
 
   validates :email,
             presence: true,
