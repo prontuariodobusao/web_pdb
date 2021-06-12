@@ -13,7 +13,7 @@ development:
   <<: *default
 test:
   <<: *default
-  database: api_pdb_db_test
+  database: api_pdb_test
 
 production:
   <<: *default

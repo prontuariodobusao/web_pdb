@@ -9,12 +9,15 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'api_pack', '~> 1.2.1'
 gem 'bcrypt', '~> 3.1.7'
+gem 'blueprinter'
+gem 'cpf_cnpj'
 gem 'fast_jsonapi'
 gem 'jwt'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'rack-cors'
 gem 'rack-mini-profiler'
+gem 'validators'
 gem 'will_paginate', '~> 3.1.0'
 
 gem 'rswag'
@@ -36,6 +39,8 @@ end
 group :development do
   gem 'listen', '~> 3.3'
   gem 'spring'
+
+  gem 'cpf_faker'
 
   gem 'rubocop', require: false
   gem 'rubycritic', require: false

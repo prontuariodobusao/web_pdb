@@ -25,6 +25,8 @@ module ApiPdb
 
     config.autoload_paths << "#{Rails.root}/lib"
 
+    config.active_record.schema_format = :sql
+
     config.generators do |g|
       g.test_framework :rspec
       g.fixture_replacement :factory_bot

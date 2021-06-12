@@ -1,4 +1,4 @@
-equire 'simplecov'
+require 'simplecov'
 require 'json_matchers/rspec'
 
 SimpleCov.start 'rails' do

@@ -1,0 +1,89 @@
+---
+openapi: 3.0.1
+info:
+  title: API Prontuário do Busão
+  version: v1
+paths:
+  "/auth/login":
+    post:
+      summary: API para autenticar usuário
+      tags:
+      - Auth
+      description: Rota para autenticação, essa pode ser executada por qualquer usuário
+      parameters: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auth_token:
+                    type: string
+        '401':
+          description: Credenciais inválidas
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/errors_object"
+        '406':
+          description: Not Acceptable
+        '415':
+          description: Unsupported Media Type
+        '500':
+          description: Error no servidor
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/errors_message"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                password:
+                  type: string
+              required:
+              - cpf
+              - password
+components:
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    errors_message:
+      type: object
+      properties:
+        message:
+          type: string
+    errors_object:
+      type: object
+      properties:
+        errors:
+          "$ref": "#/components/schemas/errors_map"
+    errors_map:
+      type: array
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+          status:
+            type: string
+          details:
+            type: string
+servers:
+- url: http://localhost:3003
+  variables:
+    defaultHost:
+      default: localhost:3003
+- url: http://heroku-pdb.com
+  variables:
+    defaultHost:
+      default: heroku-pdb.com
