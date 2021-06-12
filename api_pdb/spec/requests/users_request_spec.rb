@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'Api::V1::Users', type: :request do
-  describe 'GET api/v1/users' do
+RSpec.describe 'Users', type: :request do
+  describe 'GET users' do
     context 'request with headers valids' do
       before do
         create_list(:user, 5)

@@ -8,14 +8,14 @@ describe 'Authentications', type: :request do
 
     let(:valid_credentials) do
       {
-        email: user.email,
+        cpf: user.cpf,
         password: user.password
       }
     end
 
     let(:invalid_credentials) do
       {
-        email: Faker::Internet.email,
+        cpf: Faker::CPF.pretty,
         password: Faker::Internet.password
       }
     end

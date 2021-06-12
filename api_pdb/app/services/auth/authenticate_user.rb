@@ -1,8 +1,8 @@
 module Auth
   # app/services/auth/authenticate_user.rb
   class AuthenticateUser
-    def initialize(email, password)
-      @email = email
+    def initialize(cpf, password)
+      @cpf = cpf
       @password = password
     end
 
@@ -12,10 +12,10 @@ module Auth
 
     private
 
-    attr_accessor :email, :password
+    attr_accessor :cpf, :password
 
     def user
-      user = User.find_by(email: email)
+      user = User.find_by(cpf: cpf)
       return user if user&.authenticate(password)
 
       raise(ApiPack::Errors::Auth::AuthenticationError, 'Invalid credentials')
