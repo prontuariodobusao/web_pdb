@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'json/schema_builder'
+
+# this block ensures if any schema element is extra or missing, the test fails.
+JSON::SchemaBuilder.configure do |opts|
+  opts.validate_schema = true
+  opts.strict = true
+end
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
@@ -55,13 +62,21 @@ RSpec.configure do |config|
             }
           }
         }
-      }
+      },
       servers: [
         {
-          url: 'https://{defaultHost}',
+          url: 'http://localhost:3003',
           variables: {
             defaultHost: {
               default: 'localhost:3003'
+            }
+          }
+        },
+        {
+          url: 'http://heroku-pdb.com',
+          variables: {
+            defaultHost: {
+              default: 'heroku-pdb.com'
             }
           }
         }

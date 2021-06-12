@@ -1,6 +1,5 @@
 # app/controllers/users_controller.rb
 class UsersController < ApplicationController
-  skip_before_action :authorize_request, only: :index
   before_action :set_user, only: %i[show update]
 
   def index
