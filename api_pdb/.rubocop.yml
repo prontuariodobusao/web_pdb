@@ -11,10 +11,13 @@ AllCops:
     - 'config/initializers/rswag-ui.rb'
     - 'db/schema.rb'
     - 'Guardfile'
-  TargetRubyVersion: 2.7.1
+  TargetRubyVersion: 3.0.1
   NewCops: enable
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/Documentation:
   Enabled: false
 
 Metrics/BlockLength:
