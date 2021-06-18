@@ -7,8 +7,6 @@ class UsersResponse
       string :type
       object :attributes do
         string :name
-        string :email
-        string :username
         string :type
       end
       object :links do
@@ -23,8 +21,6 @@ class UsersResponse
       string :type
       object :attributes do
         string :name
-        string :email
-        string :username
         string :type
       end
       object :links do

@@ -23,7 +23,6 @@ class UsersController < ApplicationController
       .permit(
         :name,
         :identity,
-        :email,
         :password,
         :password_confirmation
       )

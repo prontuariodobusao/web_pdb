@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Auth::AuthenticateUser do
   let(:user) { create(:user) }
-  subject(:valid_auth_obj) { described_class.new(user.cpf, user.password) }
+  subject(:valid_auth_obj) { described_class.new(user.identity, user.password) }
   subject(:invalid_auth_obj) { described_class.new('foo', 'bar') }
 
   describe '#call' do

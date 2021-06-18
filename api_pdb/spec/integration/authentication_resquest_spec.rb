@@ -10,15 +10,15 @@ describe 'Authentications', type: :request do
       parameter name: :user_credentials, in: :body, schema: {
         type: :object,
         properties: {
-          cpf: { type: :string },
+          identity: { type: :string },
           password: { type: :string }
         },
-        required: %w[cpf password]
+        required: %w[identity password]
       }
 
       response '200', 'Sucesso' do
         let(:user) { create(:user) }
-        let(:user_credentials) { { cpf: user.cpf, password: user.password } }
+        let(:user_credentials) { { identity: user.identity, password: user.password } }
         schema type: :object,
                properties: {
                  auth_token: { type: :string }
@@ -27,7 +27,7 @@ describe 'Authentications', type: :request do
       end
 
       response '401', 'Credenciais inválidas' do
-        let(:user_credentials) { { cpf: Faker::CPF.pretty, password: Faker::Internet.password } }
+        let(:user_credentials) { { identity: Faker::Company.ein, password: Faker::Internet.password } }
         schema '$ref' => '#/components/schemas/errors_object'
 
         run_test! do |response|
@@ -37,19 +37,19 @@ describe 'Authentications', type: :request do
 
       response '406', 'Not Acceptable' do
         let(:Accept) { 'application/foo' }
-        let(:user_credentials) { { cpf: Faker::CPF.pretty, password: Faker::Internet.password } }
+        let(:user_credentials) { { identity: Faker::Company.ein, password: Faker::Internet.password } }
         run_test!
       end
 
       response '415', 'Unsupported Media Type' do
         let(:'Content-Type') { 'application/foo' }
-        let(:user_credentials) { { cpf: Faker::CPF.pretty, password: Faker::Internet.password } }
+        let(:user_credentials) { { identity: Faker::Company.ein, password: Faker::Internet.password } }
         run_test!
       end
 
       response '500', 'Error no servidor' do
         schema '$ref' => '#/components/schemas/errors_message'
-        let(:user_credentials) { { cpf: Faker::CPF.pretty, password: Faker::Internet.password } }
+        let(:user_credentials) { { identity: Faker::Company.ein, password: Faker::Internet.password } }
         before do |example|
           submit_request(example.metadata)
         end

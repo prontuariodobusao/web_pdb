@@ -2,8 +2,6 @@
   user = User.create(
     name: "Usuario #{n}",
     identity: "user_#{n}",
-    email: "user_#{n}@mail.com",
-    cpf: Faker::CPF.pretty,
     password: 'abc123',
     password_confirmation: 'abc123'
   )

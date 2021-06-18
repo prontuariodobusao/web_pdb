@@ -1,17 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
 
-  validates :name, :identity, :cpf, presence: true
-  validates :cpf, :identity, uniqueness: true
-  validates_cpf_format_of :cpf
+  validates :name, :identity, presence: true
 
-  validates :email,
-            presence: true,
-            uniqueness: true,
-            format: {
-              with: VALID_EMAIL_REGEX,
-              message: I18n.t('errors.messages.email_format')
-            }
+  validates :identity, uniqueness: true
 
   validates :password,
             length: { minimum: 6 },
