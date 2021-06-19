@@ -43,12 +43,12 @@ paths:
             schema:
               type: object
               properties:
-                cpf:
+                identity:
                   type: string
                 password:
                   type: string
               required:
-              - cpf
+              - identity
               - password
 components:
   securitySchemes:
