@@ -15,4 +15,10 @@ class User < ApplicationRecord
 
   validates :password_confirmation,
             presence: true
+
+  def locked?
+    return true unless locked_at.nil?
+
+    false
+  end
 end
