@@ -28,4 +28,11 @@ RSpec.describe User, type: :model do
       it { expect(user_unlocked.unlocked?).to be_truthy }
     end
   end
+
+  describe '#confirmed?' do
+    context 'when user was created is expected to be unconfirmed' do
+      let(:user_unlocked) { create(:user) }
+      it { expect(user_unlocked.confirmed?).to be_falsey }
+    end
+  end
 end

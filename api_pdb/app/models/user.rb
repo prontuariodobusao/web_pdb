@@ -19,4 +19,8 @@ class User < ApplicationRecord
   def unlocked?
     locked_at.nil?
   end
+
+  def confirmed?
+    !confirmed_at.nil?
+  end
 end
