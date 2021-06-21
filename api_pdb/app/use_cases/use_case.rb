@@ -18,7 +18,7 @@ module UseCase
     OpenStruct.new(success?: true, data: data, errors: nil)
   end
 
-  def fail(errors)
+  def failure(errors)
     OpenStruct.new(success?: false, data: nil, errors: errors)
   end
 end

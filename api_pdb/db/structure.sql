@@ -43,7 +43,7 @@ CREATE TABLE public.users (
     name character varying NOT NULL,
     identity character varying NOT NULL,
     password_digest character varying NOT NULL,
-    locked_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    locked_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
