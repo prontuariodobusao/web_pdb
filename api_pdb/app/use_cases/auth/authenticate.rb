@@ -1,18 +1,23 @@
 module Auth
-  # app/services/auth/authenticate_user.rb
-  class AuthenticateUser
-    def initialize(identity, password)
+  class Authenticate
+    include UseCase
+
+    def initialize(identity:, password:)
       @identity = identity
       @password = password
     end
 
     def call
-      ApiPack::JsonWebToken.encode({ user_id: user.id }) if user
+      auth if user
     end
 
     private
 
     attr_accessor :identity, :password
+
+    def auth
+      success(token: ApiPack::JsonWebToken.encode({ user_id: user.id }))
+    end
 
     def user
       user = User.find_by(identity: identity)
