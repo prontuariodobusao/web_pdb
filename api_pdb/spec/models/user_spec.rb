@@ -22,14 +22,10 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:password).is_at_least(6) }
   end
 
-  describe '#locked?' do
-    before do
-      @user = create(:user)
-      @user.reload
-    end
-
-    context 'when user login is locked' do
-      it { expect(@user.locked?).to be_truthy }
+  describe '#unlocked?' do
+    context 'when the user is created it is expected to be unlocked' do
+      let(:user_unlocked) { create(:user) }
+      it { expect(user_unlocked.unlocked?).to be_truthy }
     end
   end
 end

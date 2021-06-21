@@ -31,7 +31,7 @@ describe 'Authentications', type: :request do
         schema '$ref' => '#/components/schemas/errors_object'
 
         run_test! do |response|
-          expect(parse_json(response)['errors'][0]['details']).to match(/Invalid credentials/)
+          expect(parse_json(response)['errors'][0]['details']).to match(/Usuário ou senha inválidos!/)
         end
       end
 

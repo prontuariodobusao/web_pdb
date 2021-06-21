@@ -8,7 +8,7 @@ module Auth
     end
 
     def call
-      auth if user
+      auth if find_user
     end
 
     private
@@ -16,14 +16,14 @@ module Auth
     attr_accessor :identity, :password
 
     def auth
-      success(token: ApiPack::JsonWebToken.encode({ user_id: user.id }))
+      success(token: ApiPack::JsonWebToken.encode({ user_id: find_user.id }))
     end
 
-    def user
+    def find_user
       user = User.find_by(identity: identity)
-      return user if user&.authenticate(password)
+      return user if user&.unlocked? && user&.authenticate(password)
 
-      raise(ApiPack::Errors::Auth::AuthenticationError, 'Invalid credentials')
+      raise(ApiPack::Errors::Auth::AuthenticationError, 'Usuário ou senha inválidos!')
     end
   end
 end

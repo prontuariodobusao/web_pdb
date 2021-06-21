@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Users::Unlock do
-  let(:user) { create(:user) }
   let(:password) { '123abs' }
   let(:password_confirmation) { '123abs' }
   let(:attributes) do
@@ -12,8 +11,9 @@ describe Users::Unlock do
   end
 
   context 'on success' do
+    let(:user) { create(:user, locked_at: DateTime.current) }
+    
     before do
-      user.reload
       @result = described_class.call(user: user, attributes: attributes)
     end
 
@@ -24,6 +24,7 @@ describe Users::Unlock do
   end
 
   context 'on failure' do
+    let(:user) { create(:user) }
     before do
       @result = described_class.call(user: user, attributes: attributes)
     end

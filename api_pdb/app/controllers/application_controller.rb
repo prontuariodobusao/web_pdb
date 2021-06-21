@@ -4,7 +4,10 @@ class ApplicationController < ActionController::API
   include ExceptionHandler
   include ApiPack::ApiHelper
 
-  before_action :ensure_json_accept, :ensure_json_content_type, :authorize_request
+  before_action :ensure_json_accept,
+                :ensure_json_content_type,
+                :authorize_request
+
   attr_reader :current_user
 
   private

@@ -30,7 +30,7 @@ describe 'Authentications', type: :request do
       before { resquest_post(url: auth_login_path, params: invalid_credentials, headers: headers) }
 
       it { expect(parse_json(response)['errors'][0]['title']).to match(I18n.t('errors.messages.invalid_credentials')) }
-      it { expect(parse_json(response)['errors'][0]['details']).to match(/Invalid credentials/) }
+      it { expect(parse_json(response)['errors'][0]['details']).to match(/Usuário ou senha inválidos!/) }
     end
   end
 end

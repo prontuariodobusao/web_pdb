@@ -17,7 +17,7 @@ module Users
     attr_accessor :user, :password, :password_confirmation
 
     def unlock
-      return failure('Usuário já estar desbloqueado!') unless user.locked?
+      return failure('Usuário já estar desbloqueado!') if user.unlocked?
 
       user.update!(password: password, password_confirmation: password_confirmation, locked_at: nil)
 

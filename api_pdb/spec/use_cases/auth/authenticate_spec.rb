@@ -16,7 +16,7 @@ describe Auth::Authenticate do
       it {
         expect { invalid_auth_obj.call }.to raise_error(
           ApiPack::Errors::Auth::AuthenticationError,
-          /Invalid credentials/
+          /Usuário ou senha inválidos!/
         )
       }
     end

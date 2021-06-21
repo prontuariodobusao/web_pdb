@@ -1,5 +1,5 @@
 class UserBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :name, :identity, :locked?
+  fields :name, :identity
 end
