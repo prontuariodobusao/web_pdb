@@ -10,6 +10,10 @@ class UsersController < ApplicationController
     json_response UserBlueprint.render(users, root: :data, meta: options)
   end
 
+  def show
+    json_response UserBlueprint.render(@user, root: :data)
+  end
+
   private
 
   def set_user

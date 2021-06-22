@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   post 'auth/login', to: 'authentication#authenticate'
 
-  resources :users, only: :index do
-    resource :unlok, only: :create
+  resources :users, only: %i[index show] do
+    resource :confirmation, only: :create
   end
 end

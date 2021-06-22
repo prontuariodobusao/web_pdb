@@ -4,16 +4,11 @@ class UserResponse
   def schema
     object do
       object :data do
-        string :id
-        string :type
-        object :attributes do
-          string :name
-          string :username
-          string :type
-        end
-        object :links do
-          string :self
-        end
+        integer :id
+        string :identity
+        string :name
+        boolean :unlocked?
+        boolean :confirmed?
       end
     end
   end
