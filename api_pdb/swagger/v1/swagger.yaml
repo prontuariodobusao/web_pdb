@@ -50,6 +50,158 @@ paths:
               required:
               - identity
               - password
+  "/users/{user_id}/confirmation":
+    post:
+      summary: API para confirmacão de usuário
+      tags:
+      - Confirmação
+      description: Rota para cadastro, é necessário cadastrar um usuário para utilizar
+        este recurso
+      security:
+      - Authorization: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      identity:
+                        type: string
+                      name:
+                        type: string
+                      unlocked?:
+                        type: boolean
+                      confirmed?:
+                        type: boolean
+        '403':
+          description: Acesso negado - Token inválido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/confirmation_params"
+  "/users/{id}":
+    get:
+      summary: Buscar usuário
+      tags:
+      - Usuários
+      description: API para visualizar usuário
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      identity:
+                        type: string
+                      name:
+                        type: string
+                      unlocked?:
+                        type: boolean
+                      confirmed?:
+                        type: boolean
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
 components:
   securitySchemes:
     Authorization:
@@ -78,6 +230,16 @@ components:
             type: string
           details:
             type: string
+    confirmation_params:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            password:
+              type: string
+            password_confirmation:
+              type: string
 servers:
 - url: http://localhost:3003
   variables:
