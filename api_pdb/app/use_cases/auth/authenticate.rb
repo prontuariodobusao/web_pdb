@@ -21,7 +21,7 @@ module Auth
           {
             user_id: find_user.id,
             name: find_user.name,
-            is_onfirmed: find_user.confirmed?
+            confirmation: find_user.confirmed?
           }
         )
       )
