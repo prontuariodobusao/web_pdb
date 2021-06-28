@@ -16,7 +16,15 @@ module Auth
     attr_accessor :identity, :password
 
     def auth
-      success(token: ApiPack::JsonWebToken.encode({ user_id: find_user.id }))
+      success(
+        token: ApiPack::JsonWebToken.encode(
+          {
+            user_id: find_user.id,
+            name: find_user.name,
+            is_onfirmed: find_user.confirmed?
+          }
+        )
+      )
     end
 
     def find_user
