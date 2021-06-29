@@ -36,7 +36,7 @@ describe 'Confirmations', type: :request do
           end
 
           context 'Count values response in data' do
-            it { expect(parse_json(response)['data']['confirmed?']).to be_truthy }
+            it { expect(parse_json(response)['data']['confirmation']).to be_truthy }
           end
         end
 

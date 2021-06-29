@@ -7,8 +7,7 @@ class UserResponse
         integer :id
         string :identity
         string :name
-        boolean :unlocked?
-        boolean :confirmed?
+        boolean :confirmation
       end
     end
   end

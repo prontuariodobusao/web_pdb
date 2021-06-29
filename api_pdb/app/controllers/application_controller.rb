@@ -3,6 +3,7 @@ class ApplicationController < ActionController::API
   include Response
   include ExceptionHandler
   include ApiPack::ApiHelper
+  include Serializable
 
   before_action :ensure_json_accept,
                 :ensure_json_content_type,
