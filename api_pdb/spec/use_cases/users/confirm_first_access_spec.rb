@@ -22,17 +22,4 @@ describe Users::ConfirmFirstAccess do
       it { expect(@result.data[:user].locked_at).to be_nil }
     end
   end
-
-  context 'on failure' do
-    let(:user) { create(:user, confirmed_at: DateTime.current) }
-
-    before do
-      @result = described_class.call(user: user, attributes: attributes)
-    end
-
-    context 'when user is locked' do
-      it { expect(@result.success?).to be_falsey }
-      it { expect(@result.errors).to eq 'Usuário já confirmado!' }
-    end
-  end
 end

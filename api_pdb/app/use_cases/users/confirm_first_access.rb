@@ -17,8 +17,6 @@ module Users
     attr_accessor :user, :password, :password_confirmation
 
     def unlock
-      return failure('Usuário já confirmado!') if user.confirmed?
-
       user.update!(password: password, password_confirmation: password_confirmation, confirmed_at: DateTime.current)
 
       success(user: user)
