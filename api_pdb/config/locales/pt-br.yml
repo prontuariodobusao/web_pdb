@@ -15,7 +15,7 @@ pt-BR:
       record_not_found: Recurso Not Found
       invalid_token: Token inválido
       validations_failed: Validations Failed
-      password_format: deve possuir letras e números
+      password_format: Senha deve possuir letras e números
       email_format: formato de email inválido
       parameter_missing: Parameter Missing
       internal_server_error: Internal Server Error
