@@ -1,26 +1,28 @@
 module Auth
   # app/services/auth/authorize_api_request.rb
   class AuthorizeApiRequest
+    include UseCase
+
     def initialize(headers: {})
       @headers = headers
     end
 
     def call
-      { user: user }
+      find_user if decoded_auth_token
     end
 
     private
 
     attr_accessor :headers
 
-    def user
-      @user ||= User.find(decoded_auth_token['user_id']) if decoded_auth_token
+    def find_user
+      success(user: User.find(decoded_auth_token['user_id']))
     rescue ActiveRecord::RecordNotFound => e
       raise ApiPack::Errors::Auth::InvalidToken, ("Invalid token #{e.message}")
     end
 
     def decoded_auth_token
-      @decoded_auth_token ||= ApiPack::JsonWebToken.decode(http_auth_header)
+      ApiPack::JsonWebToken.decode(http_auth_header)
     end
 
     def http_auth_header

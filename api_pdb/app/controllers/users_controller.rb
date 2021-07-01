@@ -7,7 +7,11 @@ class UsersController < ApplicationController
 
     options = pagination_meta_generator(request, users.total_pages)
 
-    json_response UserBlueprint.render(users, root: :data, meta: options)
+    json_response serializer_blueprint(:user, users, meta: options)
+  end
+
+  def show
+    json_response serializer_blueprint(:user, @user)
   end
 
   private

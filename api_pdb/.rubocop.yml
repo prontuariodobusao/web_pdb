@@ -22,3 +22,7 @@ Style/Documentation:
 
 Metrics/BlockLength:
   IgnoredMethods: ['describe', 'context', 'feature', 'scenario', 'let', 'path', 'post', 'get', 'put', 'response', 'patch']
+
+Lint/MissingSuper:
+  Exclude:
+    - 'app/services/**/*'

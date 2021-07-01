@@ -21,4 +21,18 @@ RSpec.describe User, type: :model do
     it { is_expected.to_not allow_value('123b').for(:password) }
     it { is_expected.to validate_length_of(:password).is_at_least(6) }
   end
+
+  describe '#unlocked?' do
+    context 'when the user is created it is expected to be unlocked' do
+      let(:user_unlocked) { create(:user) }
+      it { expect(user_unlocked.unlocked?).to be_truthy }
+    end
+  end
+
+  describe '#confirmed?' do
+    context 'when user was created is expected to be unconfirmed' do
+      let(:user_unlocked) { create(:user) }
+      it { expect(user_unlocked.confirmed?).to be_falsey }
+    end
+  end
 end

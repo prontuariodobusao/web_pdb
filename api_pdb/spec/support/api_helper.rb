@@ -1,9 +1,9 @@
 module ApiHelper
   def authenticate_header
     user = create(:user)
-    response = Auth::AuthenticateUser.new(user.identity, user.password).call
+    response = Auth::Authenticate.call(identity: user.identity, password: user.password)
     {
-      Authorization: "Bearer #{response}",
+      Authorization: "Bearer #{response.data[:token]}",
       Accept: 'application/json',
       'Content-Type': 'application/json'
     }

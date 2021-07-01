@@ -3,8 +3,12 @@ class ApplicationController < ActionController::API
   include Response
   include ExceptionHandler
   include ApiPack::ApiHelper
+  include Serializable
 
-  before_action :ensure_json_accept, :ensure_json_content_type, :authorize_request
+  before_action :ensure_json_accept,
+                :ensure_json_content_type,
+                :authorize_request
+
   attr_reader :current_user
 
   private
@@ -22,6 +26,6 @@ class ApplicationController < ActionController::API
   end
 
   def authorize_request
-    @current_user = (Auth::AuthorizeApiRequest.new(headers: request.headers).call)[:user]
+    @current_user = Auth::AuthorizeApiRequest.call(headers: request.headers).data[:user]
   end
 end
