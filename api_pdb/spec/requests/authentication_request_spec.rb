@@ -8,14 +8,14 @@ describe 'Authentications', type: :request do
 
     let(:valid_credentials) do
       {
-        identity: user.identity,
+        username: user.username,
         password: user.password
       }
     end
 
     let(:invalid_credentials) do
       {
-        identity: Faker::Company.ein,
+        username: Faker::Company.ein,
         password: Faker::Internet.password
       }
     end

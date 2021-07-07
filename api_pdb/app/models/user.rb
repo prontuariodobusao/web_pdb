@@ -15,6 +15,7 @@ class User < ApplicationRecord
             presence: true
 
   belongs_to :employee
+  delegate :name, to: :employee, prefix: true
 
   def unlocked?
     locked_at.nil?

@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       .require(:attributes)
       .permit(
         :name,
-        :identity,
+        :username,
         :password,
         :password_confirmation
       )

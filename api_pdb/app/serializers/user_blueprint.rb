@@ -1,6 +1,6 @@
 class UserBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :name, :identity
+  fields :username, :employee_name
   field :confirmed?, name: :confirmation
 end

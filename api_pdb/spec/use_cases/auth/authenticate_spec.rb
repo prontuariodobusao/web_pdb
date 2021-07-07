@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe Auth::Authenticate do
   let(:user) { create(:user) }
-  subject(:valid_auth_obj) { described_class.call(identity: user.identity, password: user.password) }
-  subject(:invalid_auth_obj) { described_class.call(identity: 'foo', password: 'bar') }
+  subject(:valid_auth_obj) { described_class.call(username: user.username, password: user.password) }
+  subject(:invalid_auth_obj) { described_class.call(username: 'foo', password: 'bar') }
 
   describe '#call' do
     context 'on success' do
