@@ -26,6 +26,35 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.categories (
+    id bigint NOT NULL,
+    name character varying NOT NULL
+);
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
+
+
+--
 -- Name: employees; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -88,6 +117,38 @@ ALTER SEQUENCE public.occupations_id_seq OWNED BY public.occupations.id;
 
 
 --
+-- Name: problems; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.problems (
+    id bigint NOT NULL,
+    description character varying,
+    solution character varying,
+    priority integer NOT NULL,
+    category_id bigint NOT NULL
+);
+
+
+--
+-- Name: problems_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.problems_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: problems_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.problems_id_seq OWNED BY public.problems.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -132,6 +193,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
+
+
+--
 -- Name: employees id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -143,6 +211,13 @@ ALTER TABLE ONLY public.employees ALTER COLUMN id SET DEFAULT nextval('public.em
 --
 
 ALTER TABLE ONLY public.occupations ALTER COLUMN id SET DEFAULT nextval('public.occupations_id_seq'::regclass);
+
+
+--
+-- Name: problems id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.problems ALTER COLUMN id SET DEFAULT nextval('public.problems_id_seq'::regclass);
 
 
 --
@@ -161,6 +236,14 @@ ALTER TABLE ONLY public.ar_internal_metadata
 
 
 --
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: employees employees_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -174,6 +257,14 @@ ALTER TABLE ONLY public.employees
 
 ALTER TABLE ONLY public.occupations
     ADD CONSTRAINT occupations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: problems problems_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.problems
+    ADD CONSTRAINT problems_pkey PRIMARY KEY (id);
 
 
 --
@@ -200,6 +291,13 @@ CREATE INDEX index_employees_on_occupation_id ON public.employees USING btree (o
 
 
 --
+-- Name: index_problems_on_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_problems_on_category_id ON public.problems USING btree (category_id);
+
+
+--
 -- Name: index_users_on_employee_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -212,6 +310,14 @@ CREATE INDEX index_users_on_employee_id ON public.users USING btree (employee_id
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT fk_rails_bb0d626f7d FOREIGN KEY (employee_id) REFERENCES public.employees(id);
+
+
+--
+-- Name: problems fk_rails_c60dbdc9ec; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.problems
+    ADD CONSTRAINT fk_rails_c60dbdc9ec FOREIGN KEY (category_id) REFERENCES public.categories(id);
 
 
 --
@@ -232,6 +338,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210607191144'),
 ('20210707173923'),
 ('20210707175005'),
-('20210707175333');
+('20210707175333'),
+('20210707233816'),
+('20210707233925');
 
 
