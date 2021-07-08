@@ -1,4 +1,8 @@
 module SchemaFactory
+  def problems_response_schema
+    ProblemsResponse.new
+  end
+  
   def users_response_schema
     UsersResponse.new
   end
