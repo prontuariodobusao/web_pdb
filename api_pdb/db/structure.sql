@@ -147,6 +147,45 @@ ALTER SEQUENCE public.occupations_id_seq OWNED BY public.occupations.id;
 
 
 --
+-- Name: orders; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders (
+    id bigint NOT NULL,
+    km integer,
+    description character varying,
+    state integer DEFAULT 0,
+    problem_id bigint NOT NULL,
+    vehicle_id bigint NOT NULL,
+    status_id bigint NOT NULL,
+    owner_id bigint,
+    manager_id bigint,
+    car_mecanic_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_id_seq OWNED BY public.orders.id;
+
+
+--
 -- Name: problems; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -311,6 +350,13 @@ ALTER TABLE ONLY public.occupations ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: orders id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.orders_id_seq'::regclass);
+
+
+--
 -- Name: problems id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -379,6 +425,14 @@ ALTER TABLE ONLY public.occupations
 
 
 --
+-- Name: orders orders_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: problems problems_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -426,6 +480,48 @@ CREATE INDEX index_employees_on_occupation_id ON public.employees USING btree (o
 
 
 --
+-- Name: index_orders_on_car_mecanic_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_orders_on_car_mecanic_id ON public.orders USING btree (car_mecanic_id);
+
+
+--
+-- Name: index_orders_on_manager_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_orders_on_manager_id ON public.orders USING btree (manager_id);
+
+
+--
+-- Name: index_orders_on_owner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_orders_on_owner_id ON public.orders USING btree (owner_id);
+
+
+--
+-- Name: index_orders_on_problem_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_orders_on_problem_id ON public.orders USING btree (problem_id);
+
+
+--
+-- Name: index_orders_on_status_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_orders_on_status_id ON public.orders USING btree (status_id);
+
+
+--
+-- Name: index_orders_on_vehicle_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_orders_on_vehicle_id ON public.orders USING btree (vehicle_id);
+
+
+--
 -- Name: index_problems_on_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -444,6 +540,38 @@ CREATE INDEX index_users_on_employee_id ON public.users USING btree (employee_id
 --
 
 CREATE INDEX index_vehicles_on_car_line_id ON public.vehicles USING btree (car_line_id);
+
+
+--
+-- Name: orders fk_rails_3b809c80ac; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_3b809c80ac FOREIGN KEY (car_mecanic_id) REFERENCES public.employees(id);
+
+
+--
+-- Name: orders fk_rails_7ebc525013; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_7ebc525013 FOREIGN KEY (problem_id) REFERENCES public.problems(id);
+
+
+--
+-- Name: orders fk_rails_9d678e1e55; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_9d678e1e55 FOREIGN KEY (manager_id) REFERENCES public.employees(id);
+
+
+--
+-- Name: orders fk_rails_aee0f20b8c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_aee0f20b8c FOREIGN KEY (vehicle_id) REFERENCES public.vehicles(id);
 
 
 --
@@ -479,6 +607,22 @@ ALTER TABLE ONLY public.vehicles
 
 
 --
+-- Name: orders fk_rails_e8a9a5a8cf; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_e8a9a5a8cf FOREIGN KEY (owner_id) REFERENCES public.users(id);
+
+
+--
+-- Name: orders fk_rails_f80a4e9572; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_f80a4e9572 FOREIGN KEY (status_id) REFERENCES public.statuses(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -493,6 +637,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210707233925'),
 ('20210707235823'),
 ('20210707235934'),
-('20210708000020');
+('20210708000020'),
+('20210708142449');
 
 
