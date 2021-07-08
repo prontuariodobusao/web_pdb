@@ -19,6 +19,7 @@ RSpec.describe User, type: :model do
     it { is_expected.to_not allow_value('abcdef').for(:password) }
     it { is_expected.to_not allow_value('123b').for(:password) }
     it { is_expected.to validate_length_of(:password).is_at_least(6) }
+    it { is_expected.to belong_to(:employee) }
   end
 
   describe '#unlocked?' do
