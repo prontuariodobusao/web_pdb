@@ -26,6 +26,36 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: car_lines; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.car_lines (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    line_type integer NOT NULL
+);
+
+
+--
+-- Name: car_lines_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.car_lines_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: car_lines_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.car_lines_id_seq OWNED BY public.car_lines.id;
+
+
+--
 -- Name: categories; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -158,6 +188,36 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: statuses; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.statuses (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    color integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.statuses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.statuses_id_seq OWNED BY public.statuses.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -193,6 +253,43 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: vehicles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.vehicles (
+    id bigint NOT NULL,
+    car_number integer NOT NULL,
+    car_line_id bigint NOT NULL
+);
+
+
+--
+-- Name: vehicles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.vehicles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: vehicles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.vehicles_id_seq OWNED BY public.vehicles.id;
+
+
+--
+-- Name: car_lines id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.car_lines ALTER COLUMN id SET DEFAULT nextval('public.car_lines_id_seq'::regclass);
+
+
+--
 -- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -221,10 +318,24 @@ ALTER TABLE ONLY public.problems ALTER COLUMN id SET DEFAULT nextval('public.pro
 
 
 --
+-- Name: statuses id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.statuses ALTER COLUMN id SET DEFAULT nextval('public.statuses_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: vehicles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.vehicles ALTER COLUMN id SET DEFAULT nextval('public.vehicles_id_seq'::regclass);
 
 
 --
@@ -233,6 +344,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: car_lines car_lines_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.car_lines
+    ADD CONSTRAINT car_lines_pkey PRIMARY KEY (id);
 
 
 --
@@ -276,11 +395,27 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.statuses
+    ADD CONSTRAINT statuses_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: vehicles vehicles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.vehicles
+    ADD CONSTRAINT vehicles_pkey PRIMARY KEY (id);
 
 
 --
@@ -302,6 +437,13 @@ CREATE INDEX index_problems_on_category_id ON public.problems USING btree (categ
 --
 
 CREATE INDEX index_users_on_employee_id ON public.users USING btree (employee_id);
+
+
+--
+-- Name: index_vehicles_on_car_line_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_vehicles_on_car_line_id ON public.vehicles USING btree (car_line_id);
 
 
 --
@@ -329,6 +471,14 @@ ALTER TABLE ONLY public.employees
 
 
 --
+-- Name: vehicles fk_rails_e7493b386a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.vehicles
+    ADD CONSTRAINT fk_rails_e7493b386a FOREIGN KEY (car_line_id) REFERENCES public.car_lines(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -340,6 +490,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210707175005'),
 ('20210707175333'),
 ('20210707233816'),
-('20210707233925');
+('20210707233925'),
+('20210707235823'),
+('20210707235934'),
+('20210708000020');
 
 
