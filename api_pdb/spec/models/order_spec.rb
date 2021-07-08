@@ -1,12 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  subject { create(:order) }
+  context 'create order with image type PNG' do
+    subject { create(:order, :with_attachment_png) }
 
-  it { is_expected.to be_valid }
+    it { is_expected.to be_valid }
+  end
+  
+  context 'create order with image type JPEG' do
+    subject { create(:order, :with_attachment_jpg) }
+
+    it { is_expected.to be_valid }
+  end
 
   context 'validations' do
-    subject { build(:order) }
+    subject { build(:order, :with_attachment_to_build) }
 
     it { is_expected.to validate_presence_of(:km) }
     it { is_expected.to validate_presence_of(:state) }
@@ -16,5 +24,6 @@ RSpec.describe Order, type: :model do
     it { is_expected.to belong_to(:owner) }
     it { is_expected.to belong_to(:manager).optional }
     it { is_expected.to belong_to(:car_mecanic).optional }
+    it { expect(subject.image).to be_attached }
   end
 end

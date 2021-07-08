@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  has_one_attached :image
+
   enum state: %i[opened closed]
 
   belongs_to :problem
