@@ -1,8 +1,12 @@
 class OrdersController < ApplicationController
-  skip_before_action :ensure_json_content_type
+  skip_before_action :ensure_json_content_type, only: :create
   before_action :set_order, only: :show
 
-  def index; end
+  def index
+    orders = Order.where(owner: @current_user)
+
+    json_response serializer_blueprint(:order, orders)
+  end
 
   def show
     links = { image_url: @order.image_url }
@@ -13,9 +17,12 @@ class OrdersController < ApplicationController
   def create
     order = Order.new order_params
     order.owner = @current_user
+    order.status_id = 1
+
     order.save!
 
-    json_response_create(serializer_blueprint(:order, order))
+    json_response_create(serializer_blueprint(:order, order, meta: { links: { self: order_url(order) } }),
+                         order_path(order))
   end
 
   def update; end
@@ -27,13 +34,10 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.permit(
+    params.require(:data).permit(
       :km,
-      :description,
       :vehicle_id,
       :problem_id,
-      :vehicle_id,
-      :status_id,
       :image
     )
   end

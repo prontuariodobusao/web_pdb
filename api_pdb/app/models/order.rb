@@ -4,8 +4,14 @@ class Order < ApplicationRecord
   enum state: %i[opened closed]
 
   belongs_to :problem
+  delegate :description, to: :problem, prefix: true
+
   belongs_to :vehicle
+  delegate :car_number, to: :vehicle, prefix: true
+
   belongs_to :status
+  delegate :name, to: :status, prefix: true
+
   belongs_to :owner, class_name: 'User'
   belongs_to :manager, class_name: 'Employee', optional: true
   belongs_to :car_mecanic, class_name: 'Employee', optional: true
