@@ -10,5 +10,10 @@ class Order < ApplicationRecord
   belongs_to :manager, class_name: 'Employee', optional: true
   belongs_to :car_mecanic, class_name: 'Employee', optional: true
 
-  validates_presence_of :state, :km
+  validates_presence_of :km
+
+  def image_url
+    # get url path
+    Rails.application.routes.url_helpers.url_for(image) if image.attached?
+  end
 end

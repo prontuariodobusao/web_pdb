@@ -43,13 +43,73 @@ paths:
             schema:
               type: object
               properties:
-                identity:
+                username:
                   type: string
                 password:
                   type: string
               required:
-              - identity
+              - username
               - password
+  "/categories/{id}/problems":
+    get:
+      summary: Buscar usuário
+      tags:
+      - Usuários
+      description: API para visualizar usuário
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        car_number:
+                          type: integer
+                  problems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        description:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
   "/users/{user_id}/confirmation":
     post:
       summary: API para confirmacão de usuário
@@ -78,13 +138,11 @@ paths:
                     properties:
                       id:
                         type: integer
-                      identity:
+                      username:
                         type: string
-                      name:
+                      employee_name:
                         type: string
-                      unlocked?:
-                        type: boolean
-                      confirmed?:
+                      confirmation:
                         type: boolean
         '403':
           description: Acesso negado - Token inválido
@@ -147,6 +205,52 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/confirmation_params"
+  "/orders":
+    post:
+      summary: API para cradastro de ordens de serviços
+      tags:
+      - Ordens de Serviço
+      description: Rota para cadastro, é necessário cadastrar um usuário para utilizar
+        este recurso
+      security:
+      - Authorization: []
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      km:
+                        type: integer
+                      vehicle_id:
+                        type: integer
+                      problem_id:
+                        type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    km:
+                      type: integer
+                    vehicle_id:
+                      type: integer
+                    problem_id:
+                      type: integer
   "/users/{id}":
     get:
       summary: Buscar usuário
@@ -174,13 +278,11 @@ paths:
                     properties:
                       id:
                         type: integer
-                      identity:
+                      username:
                         type: string
-                      name:
+                      employee_name:
                         type: string
-                      unlocked?:
-                        type: boolean
-                      confirmed?:
+                      confirmation:
                         type: boolean
         '406':
           description: Not Acceptable

@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   resources :categories, only: [] do
     get 'problems', on: :member
   end
+
+  resources :orders
 end

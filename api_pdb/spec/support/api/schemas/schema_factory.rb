@@ -1,4 +1,8 @@
 module SchemaFactory
+  def order_response_schema
+    OrderResponse.new
+  end
+
   def problems_and_vehicles_response_schema
     ProblemsAndVehiclesResponse.new
   end
@@ -30,7 +34,7 @@ module SchemaFactory
   def new_errors_response
     Errors::ErrorsSchema.new
   end
-  
+
   def new_errors_validations_response
     Errors::ErrorsValidationsSchema.new
   end
