@@ -15,6 +15,7 @@ class OrderResponse
       object :meta do
         object :links do
           string :self
+          string :image_url
         end
       end
     end

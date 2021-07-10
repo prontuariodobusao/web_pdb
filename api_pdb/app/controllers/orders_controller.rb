@@ -10,9 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    links = { image_url: @order.image_url }
-
-    json_response serializer_blueprint(:order, @order, meta: { links: links })
+    json_response serializer_blueprint(:order, @order, meta: { links: links(@order) })
   end
 
   def create
@@ -21,13 +19,17 @@ class OrdersController < ApplicationController
 
     order.save!
 
-    json_response_create(serializer_blueprint(:order, order, meta: { links: { self: order_url(order) } }),
+    json_response_create(serializer_blueprint(:order, order, meta: { links: links(order) }),
                          order_path(order))
   end
 
   def update; end
 
   private
+
+  def links(order)
+    { self: order_url(order), image_url: order.image_url }
+  end
 
   def ensure_form_data_content_type
     return if request.get? || request.headers['Content-Type'] =~ /form-data/

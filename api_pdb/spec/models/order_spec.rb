@@ -17,7 +17,6 @@ RSpec.describe Order, type: :model do
     subject { build(:order, :with_attachment_to_build) }
 
     it { is_expected.to validate_presence_of(:km) }
-    it { is_expected.to validate_presence_of(:state) }
     it { is_expected.to belong_to(:problem) }
     it { is_expected.to belong_to(:vehicle) }
     it { is_expected.to belong_to(:status) }

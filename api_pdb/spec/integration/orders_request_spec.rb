@@ -6,6 +6,8 @@ describe 'Orders', type: :request do
   let(:vehicle) { create(:vehicle) }
   let(:problem) { create(:problem) }
 
+  let(:resource) { create(:order, :with_attachment_png) }
+
   let(:valid_order_attributes) do
     {
       km: 1234,
@@ -15,7 +17,7 @@ describe 'Orders', type: :request do
       image: fixture_file_upload('bus.png', 'image/png')
     }
   end
-  
+
   let(:invalid_order_attributes) do
     {
       km: nil,
@@ -85,6 +87,28 @@ describe 'Orders', type: :request do
           let(:error_title) { 'Validations Failed' }
         end
       end
+    end
+  end
+
+  path '/orders/{id}' do
+    get 'API para visualizar order de serviço' do
+      tags 'Ordens de Serviço'
+      description 'Rota para visualizar'
+      produces 'application/json'
+      security [Authorization: []]
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'Success' do
+        let(:Authorization) { authenticate_header[:Authorization] }
+        let(:id) { resource.id }
+        schema order_response_schema.schema.as_json
+
+        it_behaves_like 'a json endpoint response', 200 do
+          let(:expected_response_schema) { order_response_schema }
+        end
+      end
+
+      include_context 'show errors response'
     end
   end
 end
