@@ -2,7 +2,7 @@ class CreateOrders < ActiveRecord::Migration[6.1]
   def change
     create_table :orders do |t|
       t.integer :km
-      t.string :description
+      t.string :description, default: ''
       t.integer :state, default: 0
       t.belongs_to :problem, null: false, foreign_key: true
       t.belongs_to :vehicle, null: false, foreign_key: true

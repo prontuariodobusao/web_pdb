@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
-  skip_before_action :ensure_json_content_type, only: :create
   before_action :set_order, only: :show
+  skip_before_action :ensure_json_content_type, only: :create
+  before_action :ensure_form_data_content_type, only: :create
 
   def index
     orders = Order.where(owner: @current_user)
@@ -17,7 +18,6 @@ class OrdersController < ApplicationController
   def create
     order = Order.new order_params
     order.owner = @current_user
-    order.status_id = 1
 
     order.save!
 
@@ -29,6 +29,12 @@ class OrdersController < ApplicationController
 
   private
 
+  def ensure_form_data_content_type
+    return if request.get? || request.headers['Content-Type'] =~ /form-data/
+
+    render body: nil, status: 415
+  end
+
   def set_order
     @order = Order.find(params[:id])
   end
@@ -38,6 +44,7 @@ class OrdersController < ApplicationController
       :km,
       :vehicle_id,
       :problem_id,
+      :status_id,
       :image
     )
   end

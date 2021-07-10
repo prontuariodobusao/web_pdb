@@ -6,8 +6,16 @@ class OrderResponse
       object :data do
         integer :id
         integer :km
-        integer :vehicle_id
-        integer :problem_id
+        integer :car_number
+        string :problem
+        string :state
+        string :status
+        string :description
+      end
+      object :meta do
+        object :links do
+          string :self
+        end
       end
     end
   end

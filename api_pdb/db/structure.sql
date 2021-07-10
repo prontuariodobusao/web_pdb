@@ -252,7 +252,7 @@ ALTER SEQUENCE public.occupations_id_seq OWNED BY public.occupations.id;
 CREATE TABLE public.orders (
     id bigint NOT NULL,
     km integer,
-    description character varying,
+    description character varying DEFAULT ''::character varying,
     state integer DEFAULT 0,
     problem_id bigint NOT NULL,
     vehicle_id bigint NOT NULL,

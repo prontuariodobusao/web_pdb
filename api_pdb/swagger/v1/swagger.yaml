@@ -230,27 +230,45 @@ paths:
                         type: integer
                       km:
                         type: integer
-                      vehicle_id:
+                      car_number:
                         type: integer
-                      problem_id:
-                        type: integer
+                      problem:
+                        type: string
+                      state:
+                        type: string
+                      status:
+                        type: string
+                      description:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
       requestBody:
         content:
-          application/x-www-form-urlencoded:
+          multipart/form-data:
             schema:
               type: object
               properties:
-                data:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    km:
-                      type: integer
-                    vehicle_id:
-                      type: integer
-                    problem_id:
-                      type: integer
+                data[km]:
+                  type: integer
+                data[problem_id]:
+                  type: integer
+                data[vehicle_id]:
+                  type: integer
+                data[status_id]:
+                  type: integer
+                data[image]:
+                  type: binary
+              required:
+              - data[km]
+              - data[problem_id]
+              - data[vehicle_id]
+              - data[status_id]
   "/users/{id}":
     get:
       summary: Buscar usuário
