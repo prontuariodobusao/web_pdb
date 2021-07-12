@@ -2,6 +2,10 @@ module SchemaFactory
   def order_response_schema
     OrderResponse.new
   end
+  
+  def orders_response_schema
+    OrdersResponse.new
+  end
 
   def problems_and_vehicles_response_schema
     ProblemsAndVehiclesResponse.new

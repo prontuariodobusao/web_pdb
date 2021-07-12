@@ -1,0 +1,19 @@
+class OrdersResponse
+  include JSON::SchemaBuilder
+
+  def schema
+    array do
+      items do
+        object :data do
+          integer :id
+          integer :km
+          integer :car_number
+          string :problem
+          string :state
+          string :status
+          string :description
+        end
+      end
+    end
+  end
+end

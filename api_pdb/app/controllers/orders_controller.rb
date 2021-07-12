@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   def index
     orders = Order.where(owner: @current_user)
 
-    json_response serializer_blueprint(:order, orders)
+    json_response OrderBlueprint.render(orders)
   end
 
   def show
