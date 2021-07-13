@@ -7,7 +7,7 @@ class ProblemsAndVehiclesResponse
         items do
           object do
             integer :id
-            integer :car_number
+            string :car_number
           end
         end
       end

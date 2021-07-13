@@ -8,9 +8,9 @@ describe 'Categories', type: :request do
   let(:resource) { create(:category, :with_problems) }
 
   path '/categories/{id}/problems' do
-    get 'Buscar usuário' do
-      tags 'Usuários'
-      description 'API para visualizar usuário'
+    get 'Buscar Cartegorias e Veículos' do
+      tags 'Categorias'
+      description 'API para obter lista de categorias e veículos'
       produces 'application/json'
       security [Authorization: []]
       parameter name: :id, in: :path, type: :string

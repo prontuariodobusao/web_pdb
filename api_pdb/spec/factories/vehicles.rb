@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :vehicle do
-    car_number { Faker::Number.within(range: 4381..4381) }
+    car_number { '04356' }
     association :car_line
   end
 end

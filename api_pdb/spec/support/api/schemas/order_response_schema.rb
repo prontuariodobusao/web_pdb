@@ -6,7 +6,7 @@ class OrderResponse
       object :data do
         integer :id
         integer :km
-        integer :car_number
+        string :car_number
         string :problem
         string :state
         string :status

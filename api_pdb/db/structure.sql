@@ -396,7 +396,7 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 CREATE TABLE public.vehicles (
     id bigint NOT NULL,
-    car_number integer NOT NULL,
+    car_number character varying NOT NULL,
     car_line_id bigint NOT NULL
 );
 
