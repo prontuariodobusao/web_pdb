@@ -228,17 +228,19 @@ paths:
                     properties:
                       id:
                         type: integer
-                      km:
-                        type: integer
                       car_number:
+                        type: string
+                      category_id:
+                        type: integer
+                      category_name:
+                        type: string
+                      created_at:
                         type: string
                       problem:
                         type: string
-                      state:
+                      reference:
                         type: string
                       status:
-                        type: string
-                      description:
                         type: string
                   meta:
                     type: object
@@ -317,17 +319,13 @@ paths:
                   properties:
                     id:
                       type: integer
-                    km:
+                    category_id:
                       type: integer
-                    car_number:
+                    created_at:
                       type: string
-                    problem:
-                      type: string
-                    state:
+                    reference:
                       type: string
                     status:
-                      type: string
-                    description:
                       type: string
         '403':
           description: Acesso negado - Token inválido
@@ -394,17 +392,19 @@ paths:
                     properties:
                       id:
                         type: integer
-                      km:
-                        type: integer
                       car_number:
+                        type: string
+                      category_id:
+                        type: integer
+                      category_name:
+                        type: string
+                      created_at:
                         type: string
                       problem:
                         type: string
-                      state:
+                      reference:
                         type: string
                       status:
-                        type: string
-                      description:
                         type: string
                   meta:
                     type: object

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Orders::CreateOrder do
   let(:user) { create(:user) }
-  let(:order) { create(:order, :with_attachment_png) }
+  let(:order) { build(:order) }
 
   context 'on success' do
     before do
@@ -16,7 +16,7 @@ describe Orders::CreateOrder do
   end
 
   context 'on failure' do
-    let(:invalid_order) { create(:order, km: nil) }
+    let(:invalid_order) { build(:order, km: nil) }
 
     context 'when invalid user should raise an execption' do
       it {

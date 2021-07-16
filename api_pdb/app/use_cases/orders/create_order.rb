@@ -16,8 +16,7 @@ module Orders
     attr_accessor :user, :order
 
     def create
-      reference = "P#{(0..4).map { rand(1..5) }.join}/#{Date.current.strftime('%Y')}"
-      order.reference = reference
+      order.reference = "OS#{(0..4).map { rand(1..5) }.join}/#{Date.current.strftime('%Y')}"
       order.owner = user
 
       order.save!

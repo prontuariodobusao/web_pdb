@@ -4,19 +4,25 @@ class OrdersController < ApplicationController
   before_action :ensure_form_data_content_type, only: :create
 
   def index
-    orders = Order.where(owner: @current_user)
+    orders = Order.select(
+      :id,
+      :reference,
+      :created_at,
+      :status_id,
+      :problem_id
+    ).includes(:status, :problem).where(owner: @current_user)
 
-    json_response OrderBlueprint.render(orders)
+    json_response OrderBlueprint.render(orders, view: :list)
   end
 
   def show
-    json_response serializer_blueprint(:order, @order, meta: { links: links(@order) })
+    json_response OrderBlueprint.render(@order, root: :data, view: :show, meta: { links: links(@order) })
   end
 
   def create
     order = Orders::CreateOrder.call(user: @current_user, order: Order.new(order_params)).data[:order]
 
-    json_response_create(serializer_blueprint(:order, order, meta: { links: links(order) }),
+    json_response_create(OrderBlueprint.render(order, root: :data, view: :show, meta: { links: links(order) }),
                          order_path(order))
   end
 

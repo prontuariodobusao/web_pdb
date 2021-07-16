@@ -5,6 +5,7 @@ class Order < ApplicationRecord
 
   belongs_to :problem
   delegate :description, to: :problem, prefix: true
+  delegate :category_id, to: :problem, prefix: true
 
   belongs_to :vehicle
   delegate :car_number, to: :vehicle, prefix: true
@@ -16,7 +17,7 @@ class Order < ApplicationRecord
   belongs_to :manager, class_name: 'Employee', optional: true
   belongs_to :car_mecanic, class_name: 'Employee', optional: true
 
-  validates_presence_of :km
+  validates_presence_of :km, :reference
 
   def image_url
     # get url path

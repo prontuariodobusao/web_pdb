@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Order, type: :model do
   context 'create order with image type PNG' do
-    subject { create(:order, :with_attachment_png) }
+    subject { create(:order, :with_attachment_png, reference: 'OS1234/2021') }
 
     it { is_expected.to be_valid }
   end
   
   context 'create order with image type JPEG' do
-    subject { create(:order, :with_attachment_jpg) }
+    subject { create(:order, :with_attachment_jpg, reference: 'OS12346/2021') }
 
     it { is_expected.to be_valid }
   end

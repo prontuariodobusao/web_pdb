@@ -6,13 +6,10 @@ class OrdersResponse
       items do
         object :data do
           integer :id
+          integer :category_id
+          string :created_at
           string :reference
-          integer :km
-          string :car_number
-          string :problem
-          string :state
           string :status
-          string :description
         end
       end
     end

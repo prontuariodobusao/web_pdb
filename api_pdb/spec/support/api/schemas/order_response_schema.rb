@@ -5,13 +5,13 @@ class OrderResponse
     object do
       object :data do
         integer :id
-        string :reference
-        integer :km
         string :car_number
+        integer :category_id
+        string :category_name
+        string :created_at
         string :problem
-        string :state
+        string :reference
         string :status
-        string :description
       end
       object :meta do
         object :links do
