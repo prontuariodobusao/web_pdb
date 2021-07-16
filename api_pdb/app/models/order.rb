@@ -19,6 +19,26 @@ class Order < ApplicationRecord
 
   validates_presence_of :km, :reference
 
+  scope :openeds, lambda { |current_user|
+    select(
+      :id,
+      :reference,
+      :created_at,
+      :status_id,
+      :problem_id
+    ).includes(:status, :problem).where(owner: current_user, state: :opened)
+  }
+
+  scope :closeds, lambda { |current_user|
+    select(
+      :id,
+      :reference,
+      :created_at,
+      :status_id,
+      :problem_id
+    ).includes(:status, :problem).where(owner: current_user, state: :closed)
+  }
+
   def image_url
     # get url path
     Rails.application.routes.url_helpers.url_for(image) if image.attached?

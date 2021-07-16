@@ -16,5 +16,8 @@ class OrderBlueprint < Blueprinter::Base
     field :category_name do |order|
       order.problem.category_name
     end
+    field :employee_name do |order|
+      order.owner.employee_name
+    end
   end
 end

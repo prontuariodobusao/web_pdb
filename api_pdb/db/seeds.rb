@@ -61,7 +61,6 @@ employees.push(
   employee18,
   employee19,
   employee20,
-  employee21,
   employee22,
   employee23,
   employee24,
@@ -76,22 +75,22 @@ puts 'Create Users...'
 employees.each do |employee|
   User.create(username: employee.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee)
 end
-puts 'Users created'
+
+user1 = User.create(username: employee21.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee21)
 
 puts 'Create Categories...'
 enginer = Category.create(name: 'MOTOR')
 energy = Category.create(name: 'ELÉTRICA')
 bodywork = Category.create(name: 'CARROCERIA')
 suspension = Category.create(name: 'SUSPENSÃO')
-puts 'Categories created'
 
 puts 'Create Problems...'
-Problem.create(description: 'Óleo baixo', solution: 'Completar o óleo	Alta', priority: :high, category: enginer)
-Problem.create(description: 'Perda de força', solution: 'Verificar injeção', priority: :high, category: enginer)
-Problem.create(description: 'Aquecendo', solution: 'Completar água', priority: :high, category: enginer)
-Problem.create(description: 'Falhando', solution: 'Verificar nível do óleo', priority: :high, category: enginer)
-Problem.create(description: 'Cortando o óleo/bico injetor', solution: 'Verificar sistema de injeção', priority: :high, category: enginer)
-Problem.create(description: 'Fumaçando', solution: 'Refazer o motor, ou verificar excesso de óleo nos pistões', priority: :high, category: enginer)
+problem1 = Problem.create(description: 'Óleo baixo', solution: 'Completar o óleo	Alta', priority: :high, category: enginer)
+problem2 = Problem.create(description: 'Perda de força', solution: 'Verificar injeção', priority: :high, category: enginer)
+problem3 = Problem.create(description: 'Aquecendo', solution: 'Completar água', priority: :high, category: enginer)
+problem4 = Problem.create(description: 'Falhando', solution: 'Verificar nível do óleo', priority: :high, category: enginer)
+problem5 = Problem.create(description: 'Cortando o óleo/bico injetor', solution: 'Verificar sistema de injeção', priority: :high, category: enginer)
+problem6 = Problem.create(description: 'Fumaçando', solution: 'Refazer o motor, ou verificar excesso de óleo nos pistões', priority: :high, category: enginer)
 Problem.create(description: 'Cirene', solution: 'Fusível queimado', priority: :normal, category: energy)
 Problem.create(description: 'Faróis', solution: 'Troca de lentes ou lâmpadas', priority: :normal, category: energy)
 Problem.create(description: 'Pisca', solution: 'Substituir relé de pisca', priority: :normal, category: energy)
@@ -107,13 +106,11 @@ Problem.create(description: 'Mola Mestre', solution: 'Trocar mola Mestre', prior
 Problem.create(description: 'Amortecedor', solution: 'Substituir amortecedor', priority: :high, category: suspension)
 Problem.create(description: 'Feixo de molas', solution: 'Bater molas ou colocar abraçadeiras', priority: :normal, category: suspension)
 Problem.create(description: 'Barra estabilizadora', solution: 'Verificar buchas e coxins', priority: :high, category: suspension)
-puts 'Problems created'
 
 puts 'Create Statuses...'
-Status.create(name: 'OS de entrada', color: :yellow)
-Status.create(name: 'OS em manutenção', color: :red)
-Status.create(name: 'OS finalizada', color: :green)
-puts 'Statuses created'
+status1 = Status.create(name: 'Entrada', color: :yellow)
+Status.create(name: 'Manutenção', color: :red)
+status3 = Status.create(name: 'Finalizada', color: :green)
 
 puts 'Create Car lines...'
 line1 = CarLine.create(name: 'A 708 Porto Alegre', line_type: :feeder)
@@ -131,15 +128,14 @@ line11 = CarLine.create(name: 'T 805 Bela Vista Barão', line_type: :stem)
 line12 = CarLine.create(name: 'T 806 Bela Vista Shopping', line_type: :stem)
 
 reserve = CarLine.create(name: 'Reserva', line_type: :reserve)
-puts 'Car lines created'
 
 puts 'Create Vehicles...'
-Vehicle.create(car_number: '04383', car_line: line1)
-Vehicle.create(car_number: '04384', car_line: line2)
-Vehicle.create(car_number: '04385', car_line: line3)
-Vehicle.create(car_number: '04386', car_line: line4)
-Vehicle.create(car_number: '04387', car_line: line5)
-Vehicle.create(car_number: '04388', car_line: line6)
+vehicle1 = Vehicle.create(car_number: '04383', car_line: line1)
+vehicle2 = Vehicle.create(car_number: '04384', car_line: line2)
+vehicle3 = Vehicle.create(car_number: '04385', car_line: line3)
+vehicle4 = Vehicle.create(car_number: '04386', car_line: line4)
+vehicle5 = Vehicle.create(car_number: '04387', car_line: line5)
+vehicle6 = Vehicle.create(car_number: '04388', car_line: line6)
 
 Vehicle.create(car_number: '04389', car_line: line7)
 Vehicle.create(car_number: '04390', car_line: line8)
@@ -151,4 +147,12 @@ Vehicle.create(car_number: '04394', car_line: line12)
 Vehicle.create(car_number: '04360', car_line: reserve)
 Vehicle.create(car_number: '04361', car_line: reserve)
 Vehicle.create(car_number: '04362', car_line: reserve)
-puts 'Vehicles created'
+
+puts 'Create Orders...'
+Order.create(km: '1890', reference: 'P12394/2021', problem: problem6, vehicle: vehicle6, status: status1, owner: user1)
+
+Order.create(km: '2190', reference: 'P12334/2021', state: :closed, problem: problem1, vehicle: vehicle1, status: status3, owner: user1)
+Order.create(km: '2340', reference: 'P12374/2021', state: :closed, problem: problem2, vehicle: vehicle2, status: status3, owner: user1)
+Order.create(km: '2190', reference: 'P12384/2021', state: :closed, problem: problem3, vehicle: vehicle3, status: status3, owner: user1)
+Order.create(km: '2800', reference: 'P12324/2021', state: :closed, problem: problem4, vehicle: vehicle4, status: status3, owner: user1)
+Order.create(km: '2000', reference: 'P12354/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user1)

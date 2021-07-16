@@ -242,6 +242,8 @@ paths:
                         type: string
                       status:
                         type: string
+                      employee_name:
+                        type: string
                   meta:
                     type: object
                     properties:
@@ -405,6 +407,8 @@ paths:
                       reference:
                         type: string
                       status:
+                        type: string
+                      employee_name:
                         type: string
                   meta:
                     type: object

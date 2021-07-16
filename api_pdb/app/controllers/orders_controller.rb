@@ -4,15 +4,15 @@ class OrdersController < ApplicationController
   before_action :ensure_form_data_content_type, only: :create
 
   def index
-    orders = Order.select(
-      :id,
-      :reference,
-      :created_at,
-      :status_id,
-      :problem_id
-    ).includes(:status, :problem).where(owner: @current_user)
+    orders_openeds = Order.openeds(@current_user)
+    orders_closeds = Order.closeds(@current_user)
 
-    json_response OrderBlueprint.render(orders, view: :list)
+    json_response(
+      {
+        openeds: OrderBlueprint.render_as_hash(orders_openeds, view: :list),
+        closeds: OrderBlueprint.render_as_hash(orders_closeds, view: :list)
+      }
+    )
   end
 
   def show
