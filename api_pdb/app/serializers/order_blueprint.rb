@@ -1,7 +1,7 @@
 class OrderBlueprint < Blueprinter::Base
   identifier :id
 
-  fields :km, :state, :description
+  fields :reference, :km, :state, :description
 
   field :problem_description, name: :problem
   field :status_name, name: :status

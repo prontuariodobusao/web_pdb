@@ -14,10 +14,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    order = Order.new order_params
-    order.owner = @current_user
-
-    order.save!
+    order = Orders::CreateOrder.call(user: @current_user, order: Order.new(order_params)).data[:order]
 
     json_response_create(serializer_blueprint(:order, order, meta: { links: links(order) }),
                          order_path(order))

@@ -6,6 +6,7 @@ class OrdersResponse
       items do
         object :data do
           integer :id
+          string :reference
           integer :km
           string :car_number
           string :problem

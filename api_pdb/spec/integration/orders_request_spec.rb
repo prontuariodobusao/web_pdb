@@ -6,7 +6,7 @@ describe 'Orders', type: :request do
   let(:vehicle) { create(:vehicle) }
   let(:problem) { create(:problem) }
 
-  let(:resource) { create(:order, :with_attachment_png) }
+  let(:resource) { create(:order, :with_attachment_png, reference: Faker::Alphanumeric.alphanumeric(number: 10)) }
 
   let(:valid_order_attributes) do
     {
@@ -126,7 +126,7 @@ describe 'Orders', type: :request do
           before do |example|
             user = create(:user)
             response = Auth::Authenticate.call(username: user.username, password: user.password)
-            create_list(:order, 10, owner: user)
+            create_list(:order, 10, owner: user, reference: Faker::Alphanumeric.alphanumeric(number: 10))
             @auth_token = response.data[:token]
             submit_request(example.metadata)
           end
