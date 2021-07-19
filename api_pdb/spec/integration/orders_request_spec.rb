@@ -113,14 +113,14 @@ describe 'Orders', type: :request do
   end
 
   path '/orders' do
-    get 'Obter lista ordens de serviço por usuário' do
+    get 'Obter lista ordens de serviço por usuário motorista, listando ordens abertas e fechadas' do
       tags 'Ordens de Serviço'
       description 'Rota para lista de OS por usuário, essa pode ser executada por usuários autenticados'
       security [Authorization: []]
       produces 'application/json'
 
       response('200', 'Sucesso') do
-        schema orders_response_schema.schema.as_json
+        schema list_orders_openeds_and_closeds_response_schema.schema.as_json
 
         context 'list of orders' do
           before do |example|
@@ -134,11 +134,11 @@ describe 'Orders', type: :request do
           let(:Authorization) { @auth_token }
 
           context 'Count values response in data' do
-            it { expect(parse_json(response).count).to eq 10 }
+            it { expect(parse_json(response).count).to eq 2 }
           end
 
           it_behaves_like 'a json endpoint response', 200 do
-            let(:expected_response_schema) { orders_response_schema }
+            let(:expected_response_schema) { list_orders_openeds_and_closeds_response_schema }
           end
         end
       end

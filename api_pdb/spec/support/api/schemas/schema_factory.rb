@@ -6,6 +6,10 @@ module SchemaFactory
   def orders_response_schema
     OrdersResponse.new
   end
+  
+  def list_orders_openeds_and_closeds_response_schema
+    ListOrdersOpenedsAndClosedsResponse.new
+  end
 
   def problems_and_vehicles_response_schema
     ProblemsAndVehiclesResponse.new

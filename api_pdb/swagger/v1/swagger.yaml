@@ -302,7 +302,8 @@ paths:
               - data[vehicle_id]
               - data[status_id]
     get:
-      summary: Obter lista ordens de serviço por usuário
+      summary: Obter lista ordens de serviço por usuário motorista, listando ordens
+        abertas e fechadas
       tags:
       - Ordens de Serviço
       description: Rota para lista de OS por usuário, essa pode ser executada por
@@ -315,20 +316,38 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    category_id:
-                      type: integer
-                    created_at:
-                      type: string
-                    reference:
-                      type: string
-                    status:
-                      type: string
+                type: object
+                properties:
+                  openeds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category_id:
+                          type: integer
+                        created_at:
+                          type: string
+                        reference:
+                          type: string
+                        status:
+                          type: string
+                  closeds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category_id:
+                          type: integer
+                        created_at:
+                          type: string
+                        reference:
+                          type: string
+                        status:
+                          type: string
         '403':
           description: Acesso negado - Token inválido
           content:
