@@ -86,10 +86,10 @@ RSpec.configure do |config|
           }
         },
         {
-          url: 'http://heroku-pdb.com',
+          url: 'https://apipdb.herokuapp.com',
           variables: {
             defaultHost: {
-              default: 'heroku-pdb.com'
+              default: 'apipdb.herokuapp.com'
             }
           }
         }

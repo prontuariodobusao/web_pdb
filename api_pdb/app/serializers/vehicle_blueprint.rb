@@ -1,4 +1,4 @@
-class VahicleBlueprint < Blueprinter::Base
+class VehicleBlueprint < Blueprinter::Base
   identifier :id
 
   fields :car_number

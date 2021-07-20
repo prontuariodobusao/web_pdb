@@ -149,7 +149,7 @@ Vehicle.create(car_number: '04361', car_line: reserve)
 Vehicle.create(car_number: '04362', car_line: reserve)
 
 puts 'Create Orders...'
-Order.create(km: '1890', reference: 'P12394/2021', problem: problem6, vehicle: vehicle6, status: status1, owner: user1)
+Order.create(km: '1890', reference: 'OS12394/2021', problem: problem6, vehicle: vehicle6, status: status1, owner: user1)
 
 Order.create(km: '2190', reference: 'OS12334/2021', state: :closed, problem: problem1, vehicle: vehicle1, status: status3, owner: user1)
 Order.create(km: '2340', reference: 'OS12374/2021', state: :closed, problem: problem2, vehicle: vehicle2, status: status3, owner: user1)
