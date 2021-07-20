@@ -1,9 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
 
-  validates :name, :identity, presence: true
-
-  validates :identity, uniqueness: true
+  validates :username, uniqueness: true, presence: true
 
   validates :password,
             length: { minimum: 6 },
@@ -15,6 +13,9 @@ class User < ApplicationRecord
 
   validates :password_confirmation,
             presence: true
+
+  belongs_to :employee
+  delegate :name, to: :employee, prefix: true
 
   def unlocked?
     locked_at.nil?

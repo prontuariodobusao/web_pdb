@@ -43,13 +43,73 @@ paths:
             schema:
               type: object
               properties:
-                identity:
+                username:
                   type: string
                 password:
                   type: string
               required:
-              - identity
+              - username
               - password
+  "/categories/{id}/problems":
+    get:
+      summary: Buscar Cartegorias e Veículos
+      tags:
+      - Categorias
+      description: API para obter lista de categorias e veículos
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        car_number:
+                          type: string
+                  problems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        description:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
   "/users/{user_id}/confirmation":
     post:
       summary: API para confirmacão de usuário
@@ -78,13 +138,11 @@ paths:
                     properties:
                       id:
                         type: integer
-                      identity:
+                      username:
                         type: string
-                      name:
+                      employee_name:
                         type: string
-                      unlocked?:
-                        type: boolean
-                      confirmed?:
+                      confirmation:
                         type: boolean
         '403':
           description: Acesso negado - Token inválido
@@ -147,6 +205,260 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/confirmation_params"
+  "/orders":
+    post:
+      summary: API para cradastro de ordens de serviços
+      tags:
+      - Ordens de Serviço
+      description: Rota para cadastro, é necessário cadastrar um usuário para utilizar
+        este recurso
+      security:
+      - Authorization: []
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      car_number:
+                        type: string
+                      category_id:
+                        type: integer
+                      category_name:
+                        type: string
+                      created_at:
+                        type: string
+                      problem:
+                        type: string
+                      reference:
+                        type: string
+                      status:
+                        type: string
+                      employee_name:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                          image_url:
+                            type: string
+        '406':
+          description: Not Acceptable
+        '415':
+          description: Unsupported Media Type
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  status:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          type: string
+                        field:
+                          type: string
+                        detail:
+                          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                data[km]:
+                  type: integer
+                data[problem_id]:
+                  type: integer
+                data[vehicle_id]:
+                  type: integer
+                data[status_id]:
+                  type: integer
+                data[image]:
+                  type: binary
+              required:
+              - data[km]
+              - data[problem_id]
+              - data[vehicle_id]
+              - data[status_id]
+    get:
+      summary: Obter lista ordens de serviço por usuário motorista, listando ordens
+        abertas e fechadas
+      tags:
+      - Ordens de Serviço
+      description: Rota para lista de OS por usuário, essa pode ser executada por
+        usuários autenticados
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  openeds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category_id:
+                          type: integer
+                        created_at:
+                          type: string
+                        reference:
+                          type: string
+                        status:
+                          type: string
+                  closeds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category_id:
+                          type: integer
+                        created_at:
+                          type: string
+                        reference:
+                          type: string
+                        status:
+                          type: string
+        '403':
+          description: Acesso negado - Token inválido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+  "/orders/{id}":
+    get:
+      summary: API para visualizar order de serviço
+      tags:
+      - Ordens de Serviço
+      description: Rota para visualizar
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      car_number:
+                        type: string
+                      category_id:
+                        type: integer
+                      category_name:
+                        type: string
+                      created_at:
+                        type: string
+                      problem:
+                        type: string
+                      reference:
+                        type: string
+                      status:
+                        type: string
+                      employee_name:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                          image_url:
+                            type: string
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
   "/users/{id}":
     get:
       summary: Buscar usuário
@@ -174,13 +486,11 @@ paths:
                     properties:
                       id:
                         type: integer
-                      identity:
+                      username:
                         type: string
-                      name:
+                      employee_name:
                         type: string
-                      unlocked?:
-                        type: boolean
-                      confirmed?:
+                      confirmation:
                         type: boolean
         '406':
           description: Not Acceptable

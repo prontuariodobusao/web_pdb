@@ -6,7 +6,7 @@ class UsersResponse
       string :id
       string :type
       object :attributes do
-        string :name
+        string :employee_name
         string :type
       end
       object :links do
@@ -20,7 +20,7 @@ class UsersResponse
       string :id
       string :type
       object :attributes do
-        string :name
+        string :employee_name
         string :type
       end
       object :links do

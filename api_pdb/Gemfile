@@ -40,6 +40,8 @@ group :development do
   gem 'listen', '~> 3.3'
   gem 'spring'
 
+  gem 'rails-erd'
+
   gem 'rubocop', require: false
   gem 'rubycritic', require: false
   gem 'spring-watcher-listen', '~> 2.0.0'

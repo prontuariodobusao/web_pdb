@@ -5,8 +5,8 @@ class UserResponse
     object do
       object :data do
         integer :id
-        string :identity
-        string :name
+        string :username
+        string :employee_name
         boolean :confirmation
       end
     end

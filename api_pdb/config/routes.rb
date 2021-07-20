@@ -8,4 +8,10 @@ Rails.application.routes.draw do
   resources :users, only: %i[index show] do
     resource :confirmation, only: :create
   end
+
+  resources :categories, only: [] do
+    get 'problems', on: :member
+  end
+
+  resources :orders
 end
