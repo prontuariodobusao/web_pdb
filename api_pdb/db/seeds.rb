@@ -151,8 +151,8 @@ Vehicle.create(car_number: '04362', car_line: reserve)
 puts 'Create Orders...'
 Order.create(km: '1890', reference: 'P12394/2021', problem: problem6, vehicle: vehicle6, status: status1, owner: user1)
 
-Order.create(km: '2190', reference: 'P12334/2021', state: :closed, problem: problem1, vehicle: vehicle1, status: status3, owner: user1)
-Order.create(km: '2340', reference: 'P12374/2021', state: :closed, problem: problem2, vehicle: vehicle2, status: status3, owner: user1)
-Order.create(km: '2190', reference: 'P12384/2021', state: :closed, problem: problem3, vehicle: vehicle3, status: status3, owner: user1)
-Order.create(km: '2800', reference: 'P12324/2021', state: :closed, problem: problem4, vehicle: vehicle4, status: status3, owner: user1)
-Order.create(km: '2000', reference: 'P12354/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user1)
+Order.create(km: '2190', reference: 'OS12334/2021', state: :closed, problem: problem1, vehicle: vehicle1, status: status3, owner: user1)
+Order.create(km: '2340', reference: 'OS12374/2021', state: :closed, problem: problem2, vehicle: vehicle2, status: status3, owner: user1)
+Order.create(km: '2190', reference: 'OS12384/2021', state: :closed, problem: problem3, vehicle: vehicle3, status: status3, owner: user1)
+Order.create(km: '2800', reference: 'OS12324/2021', state: :closed, problem: problem4, vehicle: vehicle4, status: status3, owner: user1)
+Order.create(km: '2000', reference: 'OS12354/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user1)
