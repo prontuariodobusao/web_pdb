@@ -4,6 +4,7 @@ class OrderBlueprint < Blueprinter::Base
   fields :reference
 
   view :list do
+    field :status_id
     field :status_name, name: :status
     field :created_at, datetime_format: '%d/%m/%Y'
     field :problem_category_id, name: :category_id

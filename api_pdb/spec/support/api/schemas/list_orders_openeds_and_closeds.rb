@@ -8,6 +8,7 @@ class ListOrdersOpenedsAndClosedsResponse
           object do
             integer :id
             integer :category_id
+            integer :status_id
             string :created_at
             string :reference
             string :status
@@ -19,6 +20,7 @@ class ListOrdersOpenedsAndClosedsResponse
           object do
             integer :id
             integer :category_id
+            integer :status_id
             string :created_at
             string :reference
             string :status

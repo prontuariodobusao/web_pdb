@@ -12,6 +12,7 @@ class OrderResponse
         string :problem
         string :reference
         string :status
+        integer :status_id
         string :employee_name
       end
       object :meta do
