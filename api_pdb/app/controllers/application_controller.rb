@@ -4,6 +4,7 @@ class ApplicationController < ActionController::API
   include ExceptionHandler
   include ApiPack::ApiHelper
   include Serializable
+  include Pundit
 
   before_action :ensure_json_accept,
                 :ensure_json_content_type,
