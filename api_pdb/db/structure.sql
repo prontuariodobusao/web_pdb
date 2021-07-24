@@ -222,7 +222,8 @@ ALTER SEQUENCE public.employees_id_seq OWNED BY public.employees.id;
 
 CREATE TABLE public.occupations (
     id bigint NOT NULL,
-    name character varying NOT NULL
+    name character varying NOT NULL,
+    type_occupation integer
 );
 
 
@@ -318,6 +319,39 @@ ALTER SEQUENCE public.problems_id_seq OWNED BY public.problems.id;
 
 
 --
+-- Name: roles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.roles (
+    id bigint NOT NULL,
+    name character varying,
+    resource_type character varying,
+    resource_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.roles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: roles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -389,6 +423,16 @@ CREATE SEQUENCE public.users_id_seq
 --
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: users_roles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users_roles (
+    user_id bigint,
+    role_id bigint
+);
 
 
 --
@@ -482,6 +526,13 @@ ALTER TABLE ONLY public.orders ALTER COLUMN id SET DEFAULT nextval('public.order
 --
 
 ALTER TABLE ONLY public.problems ALTER COLUMN id SET DEFAULT nextval('public.problems_id_seq'::regclass);
+
+
+--
+-- Name: roles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.roles ALTER COLUMN id SET DEFAULT nextval('public.roles_id_seq'::regclass);
 
 
 --
@@ -583,6 +634,14 @@ ALTER TABLE ONLY public.orders
 
 ALTER TABLE ONLY public.problems
     ADD CONSTRAINT problems_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.roles
+    ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
 
 
 --
@@ -702,10 +761,45 @@ CREATE INDEX index_problems_on_category_id ON public.problems USING btree (categ
 
 
 --
+-- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_roles_on_name_and_resource_type_and_resource_id ON public.roles USING btree (name, resource_type, resource_id);
+
+
+--
+-- Name: index_roles_on_resource; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_roles_on_resource ON public.roles USING btree (resource_type, resource_id);
+
+
+--
 -- Name: index_users_on_employee_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_employee_id ON public.users USING btree (employee_id);
+
+
+--
+-- Name: index_users_roles_on_role_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_roles_on_role_id ON public.users_roles USING btree (role_id);
+
+
+--
+-- Name: index_users_roles_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_roles_on_user_id ON public.users_roles USING btree (user_id);
+
+
+--
+-- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_roles_on_user_id_and_role_id ON public.users_roles USING btree (user_id, role_id);
 
 
 --
@@ -828,6 +922,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210707235934'),
 ('20210708000020'),
 ('20210708142449'),
-('20210708151405');
+('20210708151405'),
+('20210723141531'),
+('20210723234734');
 
 

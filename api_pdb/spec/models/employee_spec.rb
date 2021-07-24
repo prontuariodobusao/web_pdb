@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Employee, type: :model do
-  subject { create(:employee) }
+  subject { create(:driver_employee) }
 
   it { is_expected.to be_valid }
 
   context 'validations' do
-    subject { build(:employee) }
+    subject { create(:driver_employee) }
 
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:identity) }

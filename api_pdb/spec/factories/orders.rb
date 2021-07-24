@@ -7,8 +7,8 @@ FactoryBot.define do
     association :vehicle
     association :status
     association :owner, factory: :user
-    association :manager, factory: :employee
-    association :car_mecanic, factory: :employee
+    association :manager, factory: :manager_employee
+    association :car_mecanic, factory: :mecanic_employee
 
     trait :with_attachment_png do
       after :create do |order|

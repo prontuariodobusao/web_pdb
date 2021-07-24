@@ -7,7 +7,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'validations' do
-    subject { build(:user) }
+    subject { create(:user) }
 
     it { is_expected.to validate_presence_of(:username) }
     it { is_expected.to validate_presence_of(:password_confirmation) }
@@ -33,6 +33,29 @@ RSpec.describe User, type: :model do
     context 'when user was created is expected to be unconfirmed' do
       let(:user_unlocked) { create(:user) }
       it { expect(user_unlocked.confirmed?).to be_falsey }
+    end
+  end
+
+  context 'check type User' do
+    context 'Driver' do
+      let(:driver_user) { create(:user) }
+
+      it { expect(driver_user.employee.occupation_type_occupation).to eql 'driver' }
+    end
+    context 'Manager' do
+      let(:manager_user) { create(:user, :manager_user) }
+
+      it { expect(manager_user.employee.occupation_type_occupation).to eql 'manager' }
+    end
+    context 'Mecanic' do
+      let(:mecanic_user) { create(:user, :mecanic_user) }
+
+      it { expect(mecanic_user.employee.occupation_type_occupation).to eql 'mecanic' }
+    end
+    context 'RH' do
+      let(:rh_user) { create(:user, :rh_user) }
+
+      it { expect(rh_user.employee.occupation_type_occupation).to eql 'rh' }
     end
   end
 end

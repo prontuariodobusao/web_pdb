@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Occupation, type: :model do
-  subject { create(:occupation) }
+  subject { create(:occupation, :driver) }
 
   it { is_expected.to be_valid }
 
