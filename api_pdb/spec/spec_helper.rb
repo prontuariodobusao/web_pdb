@@ -1,6 +1,5 @@
 require 'simplecov'
 require 'json_matchers/rspec'
-require 'pundit/rspec'
 
 SimpleCov.start 'rails' do
   add_filter '/spec/'

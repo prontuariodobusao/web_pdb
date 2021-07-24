@@ -13,5 +13,9 @@ Rails.application.routes.draw do
     get 'problems', on: :member
   end
 
+  namespace :manager do
+    resources :orders
+  end
+
   resources :orders
 end
