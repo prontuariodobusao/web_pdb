@@ -6,8 +6,8 @@ module Manager
     before_action :ensure_form_data_content_type, only: :create
 
     def index
-      orders_openeds = Order.openeds(@current_user)
-      orders_closeds = Order.closeds(@current_user)
+      orders_openeds = Order.to_managers(:opened).order('problems.priority DESC')
+      orders_closeds = Order.to_managers(:closed).order('problems.priority DESC')
 
       json_response(
         {
@@ -57,6 +57,7 @@ module Manager
         :problem_id,
         :status_id,
         :description,
+        :mecanic_id,
         :image
       )
     end

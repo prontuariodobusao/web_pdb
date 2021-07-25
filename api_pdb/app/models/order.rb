@@ -19,24 +19,24 @@ class Order < ApplicationRecord
 
   validates_presence_of :km, :reference
 
-  scope :openeds, lambda { |current_user|
+  scope :by_user, lambda { |current_user, state|
     select(
       :id,
       :reference,
       :created_at,
       :status_id,
       :problem_id
-    ).includes(:status, :problem).where(owner: current_user, state: :opened)
+    ).includes(:status, :problem).where(owner: current_user, state: state)
   }
 
-  scope :closeds, lambda { |current_user|
+  scope :to_managers, lambda { |state|
     select(
       :id,
       :reference,
       :created_at,
       :status_id,
       :problem_id
-    ).includes(:status, :problem).where(owner: current_user, state: :closed)
+    ).includes(:status, :problem).where(state: state)
   }
 
   def image_url
