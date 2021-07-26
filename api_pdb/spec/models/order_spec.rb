@@ -6,7 +6,7 @@ RSpec.describe Order, type: :model do
 
     it { is_expected.to be_valid }
   end
-  
+
   context 'create order with image type JPEG' do
     subject { create(:order, :with_attachment_jpg, reference: 'OS12346/2021') }
 
@@ -18,6 +18,7 @@ RSpec.describe Order, type: :model do
 
     it { is_expected.to validate_presence_of(:km) }
     it { is_expected.to belong_to(:problem) }
+    it { is_expected.to belong_to(:solution).optional }
     it { is_expected.to belong_to(:vehicle) }
     it { is_expected.to belong_to(:status) }
     it { is_expected.to belong_to(:owner) }

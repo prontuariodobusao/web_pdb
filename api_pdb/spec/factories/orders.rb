@@ -4,6 +4,7 @@ FactoryBot.define do
     description { Faker::Lorem.sentence }
     state { Faker::Number.within(range: 0..1) }
     association :problem
+    association :solution
     association :vehicle
     association :status
     association :owner, factory: :user

@@ -7,6 +7,9 @@ class Order < ApplicationRecord
   delegate :description, to: :problem, prefix: true
   delegate :category_id, to: :problem, prefix: true
 
+  belongs_to :solution, optional: true
+  delegate :description, to: :solution, prefix: true
+
   belongs_to :vehicle
   delegate :car_number, to: :vehicle, prefix: true
 
