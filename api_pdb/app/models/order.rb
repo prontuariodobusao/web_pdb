@@ -18,7 +18,9 @@ class Order < ApplicationRecord
 
   belongs_to :owner, class_name: 'User'
   belongs_to :manager, class_name: 'Employee', optional: true
+  delegate :name, to: :manager, prefix: true
   belongs_to :car_mecanic, class_name: 'Employee', optional: true
+  delegate :name, to: :manager, prefix: true
 
   validates_presence_of :km, :reference
 

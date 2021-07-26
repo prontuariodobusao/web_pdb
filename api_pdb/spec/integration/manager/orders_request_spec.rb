@@ -14,14 +14,10 @@ describe 'Manager::Orders', type: :request do
 
   let(:valid_order_attributes_update) do
     {
-      km: 1234,
-      problem_id: problem.id,
-      vehicle_id: vehicle.id,
-      car_mecanic: mecanic.id,
+      car_mecanic_id: mecanic.id,
       solution_id: solution.id,
       status_id: status.id,
-      description: Faker::Lorem.sentence,
-      image: fixture_file_upload('bus.png', 'image/png')
+      description: Faker::Lorem.sentence
     }
   end
 
@@ -190,14 +186,12 @@ describe 'Manager::Orders', type: :request do
                 schema: {
                   type: :object,
                   properties: {
-                    'data[km]': { type: :integer },
-                    'data[problem_id]': { type: :integer },
-                    'data[vehicle_id]': { type: :integer },
                     'data[car_mecanic_id]': { type: :integer },
                     'data[status_id]': { type: :integer },
-                    'data[image]': { type: :binary }
+                    'data[solution_id]': { type: :integer },
+                    'data[description]': { type: :string }
                   },
-                  required: ['data[km]', 'data[problem_id]', 'data[vehicle_id]', 'data[status_id]']
+                  required: ['data[status_id]']
                 }
 
       response '204', 'Not Content' do

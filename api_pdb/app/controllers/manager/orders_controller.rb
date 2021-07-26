@@ -8,7 +8,7 @@ module Manager
     def edit
       solutions = Solution.select(:id, :description).where(problem: @order.problem)
       statuses = Orders::StatusFlow.call(current_status: @order.status_id)
-      mecanics = Employee.select(:id, :name).joins(:occupation).where('occupations.type_occupation = 1')
+      mecanics = Employee.select(:id, :name).joins(:occupation).where('occupations.type_occupation = 3')
 
       json_response(
         {
@@ -32,7 +32,7 @@ module Manager
     end
 
     def show
-      json_response OrderBlueprint.render(@order, root: :data, view: :show, meta: { links: links(@order) })
+      json_response OrderBlueprint.render(@order, root: :data, view: :show_manager, meta: { links: links(@order) })
     end
 
     def update
@@ -64,13 +64,10 @@ module Manager
 
     def order_params_update
       params.require(:data).permit(
-        :km,
-        :vehicle_id,
-        :problem_id,
         :status_id,
         :description,
         :car_mecanic_id,
-        :image
+        :solution_id
       )
     end
   end
