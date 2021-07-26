@@ -107,7 +107,7 @@ problem19 = Problem.create(description: 'Amortecedor', priority: :high, category
 problem20 = Problem.create(description: 'Feixo de molas', priority: :normal, category: suspension)
 problem21 = Problem.create(description: 'Barra estabilizadora', priority: :high, category: suspension)
 
-Solution.create(description: 'Completar o óleo	Alta', problem: problem1)
+Solution.create(description: 'Completar o óleo', problem: problem1)
 Solution.create(description: 'Verificar injeção', problem: problem2)
 Solution.create(description: 'Completar água', problem: problem3)
 Solution.create(description: 'Verificar nível do óleo', problem: problem4)
