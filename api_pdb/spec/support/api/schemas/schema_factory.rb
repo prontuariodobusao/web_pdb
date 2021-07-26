@@ -1,4 +1,8 @@
 module SchemaFactory
+  def resources_response_schema
+    ResourcesResponse.new
+  end
+  
   def order_response_schema
     OrderResponse.new
   end

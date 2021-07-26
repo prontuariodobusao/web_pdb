@@ -8,19 +8,10 @@ describe 'Manager::Orders', type: :request do
   let(:mecanic) { create(:mecanic_employee) }
   let(:solution) { create(:solution) }
 
-  let(:resource) { create(:order, :with_attachment_png, reference: Faker::Alphanumeric.alphanumeric(number: 10)) }
-
-  let(:valid_order_attributes_create) do
-    {
-      km: 1234,
-      problem_id: problem.id,
-      vehicle_id: vehicle.id,
-      status_id: status.id,
-      description: Faker::Lorem.sentence,
-      image: fixture_file_upload('bus.png', 'image/png')
-    }
+  let(:resource) do
+    create(:order, :with_attachment_png, reference: Faker::Alphanumeric.alphanumeric(number: 10))
   end
-  
+
   let(:valid_order_attributes_update) do
     {
       km: 1234,
@@ -44,76 +35,68 @@ describe 'Manager::Orders', type: :request do
     }
   end
 
-  path '/manager/orders' do
-    post 'API para cradastro de ordens de serviços' do
+  path '/manager/orders/{id}/edit' do
+    get 'API para obter lista de rescursos para edição do gerente' do
       tags 'Gerente Ordens de Serviço'
-      description 'Rota para cadastro, é necessário cadastrar um usuário para utilizar este recurso'
-      consumes 'multipart/form-data'
+      description 'Rota obter lista de recursos'
       produces 'application/json'
-
       security [Authorization: []]
+      parameter name: :id, in: :path, type: :string
 
-      parameter name: :data,
-                in: :formData,
-                schema: {
-                  type: :object,
-                  properties: {
-                    'data[km]': { type: :integer },
-                    'data[problem_id]': { type: :integer },
-                    'data[vehicle_id]': { type: :integer },
-                    'data[status_id]': { type: :integer },
-                    'data[image]': { type: :binary }
-                  },
-                  required: ['data[km]', 'data[problem_id]', 'data[vehicle_id]', 'data[status_id]']
-                }
+      response '200', 'Success' do
+        before do |example|
+          create_list(:status, 4)
+          status1 = Status.find(1)
+          @order = create(:order, :with_attachment_png, reference: Faker::Alphanumeric.alphanumeric(number: 10), status_id: status1.id)
+          create_list(:solution, 5, problem_id: @order.problem.id)
+          problem = create(:problem)
+          create_list(:solution, 3, problem_id: problem.id)
+          create_list(:mecanic_employee, 5)
+          submit_request(example.metadata)
+        end
 
-      response '201', 'Created' do
-        let(:data) { valid_order_attributes_create }
         let(:Authorization) { authenticate_manager_user[:Authorization] }
+        let(:id) { @order.id }
+        schema resources_response_schema.schema.as_json
 
-        schema order_response_schema.schema.as_json
-
-        it_behaves_like 'a json endpoint response', 201 do
-          let(:data) { valid_order_attributes_create }
-          let(:Authorization) { authenticate_manager_user[:Authorization] }
-          let(:expected_response_schema) { order_response_schema }
+        context 'response body' do
+          let(:json_response) { JSON.parse(response.body) }
+      
+          it 'matches the documented response schema' do  |_example|
+            errors = resources_response_schema.schema.fully_validate(json_response)
+            puts json_response if errors.count.positive? # for debugging
+            expect(errors).to be_empty
+          end
         end
       end
 
       response '403', 'Forbidden' do
         let(:Authorization) { authenticate_header[:Authorization] }
-        let(:data) { valid_order_attributes_create }
+        let(:id) { resource.id }
         run_test!
       end
 
       response '406', 'Not Acceptable' do
-        let(:Authorization) { authenticate_manager_user[:Authorization] }
-        let(:data) { valid_order_attributes_create }
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
+        let(:id) { resource.id }
         let(:Accept) { 'application/foo' }
         run_test!
       end
 
-      response '415', 'Unsupported Media Type' do
+      response '404', 'Not Found' do
         let(:Authorization) { authenticate_manager_user[:Authorization] }
-        let(:data) { valid_order_attributes_create }
-        let(:'Content-Type') { 'application/foo' }
-        run_test!
-      end
+        let(:id) { 30 }
+        schema new_errors_response.schema.as_json
 
-      response '422', 'Unprocessable Entity' do
-        let(:Authorization) { authenticate_manager_user[:Authorization] }
-        let(:data) { invalid_order_attributes }
-        schema new_errors_validations_response.schema.as_json
-        it_behaves_like 'a error json endpoint', 422 do
-          let(:expected_response_schema) { new_errors_validations_response }
-          let(:error_title) { 'Validations Failed' }
+        it_behaves_like 'a error json endpoint', 404 do
+          let(:expected_response_schema) { new_errors_response }
         end
       end
     end
   end
 
   path '/manager/orders/{id}' do
-    get 'API para visualizar order de serviço' do
+    get 'API para visualizar orden de serviço' do
       tags 'Gerente Ordens de Serviço'
       description 'Rota para visualizar'
       produces 'application/json'

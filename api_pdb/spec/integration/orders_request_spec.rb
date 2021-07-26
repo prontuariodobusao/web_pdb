@@ -14,6 +14,7 @@ describe 'Orders', type: :request do
       problem_id: problem.id,
       vehicle_id: vehicle.id,
       status_id: status.id,
+      description: Faker::Lorem.sentence,
       image: fixture_file_upload('bus.png', 'image/png')
     }
   end
@@ -46,6 +47,7 @@ describe 'Orders', type: :request do
                     'data[problem_id]': { type: :integer },
                     'data[vehicle_id]': { type: :integer },
                     'data[status_id]': { type: :integer },
+                    'data[description]': { type: :string },
                     'data[image]': { type: :binary }
                   },
                   required: ['data[km]', 'data[problem_id]', 'data[vehicle_id]', 'data[status_id]']

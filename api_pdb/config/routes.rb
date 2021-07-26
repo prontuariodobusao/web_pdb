@@ -14,8 +14,10 @@ Rails.application.routes.draw do
   end
 
   namespace :manager do
-    resources :orders
+    resources :orders, except: %i[destroy create] do
+      get 'edit', on: :member
+    end
   end
 
-  resources :orders
+  resources :orders, except: %i[destroy update]
 end

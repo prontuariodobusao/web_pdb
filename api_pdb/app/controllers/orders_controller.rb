@@ -50,6 +50,7 @@ class OrdersController < ApplicationController
       :vehicle_id,
       :problem_id,
       :status_id,
+      :description,
       :image
     )
   end
