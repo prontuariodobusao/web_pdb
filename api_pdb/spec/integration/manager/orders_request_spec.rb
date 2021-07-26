@@ -5,6 +5,7 @@ describe 'Manager::Orders', type: :request do
   let(:status) { create(:status) }
   let(:vehicle) { create(:vehicle) }
   let(:problem) { create(:problem) }
+  let(:mecanic) { create(:mecanic_employee) }
 
   let(:resource) { create(:order, :with_attachment_png, reference: Faker::Alphanumeric.alphanumeric(number: 10)) }
 
@@ -13,7 +14,9 @@ describe 'Manager::Orders', type: :request do
       km: 1234,
       problem_id: problem.id,
       vehicle_id: vehicle.id,
+      car_mecanic: mecanic.id,
       status_id: status.id,
+      description: Faker::Lorem.sentence,
       image: fixture_file_upload('bus.png', 'image/png')
     }
   end
@@ -69,7 +72,7 @@ describe 'Manager::Orders', type: :request do
         let(:data) { valid_order_attributes }
         run_test!
       end
-      
+
       response '406', 'Not Acceptable' do
         let(:Authorization) { authenticate_manager_user[:Authorization] }
         let(:data) { valid_order_attributes }
@@ -126,12 +129,12 @@ describe 'Manager::Orders', type: :request do
         let(:Accept) { 'application/foo' }
         run_test!
       end
-  
+
       response '404', 'Not Found' do
         let(:Authorization) { authenticate_manager_user[:Authorization] }
         let(:id) { 30 }
         schema new_errors_response.schema.as_json
-  
+
         it_behaves_like 'a error json endpoint', 404 do
           let(:expected_response_schema) { new_errors_response }
         end
@@ -173,6 +176,62 @@ describe 'Manager::Orders', type: :request do
 
       response '403', 'Forbidden' do
         let(:Authorization) { authenticate_header[:Authorization] }
+        run_test!
+      end
+    end
+  end
+
+  path '/manager/orders/{id}' do
+    put 'API para atualizar ordens de servio pelo Gerente' do
+      tags 'Gerente Ordens de Serviço'
+      description 'Rota para atualizar, essa rota pode ser executada por usuário gerente'
+      security [Authorization: []]
+      consumes 'multipart/form-data'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :string
+      parameter name: :data,
+                in: :formData,
+                schema: {
+                  type: :object,
+                  properties: {
+                    'data[km]': { type: :integer },
+                    'data[problem_id]': { type: :integer },
+                    'data[vehicle_id]': { type: :integer },
+                    'data[car_mecanic_id]': { type: :integer },
+                    'data[status_id]': { type: :integer },
+                    'data[image]': { type: :binary }
+                  },
+                  required: ['data[km]', 'data[problem_id]', 'data[vehicle_id]', 'data[status_id]']
+                }
+
+      response '204', 'Not Content' do
+        let(:id) { resource.id }
+        let(:data) { valid_order_attributes }
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
+
+        run_test!
+      end
+
+      response '403', 'Forbidden' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_header[:Authorization] }
+        let(:data) { valid_order_attributes }
+        run_test!
+      end
+
+      response '406', 'Not Acceptable' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
+        let(:data) { valid_order_attributes }
+        let(:Accept) { 'application/foo' }
+        run_test!
+      end
+
+      response '415', 'Unsupported Media Type' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
+        let(:data) { valid_order_attributes }
+        let(:'Content-Type') { 'application/foo' }
         run_test!
       end
     end

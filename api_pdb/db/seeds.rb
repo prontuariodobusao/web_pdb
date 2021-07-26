@@ -66,17 +66,17 @@ employees.each do |employee|
   User.create(username: employee.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee)
 end
 
-user1 = User.create(username: employee1.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee1)
-user2 = User.create(username: employee2.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee2)
-user3 = User.create(username: employee3.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee3)
-user4 = User.create(username: employee21.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee21)
-user5 = User.create(username: employee22.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee22)
-user6 = User.create(username: employee23.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee23)
-user7 = User.create(username: employee24.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee24)
-user8 = User.create(username: employee25.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee25)
-user9 = User.create(username: employee26.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee26)
-user10 = User.create(username: employee27.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee27)
-user11 = User.create(username: employee28.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee28)
+User.create(username: employee1.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee1)
+User.create(username: employee2.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee2)
+User.create(username: employee3.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee3)
+User.create(username: employee21.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee21)
+User.create(username: employee22.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee22)
+User.create(username: employee23.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee23)
+User.create(username: employee24.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee24)
+User.create(username: employee25.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee25)
+User.create(username: employee26.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee26)
+User.create(username: employee27.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee27)
+User.create(username: employee28.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee28)
 
 puts 'Create Categories...'
 enginer = Category.create(name: 'MOTOR')
@@ -108,9 +108,9 @@ Problem.create(description: 'Feixo de molas', solution: 'Bater molas ou colocar 
 Problem.create(description: 'Barra estabilizadora', solution: 'Verificar buchas e coxins', priority: :high, category: suspension)
 
 puts 'Create Statuses...'
-status1 = Status.create(name: 'Entrada', color: :yellow)
+Status.create(name: 'Entrada', color: :yellow)
 Status.create(name: 'Manutenção', color: :red)
-status3 = Status.create(name: 'Finalizada', color: :green)
+Status.create(name: 'Finalizada', color: :green)
 
 puts 'Create Car lines...'
 line1 = CarLine.create(name: 'A 708 Porto Alegre', line_type: :feeder)
@@ -126,16 +126,15 @@ line9 = CarLine.create(name: 'T 803 Parque Piauí Pedro Freitas', line_type: :st
 line10 = CarLine.create(name: 'T 804 Parque Piauí Miguel Rosa Shopping', line_type: :stem)
 line11 = CarLine.create(name: 'T 805 Bela Vista Barão', line_type: :stem)
 line12 = CarLine.create(name: 'T 806 Bela Vista Shopping', line_type: :stem)
-
 reserve = CarLine.create(name: 'Reserva', line_type: :reserve)
 
 puts 'Create Vehicles...'
-vehicle1 = Vehicle.create(car_number: '04383', car_line: line1)
-vehicle2 = Vehicle.create(car_number: '04384', car_line: line2)
-vehicle3 = Vehicle.create(car_number: '04385', car_line: line3)
-vehicle4 = Vehicle.create(car_number: '04386', car_line: line4)
-vehicle5 = Vehicle.create(car_number: '04387', car_line: line5)
-vehicle6 = Vehicle.create(car_number: '04388', car_line: line6)
+Vehicle.create(car_number: '04383', car_line: line1)
+Vehicle.create(car_number: '04384', car_line: line2)
+Vehicle.create(car_number: '04385', car_line: line3)
+Vehicle.create(car_number: '04386', car_line: line4)
+Vehicle.create(car_number: '04387', car_line: line5)
+Vehicle.create(car_number: '04388', car_line: line6)
 
 Vehicle.create(car_number: '04389', car_line: line7)
 Vehicle.create(car_number: '04390', car_line: line8)
@@ -148,17 +147,3 @@ Vehicle.create(car_number: '04360', car_line: reserve)
 Vehicle.create(car_number: '04361', car_line: reserve)
 Vehicle.create(car_number: '04362', car_line: reserve)
 
-puts 'Create Orders...'
-Order.create(km: '1890', reference: 'OS12394/2021', problem: problem6, vehicle: vehicle6, status: status1, owner: user4)
-
-Order.create(km: '2190', reference: 'OS12334/2021', state: :closed, problem: problem1, vehicle: vehicle1, status: status3, owner: user1)
-Order.create(km: '2340', reference: 'OS12374/2021', state: :closed, problem: problem2, vehicle: vehicle2, status: status3, owner: user2)
-Order.create(km: '2190', reference: 'OS12384/2021', state: :closed, problem: problem3, vehicle: vehicle3, status: status3, owner: user3)
-Order.create(km: '2800', reference: 'OS12324/2021', state: :closed, problem: problem4, vehicle: vehicle4, status: status3, owner: user4)
-Order.create(km: '2000', reference: 'OS12354/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user5)
-Order.create(km: '2000', reference: 'OS12554/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user6)
-Order.create(km: '2000', reference: 'OS12654/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user7)
-Order.create(km: '2000', reference: 'OS12754/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user8)
-Order.create(km: '2000', reference: 'OS12854/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user9)
-Order.create(km: '2000', reference: 'OS12954/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user10)
-Order.create(km: '2000', reference: 'OS12154/2021', state: :closed, problem: problem5, vehicle: vehicle5, status: status3, owner: user11)

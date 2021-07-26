@@ -1,9 +1,9 @@
 module Manager
   class OrdersController < ApplicationController
-    skip_before_action :ensure_json_content_type, only: :create
+    skip_before_action :ensure_json_content_type, only: %i[create update]
     before_action :autorize_manager
-    before_action :set_order, only: :show
-    before_action :ensure_form_data_content_type, only: :create
+    before_action :set_order, only: %i[show update]
+    before_action :ensure_form_data_content_type, only: %i[create update]
 
     def index
       orders_openeds = Order.to_managers(:opened).order('problems.priority DESC')
@@ -22,13 +22,18 @@ module Manager
     end
 
     def create
-      order = Orders::CreateOrder.call(user: @current_user, order: Order.new(order_params)).data[:order]
+      order = Orders::CreateOrder.call(user: @current_user, order: Order.new(order_params_create)).data[:order]
 
       json_response_create(OrderBlueprint.render(order, root: :data, view: :show, meta: { links: links(order) }),
                            order_path(order))
     end
 
-    def update; end
+    def update
+      @order.manager = current_user.employee
+      @order.update!(order_params_update)
+
+      head :no_content
+    end
 
     private
 
@@ -50,14 +55,25 @@ module Manager
       @order = Order.find(params[:id])
     end
 
-    def order_params
+    def order_params_create
+      params.require(:data).permit(
+        :km,
+        :vehicle_id,
+        :status_id,
+        :problem_id,
+        :description,
+        :image
+      )
+    end
+
+    def order_params_update
       params.require(:data).permit(
         :km,
         :vehicle_id,
         :problem_id,
         :status_id,
         :description,
-        :mecanic_id,
+        :car_mecanic_id,
         :image
       )
     end
