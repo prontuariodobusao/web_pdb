@@ -305,24 +305,76 @@ paths:
                     properties:
                       id:
                         type: integer
-                      car_number:
-                        type: string
-                      category_id:
-                        type: integer
-                      category_name:
-                        type: string
                       created_at:
-                        type: string
-                      problem:
                         type: string
                       reference:
                         type: string
+                      description:
+                        type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                      solution:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                      manager:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                      car_mecanic:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
                       status:
-                        type: string
-                      status_id:
-                        type: integer
-                      employee_name:
-                        type: string
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          car_number:
+                            type: string
                   meta:
                     type: object
                     properties:
@@ -371,6 +423,73 @@ paths:
       responses:
         '204':
           description: Not Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      created_at:
+                        type: string
+                      reference:
+                        type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          car_number:
+                            type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                          image_url:
+                            type: string
         '403':
           description: Forbidden
         '406':
@@ -405,22 +524,15 @@ paths:
             schema:
               type: object
               properties:
-                data[km]:
-                  type: integer
-                data[problem_id]:
-                  type: integer
-                data[vehicle_id]:
-                  type: integer
                 data[car_mecanic_id]:
                   type: integer
                 data[status_id]:
                   type: integer
-                data[image]:
-                  type: binary
+                data[solution_id]:
+                  type: integer
+                data[description]:
+                  type: string
               required:
-              - data[km]
-              - data[problem_id]
-              - data[vehicle_id]
               - data[status_id]
   "/manager/orders":
     get:
@@ -535,24 +647,53 @@ paths:
                     properties:
                       id:
                         type: integer
-                      car_number:
-                        type: string
-                      category_id:
-                        type: integer
-                      category_name:
-                        type: string
                       created_at:
-                        type: string
-                      problem:
                         type: string
                       reference:
                         type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
                       status:
-                        type: string
-                      status_id:
-                        type: integer
-                      employee_name:
-                        type: string
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          car_number:
+                            type: string
                   meta:
                     type: object
                     properties:
@@ -728,24 +869,53 @@ paths:
                     properties:
                       id:
                         type: integer
-                      car_number:
-                        type: string
-                      category_id:
-                        type: integer
-                      category_name:
-                        type: string
                       created_at:
-                        type: string
-                      problem:
                         type: string
                       reference:
                         type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
                       status:
-                        type: string
-                      status_id:
-                        type: integer
-                      employee_name:
-                        type: string
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          car_number:
+                            type: string
                   meta:
                     type: object
                     properties:

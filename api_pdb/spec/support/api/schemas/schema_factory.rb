@@ -7,6 +7,10 @@ module SchemaFactory
     OrderResponse.new
   end
   
+  def order_manager_response_schema
+    OrderManagerResponse.new
+  end
+  
   def orders_response_schema
     OrdersResponse.new
   end

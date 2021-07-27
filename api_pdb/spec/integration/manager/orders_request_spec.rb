@@ -102,10 +102,10 @@ describe 'Manager::Orders', type: :request do
       response '200', 'Success' do
         let(:Authorization) { authenticate_manager_user[:Authorization] }
         let(:id) { resource.id }
-        schema order_response_schema.schema.as_json
+        schema order_manager_response_schema.schema.as_json
 
         it_behaves_like 'a json endpoint response', 200 do
-          let(:expected_response_schema) { order_response_schema }
+          let(:expected_response_schema) { order_manager_response_schema }
         end
       end
 
@@ -198,6 +198,7 @@ describe 'Manager::Orders', type: :request do
         let(:id) { resource.id }
         let(:data) { valid_order_attributes_update }
         let(:Authorization) { authenticate_manager_user[:Authorization] }
+        # schema order_response_schema.schema.as_json
 
         run_test!
       end
