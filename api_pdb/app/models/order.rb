@@ -22,7 +22,8 @@ class Order < ApplicationRecord
   belongs_to :car_mecanic, class_name: 'Employee', optional: true
   delegate :name, to: :manager, prefix: true
 
-  validates_presence_of :km, :reference
+  validates_presence_of :km
+  validates :reference, uniqueness: true, presence: true
 
   scope :by_user, lambda { |current_user, state|
     select(
@@ -47,5 +48,17 @@ class Order < ApplicationRecord
   def image_url
     # get url path
     Rails.application.routes.url_helpers.url_for(image) if image.attached?
+  end
+
+  def self.find_last_number_by_year
+    result = Order
+             .select(:reference)
+             .where('orders.reference ILIKE ?', "%#{Date.current.strftime('%Y')}%")
+             .order(reference: :desc)
+             .take
+
+    return result.reference unless result.nil?
+
+    nil
   end
 end

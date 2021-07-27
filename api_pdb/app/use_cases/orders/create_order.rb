@@ -16,7 +16,7 @@ module Orders
     attr_accessor :user, :order
 
     def create
-      order.reference = "OS#{(0..4).map { rand(1..5) }.join}/#{Date.current.strftime('%Y')}"
+      order.reference = Orders::NextNumber.call
       order.owner = user
 
       order.save!

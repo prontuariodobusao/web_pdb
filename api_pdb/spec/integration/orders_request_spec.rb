@@ -128,7 +128,11 @@ describe 'Orders', type: :request do
           before do |example|
             user = create(:user)
             response = Auth::Authenticate.call(username: user.username, password: user.password)
-            create_list(:order, 10, owner: user, reference: Faker::Alphanumeric.alphanumeric(number: 10))
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10))
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10))
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10))
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10))
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10))
             @auth_token = response.data[:token]
             submit_request(example.metadata)
           end
