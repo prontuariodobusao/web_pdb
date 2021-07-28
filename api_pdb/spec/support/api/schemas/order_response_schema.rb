@@ -12,6 +12,7 @@ class OrderResponse
           boolean :confirmation
           string :employee_name
           string :username
+          string :occupation
         end
         object :problem do
           integer :id
