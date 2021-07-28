@@ -36,9 +36,7 @@ module Manager
     end
 
     def update
-      @order.manager = current_user.employee
-      @order.update!(order_params_update)
-
+      Orders::UpdateOrder.call(user: current_user, order: @order, order_params: order_params_update)
       head :no_content
     end
 
