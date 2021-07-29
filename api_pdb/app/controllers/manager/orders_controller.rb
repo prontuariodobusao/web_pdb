@@ -20,8 +20,8 @@ module Manager
     end
 
     def index
-      orders_openeds = Order.to_managers(:opened).order('problems.priority ASC')
-      orders_closeds = Order.to_managers(:closed).order('problems.priority ASC')
+      orders_openeds = Order.to_managers(:opened).order('problems.priority ASC', reference: :desc)
+      orders_closeds = Order.to_managers(:closed).order('problems.priority ASC', reference: :desc)
 
       json_response(
         {
