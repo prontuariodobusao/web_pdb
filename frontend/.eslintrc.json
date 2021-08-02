@@ -36,8 +36,7 @@
     "@typescript-eslint/return-await": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "import/prefer-default-export": "off",
-    "jsx-quotes": ["error", "prefer-single"]
+    "import/prefer-default-export": "off"
   },
   "settings": {
     "import/resolver": {

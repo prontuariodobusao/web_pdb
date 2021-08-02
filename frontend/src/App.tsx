@@ -1,7 +1,8 @@
 import React from 'react'
+import './assets/scss/styles.scss'
 
 const App: React.FC = () => {
-  return <div>Pagina inicial</div>
+  return <div className="container">Pagina inicial</div>
 }
 
 export default App
