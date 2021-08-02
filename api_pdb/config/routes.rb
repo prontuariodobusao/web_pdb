@@ -13,5 +13,11 @@ Rails.application.routes.draw do
     get 'problems', on: :member
   end
 
-  resources :orders
+  namespace :manager do
+    resources :orders, except: %i[destroy create] do
+      get 'edit', on: :member
+    end
+  end
+
+  resources :orders, except: %i[destroy update]
 end

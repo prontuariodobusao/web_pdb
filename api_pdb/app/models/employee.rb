@@ -3,5 +3,7 @@ class Employee < ApplicationRecord
   validates :identity, uniqueness: true, presence: true
 
   belongs_to :occupation
+  delegate :type_occupation, to: :occupation, prefix: true
+
   has_one :user
 end

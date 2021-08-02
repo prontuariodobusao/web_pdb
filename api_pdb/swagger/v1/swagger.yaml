@@ -205,6 +205,425 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/confirmation_params"
+  "/manager/orders/{id}/edit":
+    get:
+      summary: API para obter lista de rescursos para edição do gerente
+      tags:
+      - Gerente Ordens de Serviço
+      description: Rota obter lista de recursos
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  solutions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        description:
+                          type: string
+                  statuses:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        color:
+                          type: string
+                  mecanics:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+        '403':
+          description: Forbidden
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+  "/manager/orders/{id}":
+    get:
+      summary: API para visualizar orden de serviço
+      tags:
+      - Gerente Ordens de Serviço
+      description: Rota para visualizar
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      created_at:
+                        type: string
+                      reference:
+                        type: string
+                      description:
+                        type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                      solution:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                      manager:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                      car_mecanic:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          car_number:
+                            type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                          image_url:
+                            type: string
+        '403':
+          description: Forbidden
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+    put:
+      summary: API para atualizar ordens de servio pelo Gerente
+      tags:
+      - Gerente Ordens de Serviço
+      description: Rota para atualizar, essa rota pode ser executada por usuário gerente
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Not Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      created_at:
+                        type: string
+                      reference:
+                        type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          car_number:
+                            type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                          image_url:
+                            type: string
+        '403':
+          description: Forbidden
+        '406':
+          description: Not Acceptable
+        '415':
+          description: Unsupported Media Type
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  status:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          type: string
+                        field:
+                          type: string
+                        detail:
+                          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                data[car_mecanic_id]:
+                  type: integer
+                data[status_id]:
+                  type: integer
+                data[solution_id]:
+                  type: integer
+                data[description]:
+                  type: string
+              required:
+              - data[status_id]
+  "/manager/orders":
+    get:
+      summary: Obter lista ordens de serviço por usuário motorista, listando ordens
+        abertas e fechadas
+      tags:
+      - Gerente Ordens de Serviço
+      description: Rota para lista de OS por usuário, essa pode ser executada por
+        usuários autenticados
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  openeds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category_id:
+                          type: integer
+                        status_id:
+                          type: integer
+                        created_at:
+                          type: string
+                        reference:
+                          type: string
+                        status:
+                          type: string
+                  closeds:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        category_id:
+                          type: integer
+                        status_id:
+                          type: integer
+                        created_at:
+                          type: string
+                        reference:
+                          type: string
+                        status:
+                          type: string
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
   "/orders":
     post:
       summary: API para cradastro de ordens de serviços
@@ -228,22 +647,53 @@ paths:
                     properties:
                       id:
                         type: integer
-                      car_number:
-                        type: string
-                      category_id:
-                        type: integer
-                      category_name:
-                        type: string
                       created_at:
-                        type: string
-                      problem:
                         type: string
                       reference:
                         type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
                       status:
-                        type: string
-                      employee_name:
-                        type: string
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          car_number:
+                            type: string
                   meta:
                     type: object
                     properties:
@@ -294,6 +744,8 @@ paths:
                   type: integer
                 data[status_id]:
                   type: integer
+                data[description]:
+                  type: string
                 data[image]:
                   type: binary
               required:
@@ -327,6 +779,8 @@ paths:
                           type: integer
                         category_id:
                           type: integer
+                        status_id:
+                          type: integer
                         created_at:
                           type: string
                         reference:
@@ -341,6 +795,8 @@ paths:
                         id:
                           type: integer
                         category_id:
+                          type: integer
+                        status_id:
                           type: integer
                         created_at:
                           type: string
@@ -413,22 +869,53 @@ paths:
                     properties:
                       id:
                         type: integer
-                      car_number:
-                        type: string
-                      category_id:
-                        type: integer
-                      category_name:
-                        type: string
                       created_at:
-                        type: string
-                      problem:
                         type: string
                       reference:
                         type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
                       status:
-                        type: string
-                      employee_name:
-                        type: string
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          car_number:
+                            type: string
                   meta:
                     type: object
                     properties:
@@ -555,7 +1042,7 @@ servers:
   variables:
     defaultHost:
       default: localhost:3003
-- url: http://heroku-pdb.com
+- url: https://apipdb.herokuapp.com
   variables:
     defaultHost:
-      default: heroku-pdb.com
+      default: apipdb.herokuapp.com

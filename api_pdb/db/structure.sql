@@ -222,7 +222,8 @@ ALTER SEQUENCE public.employees_id_seq OWNED BY public.employees.id;
 
 CREATE TABLE public.occupations (
     id bigint NOT NULL,
-    name character varying NOT NULL
+    name character varying NOT NULL,
+    type_occupation integer
 );
 
 
@@ -262,7 +263,8 @@ CREATE TABLE public.orders (
     manager_id bigint,
     car_mecanic_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    solution_id bigint
 );
 
 
@@ -324,6 +326,36 @@ ALTER SEQUENCE public.problems_id_seq OWNED BY public.problems.id;
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
+
+
+--
+-- Name: solutions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.solutions (
+    id bigint NOT NULL,
+    description character varying,
+    problem_id bigint NOT NULL
+);
+
+
+--
+-- Name: solutions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.solutions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: solutions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.solutions_id_seq OWNED BY public.solutions.id;
 
 
 --
@@ -485,6 +517,13 @@ ALTER TABLE ONLY public.problems ALTER COLUMN id SET DEFAULT nextval('public.pro
 
 
 --
+-- Name: solutions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.solutions ALTER COLUMN id SET DEFAULT nextval('public.solutions_id_seq'::regclass);
+
+
+--
 -- Name: statuses id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -594,6 +633,14 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: solutions solutions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.solutions
+    ADD CONSTRAINT solutions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: statuses statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -681,6 +728,13 @@ CREATE INDEX index_orders_on_problem_id ON public.orders USING btree (problem_id
 
 
 --
+-- Name: index_orders_on_solution_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_orders_on_solution_id ON public.orders USING btree (solution_id);
+
+
+--
 -- Name: index_orders_on_status_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -699,6 +753,13 @@ CREATE INDEX index_orders_on_vehicle_id ON public.orders USING btree (vehicle_id
 --
 
 CREATE INDEX index_problems_on_category_id ON public.problems USING btree (category_id);
+
+
+--
+-- Name: index_solutions_on_problem_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_solutions_on_problem_id ON public.solutions USING btree (problem_id);
 
 
 --
@@ -748,11 +809,27 @@ ALTER TABLE ONLY public.orders
 
 
 --
+-- Name: orders fk_rails_aecb0726c1; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders
+    ADD CONSTRAINT fk_rails_aecb0726c1 FOREIGN KEY (solution_id) REFERENCES public.solutions(id);
+
+
+--
 -- Name: orders fk_rails_aee0f20b8c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.orders
     ADD CONSTRAINT fk_rails_aee0f20b8c FOREIGN KEY (vehicle_id) REFERENCES public.vehicles(id);
+
+
+--
+-- Name: solutions fk_rails_b967ba8f91; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.solutions
+    ADD CONSTRAINT fk_rails_b967ba8f91 FOREIGN KEY (problem_id) REFERENCES public.problems(id);
 
 
 --
@@ -828,6 +905,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210707235934'),
 ('20210708000020'),
 ('20210708142449'),
-('20210708151405');
+('20210708151405'),
+('20210723234734'),
+('20210726121723'),
+('20210726122218');
 
 

@@ -4,8 +4,8 @@ class OrdersController < ApplicationController
   before_action :ensure_form_data_content_type, only: :create
 
   def index
-    orders_openeds = Order.openeds(@current_user)
-    orders_closeds = Order.closeds(@current_user)
+    orders_openeds = Order.by_user(@current_user, :opened)
+    orders_closeds = Order.by_user(@current_user, :closed)
 
     json_response(
       {
@@ -50,6 +50,7 @@ class OrdersController < ApplicationController
       :vehicle_id,
       :problem_id,
       :status_id,
+      :description,
       :image
     )
   end

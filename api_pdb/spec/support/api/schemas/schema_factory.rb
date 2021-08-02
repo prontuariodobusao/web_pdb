@@ -1,6 +1,14 @@
 module SchemaFactory
+  def resources_response_schema
+    ResourcesResponse.new
+  end
+  
   def order_response_schema
     OrderResponse.new
+  end
+  
+  def order_manager_response_schema
+    OrderManagerResponse.new
   end
   
   def orders_response_schema

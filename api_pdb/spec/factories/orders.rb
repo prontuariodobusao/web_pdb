@@ -2,13 +2,14 @@ FactoryBot.define do
   factory :order do
     km { Faker::Number.within(range: 1000..5000) }
     description { Faker::Lorem.sentence }
-    state { Faker::Number.within(range: 0..1) }
+    state { 0 }
     association :problem
+    association :solution
     association :vehicle
     association :status
     association :owner, factory: :user
-    association :manager, factory: :employee
-    association :car_mecanic, factory: :employee
+    association :manager, factory: :manager_employee
+    association :car_mecanic, factory: :mecanic_employee
 
     trait :with_attachment_png do
       after :create do |order|

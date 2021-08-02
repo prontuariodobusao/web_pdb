@@ -7,6 +7,7 @@ class UserResponse
         integer :id
         string :username
         string :employee_name
+        string :occupation
         boolean :confirmation
       end
     end

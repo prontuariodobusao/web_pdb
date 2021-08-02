@@ -1,4 +1,4 @@
-class OrderResponse
+class OrderManagerResponse
   include JSON::SchemaBuilder
 
   def schema
@@ -7,6 +7,7 @@ class OrderResponse
         integer :id
         string :created_at
         string :reference
+        string :description
         object :owner do
           integer :id
           boolean :confirmation
@@ -22,6 +23,18 @@ class OrderResponse
             integer :id
             string :name
           end
+        end
+        object :solution do
+          integer :id
+          string :description
+        end
+        object :manager do
+          integer :id
+          string :name
+        end
+        object :car_mecanic do
+          integer :id
+          string :name
         end
         object :status do
           integer :id

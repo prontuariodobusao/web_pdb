@@ -11,14 +11,18 @@ class OrderBlueprint < Blueprinter::Base
   end
 
   view :show do
-    include_view :list
-    field :problem_description, name: :problem
-    field :vehicle_car_number, name: :car_number
-    field :category_name do |order|
-      order.problem.category_name
-    end
-    field :employee_name do |order|
-      order.owner.employee_name
-    end
+    field :created_at, datetime_format: '%d/%m/%Y'
+    association :vehicle, blueprint: VehicleBlueprint
+    association :status, blueprint: StatusBlueprint
+    association :problem, blueprint: ProblemBlueprint
+    association :owner, blueprint: UserBlueprint
+  end
+
+  view :show_manager do
+    include_view :show
+    field :description
+    association :solution, blueprint: SolutionBlueprint
+    association :manager, blueprint: EmployeeBlueprint
+    association :car_mecanic, blueprint: EmployeeBlueprint
   end
 end
