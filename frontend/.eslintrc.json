@@ -4,7 +4,6 @@
     "es2021": true
   },
   "extends": [
-    "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
@@ -19,7 +18,26 @@
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
-    "import/no-unresolved": "error"
+    "prettier/prettier": [
+      "error",
+      {
+        "bracketSpacing": false,
+        "jsxBracketSameLine": true,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "arrowParens": "avoid",
+        "semi": false
+      }
+    ],
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/comma-spacing": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/return-await": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "import/prefer-default-export": "off",
+    "jsx-quotes": ["error", "prefer-single"]
   },
   "settings": {
     "import/resolver": {
