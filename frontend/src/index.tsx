@@ -2,11 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Routes from './main/routes/routes'
 import reportWebVitals from './reportWebVitals'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import {ConfigProvider} from 'presentation/contexts/ConfigContext'
+import 'presentation/styles/index.scss'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Routes />
+    <ConfigProvider>
+      <Routes />
+    </ConfigProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 )
