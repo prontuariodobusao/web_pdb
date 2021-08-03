@@ -52,6 +52,7 @@ const NavBar: React.FC = () => {
       </div>
       <div className={collapseClass.join(' ')}>
         <NavLeft />
+        <NavRight />
       </div>
     </>
   )
