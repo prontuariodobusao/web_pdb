@@ -1,12 +1,12 @@
 import React from 'react'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
-import App from '../../presentation/App'
+import AdminLayout from '../../presentation/layouts/AdminLayout'
 
 const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={App} />
+        <Route path="/" exact component={AdminLayout} />
       </Switch>
     </BrowserRouter>
   )
