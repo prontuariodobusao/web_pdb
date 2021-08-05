@@ -73,6 +73,21 @@ RSpec.configure do |config|
                 }
               }
             }
+          },
+          employee_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  name: { type: :string },
+                  identity: { type: :string },
+                  driver_license: { type: :integer },
+                  occupation_id: { type: :integer },
+                  admission_date: { type: :date }
+                }
+              }
+            }
           }
         }
       },
