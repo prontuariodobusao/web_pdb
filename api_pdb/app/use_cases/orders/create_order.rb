@@ -19,9 +19,11 @@ module Orders
       order.reference = Orders::NextNumber.call
       order.owner = user
 
-      order.save!
-      # create history
-      order.histories.create!(history_attr)
+      order.transaction do
+        order.save!
+        # create history
+        order.histories.create!(history_attr)
+      end
 
       success(order: order)
     end
