@@ -3,6 +3,7 @@ FactoryBot.define do
     km { Faker::Number.within(range: 1000..5000) }
     description { Faker::Lorem.sentence }
     association :status
-    association :order, factory: :order_with_reference 
+    association :order, factory: :order_with_reference
+    association :owner, factory: :user
   end
 end

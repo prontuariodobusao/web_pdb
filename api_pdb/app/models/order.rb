@@ -22,6 +22,8 @@ class Order < ApplicationRecord
   belongs_to :car_mecanic, class_name: 'Employee', optional: true
   delegate :name, to: :manager, prefix: true
 
+  has_many :histories
+
   validates_presence_of :km
   validates :reference, uniqueness: true, presence: true
 

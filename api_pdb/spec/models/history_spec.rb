@@ -8,5 +8,5 @@ RSpec.describe History, type: :model do
   it { is_expected.to validate_presence_of(:km) }
   it { is_expected.to belong_to(:status) }
   it { is_expected.to belong_to(:order) }
-  it { is_expected.to belong_to(:manager).optional }
+  it { is_expected.to belong_to(:owner) }
 end

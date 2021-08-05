@@ -226,7 +226,7 @@ CREATE TABLE public.histories (
     description character varying,
     status_id bigint NOT NULL,
     order_id bigint NOT NULL,
-    manager_id bigint,
+    owner_id bigint,
     created_at timestamp without time zone
 );
 
@@ -749,17 +749,17 @@ CREATE INDEX index_employees_on_occupation_id ON public.employees USING btree (o
 
 
 --
--- Name: index_histories_on_manager_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_histories_on_manager_id ON public.histories USING btree (manager_id);
-
-
---
 -- Name: index_histories_on_order_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_histories_on_order_id ON public.histories USING btree (order_id);
+
+
+--
+-- Name: index_histories_on_owner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_histories_on_owner_id ON public.histories USING btree (owner_id);
 
 
 --
@@ -863,11 +863,11 @@ ALTER TABLE ONLY public.orders
 
 
 --
--- Name: histories fk_rails_5bf3bc51e9; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: histories fk_rails_5d79e6fbe6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.histories
-    ADD CONSTRAINT fk_rails_5bf3bc51e9 FOREIGN KEY (manager_id) REFERENCES public.employees(id);
+    ADD CONSTRAINT fk_rails_5d79e6fbe6 FOREIGN KEY (owner_id) REFERENCES public.users(id);
 
 
 --

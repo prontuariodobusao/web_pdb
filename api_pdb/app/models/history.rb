@@ -1,7 +1,7 @@
 class History < ApplicationRecord
   belongs_to :status
   belongs_to :order
-  belongs_to :manager, class_name: 'Employee', optional: true
+  belongs_to :owner, class_name: 'User'
 
   validates_presence_of :km
 end
