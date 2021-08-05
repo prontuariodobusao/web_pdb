@@ -193,7 +193,9 @@ CREATE TABLE public.employees (
     identity character varying NOT NULL,
     occupation_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    admission_date date,
+    driver_license integer
 );
 
 
@@ -1003,6 +1005,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210723234734'),
 ('20210726121723'),
 ('20210726122218'),
-('20210805130020');
+('20210805130020'),
+('20210805171235');
 
 

@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :employee do
     name { Faker::Name.name }
     identity { Faker::Company.unique.ein }
+    driver_license { Faker::Number.within(range: 1..5) }
+    admission_date { Faker::Date.between(from: 2.days.ago, to: Date.today) }
 
     trait :driver do
       before(:create) do |employee|
