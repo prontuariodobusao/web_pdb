@@ -217,6 +217,40 @@ ALTER SEQUENCE public.employees_id_seq OWNED BY public.employees.id;
 
 
 --
+-- Name: histories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.histories (
+    id bigint NOT NULL,
+    km character varying,
+    description character varying,
+    status_id bigint NOT NULL,
+    order_id bigint NOT NULL,
+    manager_id bigint,
+    created_at timestamp without time zone
+);
+
+
+--
+-- Name: histories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.histories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: histories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.histories_id_seq OWNED BY public.histories.id;
+
+
+--
 -- Name: occupations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -496,6 +530,13 @@ ALTER TABLE ONLY public.employees ALTER COLUMN id SET DEFAULT nextval('public.em
 
 
 --
+-- Name: histories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.histories ALTER COLUMN id SET DEFAULT nextval('public.histories_id_seq'::regclass);
+
+
+--
 -- Name: occupations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -601,6 +642,14 @@ ALTER TABLE ONLY public.employees
 
 
 --
+-- Name: histories histories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.histories
+    ADD CONSTRAINT histories_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: occupations occupations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -700,6 +749,27 @@ CREATE INDEX index_employees_on_occupation_id ON public.employees USING btree (o
 
 
 --
+-- Name: index_histories_on_manager_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_histories_on_manager_id ON public.histories USING btree (manager_id);
+
+
+--
+-- Name: index_histories_on_order_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_histories_on_order_id ON public.histories USING btree (order_id);
+
+
+--
+-- Name: index_histories_on_status_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_histories_on_status_id ON public.histories USING btree (status_id);
+
+
+--
 -- Name: index_orders_on_car_mecanic_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -777,11 +847,27 @@ CREATE INDEX index_vehicles_on_car_line_id ON public.vehicles USING btree (car_l
 
 
 --
+-- Name: histories fk_rails_1a816d3ed9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.histories
+    ADD CONSTRAINT fk_rails_1a816d3ed9 FOREIGN KEY (status_id) REFERENCES public.statuses(id);
+
+
+--
 -- Name: orders fk_rails_3b809c80ac; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.orders
     ADD CONSTRAINT fk_rails_3b809c80ac FOREIGN KEY (car_mecanic_id) REFERENCES public.employees(id);
+
+
+--
+-- Name: histories fk_rails_5bf3bc51e9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.histories
+    ADD CONSTRAINT fk_rails_5bf3bc51e9 FOREIGN KEY (manager_id) REFERENCES public.employees(id);
 
 
 --
@@ -857,6 +943,14 @@ ALTER TABLE ONLY public.problems
 
 
 --
+-- Name: histories fk_rails_db8b936321; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.histories
+    ADD CONSTRAINT fk_rails_db8b936321 FOREIGN KEY (order_id) REFERENCES public.orders(id);
+
+
+--
 -- Name: employees fk_rails_e2d685ea72; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -908,6 +1002,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210708151405'),
 ('20210723234734'),
 ('20210726121723'),
-('20210726122218');
+('20210726122218'),
+('20210805130020');
 
 

@@ -30,5 +30,11 @@ FactoryBot.define do
     trait :with_attachment_to_build do
       image { Rack::Test::UploadedFile.new("#{Rails.root}/spec/support/files/bus.png", 'image/png') }
     end
+
+    trait :with_reference do
+      reference { 'OS12345/2000' }
+    end
+
+    factory :order_with_reference, traits: %i[with_reference]
   end
 end
