@@ -9,8 +9,6 @@ describe 'Manager::Employees', type: :request do
       data: {
         name: Faker::Name.name,
         identity: Faker::Company.unique.ein,
-        driver_license: Faker::Number.within(range: 1..5),
-        admission_date: Faker::Date.between(from: 2.days.ago, to: Date.today),
         occupation_id: occupation.id
       }
     }
@@ -21,8 +19,6 @@ describe 'Manager::Employees', type: :request do
       data: {
         name: nil,
         identity: nil,
-        driver_license: nil,
-        admission_date: nil,
         occupation_id: nil
       }
     }
@@ -43,13 +39,13 @@ describe 'Manager::Employees', type: :request do
 
       response '201', 'Created' do
         let(:data) { valid_employee_attributes }
-        let(:Authorization) { authenticate_header[:Authorization] }
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
 
         schema employee_response_schema.schema.as_json
 
         it_behaves_like 'a json endpoint response', 201 do
           let(:data) { valid_employee_attributes }
-          let(:Authorization) { authenticate_header[:Authorization] }
+          let(:Authorization) { authenticate_rh_user[:Authorization] }
           let(:expected_response_schema) { employee_response_schema }
         end
       end
@@ -68,8 +64,20 @@ describe 'Manager::Employees', type: :request do
         run_test!
       end
 
-      response '422', 'Unprocessable Entity' do
+      response '403', 'Forbidden - Não autorizado' do
         let(:Authorization) { authenticate_header[:Authorization] }
+        let(:data) { valid_employee_attributes }
+        run_test!
+      end
+
+      response '403', 'Forbidden - Token inválido' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}"  }
+        let(:data) { valid_employee_attributes }
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        let(:Authorization) { authenticate_rh_user[:Authorization] }
         let(:data) { invalid_employee_attributes }
         schema new_errors_validations_response.schema.as_json
         it_behaves_like 'a error json endpoint', 422 do

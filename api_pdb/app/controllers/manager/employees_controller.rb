@@ -1,6 +1,7 @@
 module Manager
   class EmployeesController < ApplicationController
     before_action :set_employee, only: %i[show update destroy]
+    before_action :autorize_manager_or_rh
 
     # GET /manager/employees
     def index
@@ -38,6 +39,10 @@ module Manager
 
     private
 
+    def autorize_manager_or_rh
+      authorize Employee, :manager_or_rh?
+    end
+
     def links(employee)
       { self: manager_employee_url(employee) }
     end
@@ -52,8 +57,6 @@ module Manager
       params.require(:data).permit(
         :name,
         :identity,
-        :driver_license,
-        :admission_date,
         :occupation_id
       )
     end

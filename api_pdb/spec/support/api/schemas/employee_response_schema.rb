@@ -7,8 +7,6 @@ class EmployeeResponse
         integer :id
         string :name
         string :identity
-        string :driver_license
-        string :admission_date
         string :occupation
       end
       object :meta do

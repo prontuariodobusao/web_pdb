@@ -82,9 +82,7 @@ RSpec.configure do |config|
                 properties: {
                   name: { type: :string },
                   identity: { type: :string },
-                  driver_license: { type: :integer },
-                  occupation_id: { type: :integer },
-                  admission_date: { type: :date }
+                  occupation_id: { type: :integer }
                 }
               }
             }
