@@ -130,4 +130,43 @@ describe 'Manager::Employees', type: :request do
       end
     end
   end
+
+  path '/manager/employees' do
+    get 'Obter lista funcionários por usuário motorista, listando ordens abertas e fechadas' do
+      tags 'Gerente funcionários'
+      description 'Rota para lista de OS por usuário, essa pode ser executada por usuários autenticados'
+      security [Authorization: []]
+      produces 'application/json'
+
+      response('200', 'Sucesso') do
+        schema employees_response_schema.schema.as_json
+
+        context 'list of employees' do
+          before do |example|
+            user = create(:user, :rh_user)
+            response = Auth::Authenticate.call(username: user.username, password: user.password)
+            create_list(:driver_employee, 5)
+            @auth_token = response.data[:token]
+            submit_request(example.metadata)
+          end
+
+          let(:Authorization) { @auth_token }
+
+          context 'Count values response in data' do
+            it { expect(parse_json(response).count).to eq 6 }
+          end
+
+          it_behaves_like 'a json endpoint response', 200 do
+            let(:expected_response_schema) { employees_response_schema }
+          end
+        end
+      end
+      include_context 'with errors response test'
+
+      response '403', 'Forbidden' do
+        let(:Authorization) { authenticate_header[:Authorization] }
+        run_test!
+      end
+    end
+  end
 end

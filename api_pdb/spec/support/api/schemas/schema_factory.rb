@@ -10,6 +10,10 @@ module SchemaFactory
   def employee_response_schema
     EmployeeResponse.new
   end
+  
+  def employees_response_schema
+    EmployeesResponse.new
+  end
 
   def order_manager_response_schema
     OrderManagerResponse.new
