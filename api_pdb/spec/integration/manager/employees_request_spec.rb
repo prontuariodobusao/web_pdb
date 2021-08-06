@@ -1,7 +1,7 @@
 require 'swagger_helper'
 
 describe 'Manager::Employees', type: :request do
-  let(:resource) { create(:employee) }
+  let(:resource) { create(:driver_employee) }
   let(:occupation) { create(:occupation, :driver) }
 
   let(:valid_employee_attributes) do
@@ -83,6 +83,49 @@ describe 'Manager::Employees', type: :request do
         it_behaves_like 'a error json endpoint', 422 do
           let(:expected_response_schema) { new_errors_validations_response }
           let(:error_title) { 'Validations Failed' }
+        end
+      end
+    end
+  end
+
+  path '/manager/employees/{id}' do
+    get 'API para visualizar funcionário' do
+      tags 'Funcionários'
+      description 'Rota para visualizar'
+      produces 'application/json'
+      security [Authorization: []]
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'Success' do
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
+        let(:id) { resource.id }
+        schema employee_response_schema.schema.as_json
+
+        it_behaves_like 'a json endpoint response', 200 do
+          let(:expected_response_schema) { employee_response_schema }
+        end
+      end
+
+      response '403', 'Forbidden' do
+        let(:Authorization) { authenticate_header[:Authorization] }
+        let(:id) { resource.id }
+        run_test!
+      end
+
+      response '406', 'Not Acceptable' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
+        let(:id) { resource.id }
+        let(:Accept) { 'application/foo' }
+        run_test!
+      end
+
+      response '404', 'Not Found' do
+        let(:Authorization) { authenticate_rh_user[:Authorization] }
+        let(:id) { 30 }
+        schema new_errors_response.schema.as_json
+
+        it_behaves_like 'a error json endpoint', 404 do
+          let(:expected_response_schema) { new_errors_response }
         end
       end
     end

@@ -12,7 +12,7 @@ module Manager
 
     # GET /manager/employees/1
     def show
-      json_response EmployeeBlueprint.render @employee
+      json_response EmployeeBlueprint.render(@employee, root: :data, meta: { links: links(@employee) })
     end
 
     # POST /manager/employees
