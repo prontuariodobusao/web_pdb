@@ -142,6 +142,8 @@ paths:
                         type: string
                       employee_name:
                         type: string
+                      occupation:
+                        type: string
                       confirmation:
                         type: boolean
         '403':
@@ -205,6 +207,278 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/confirmation_params"
+  "/manager/employees":
+    post:
+      summary: API para cradastro de Funcionários
+      tags:
+      - Funcionários
+      description: Rota para cadastro, essa rota pode ser executada por usuário gerente
+        ou RH
+      security:
+      - Authorization: []
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      identity:
+                        type: string
+                      occupation:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+        '406':
+          description: Not Acceptable
+        '415':
+          description: Unsupported Media Type
+        '403':
+          description: Forbidden - Token inválido
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  status:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          type: string
+                        field:
+                          type: string
+                        detail:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/employee_params"
+    get:
+      summary: Obter lista de funcionários
+      tags:
+      - Funcionários
+      description: Rota para lista de OS por usuário, essa rota pode ser executada
+        por usuário gerente ou RH
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    identity:
+                      type: string
+                    occupation:
+                      type: string
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+  "/manager/employees/{id}":
+    get:
+      summary: API para visualizar funcionário
+      tags:
+      - Funcionários
+      description: Rota para visualizar, essa rota pode ser executada por usuário
+        gerente ou RH
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      identity:
+                        type: string
+                      occupation:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+        '403':
+          description: Forbidden
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+    put:
+      summary: API para atualizar funcionários
+      tags:
+      - Funcionários
+      description: Rota para atualizar, essa rota pode ser executada por usuário gerente
+        ou RH
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Not Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      identity:
+                        type: string
+                      occupation:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+        '403':
+          description: Forbidden
+        '406':
+          description: Not Acceptable
+        '415':
+          description: Unsupported Media Type
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  status:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          type: string
+                        field:
+                          type: string
+                        detail:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/employee_params"
   "/manager/orders/{id}/edit":
     get:
       summary: API para obter lista de rescursos para edição do gerente
@@ -321,6 +595,8 @@ paths:
                           employee_name:
                             type: string
                           username:
+                            type: string
+                          occupation:
                             type: string
                       problem:
                         type: object
@@ -447,6 +723,8 @@ paths:
                           employee_name:
                             type: string
                           username:
+                            type: string
+                          occupation:
                             type: string
                       problem:
                         type: object
@@ -661,6 +939,8 @@ paths:
                           employee_name:
                             type: string
                           username:
+                            type: string
+                          occupation:
                             type: string
                       problem:
                         type: object
@@ -884,6 +1164,8 @@ paths:
                             type: string
                           username:
                             type: string
+                          occupation:
+                            type: string
                       problem:
                         type: object
                         properties:
@@ -977,6 +1259,8 @@ paths:
                         type: string
                       employee_name:
                         type: string
+                      occupation:
+                        type: string
                       confirmation:
                         type: boolean
         '406':
@@ -1037,6 +1321,18 @@ components:
               type: string
             password_confirmation:
               type: string
+    employee_params:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+            identity:
+              type: string
+            occupation_id:
+              type: integer
 servers:
 - url: http://localhost:3003
   variables:

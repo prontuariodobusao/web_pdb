@@ -27,7 +27,7 @@ describe 'Manager::Employees', type: :request do
   path '/manager/employees' do
     post 'API para cradastro de Funcionários' do
       tags 'Funcionários'
-      description 'Rota para cadastro, é necessário cadastrar um usuário autenticado para utilizar este recurso'
+      description 'Rota para cadastro, essa rota pode ser executada por usuário gerente ou RH'
       consumes 'application/json'
       produces 'application/json'
 
@@ -91,7 +91,7 @@ describe 'Manager::Employees', type: :request do
   path '/manager/employees/{id}' do
     get 'API para visualizar funcionário' do
       tags 'Funcionários'
-      description 'Rota para visualizar'
+      description 'Rota para visualizar, essa rota pode ser executada por usuário gerente ou RH'
       produces 'application/json'
       security [Authorization: []]
       parameter name: :id, in: :path, type: :string
@@ -132,9 +132,9 @@ describe 'Manager::Employees', type: :request do
   end
 
   path '/manager/employees' do
-    get 'Obter lista funcionários por usuário motorista, listando ordens abertas e fechadas' do
-      tags 'Gerente funcionários'
-      description 'Rota para lista de OS por usuário, essa pode ser executada por usuários autenticados'
+    get 'Obter lista de funcionários' do
+      tags 'Funcionários'
+      description 'Rota para lista de OS por usuário, essa rota pode ser executada por usuário gerente ou RH'
       security [Authorization: []]
       produces 'application/json'
 
@@ -166,6 +166,63 @@ describe 'Manager::Employees', type: :request do
       response '403', 'Forbidden' do
         let(:Authorization) { authenticate_header[:Authorization] }
         run_test!
+      end
+    end
+  end
+
+  path '/manager/employees/{id}' do
+    put 'API para atualizar funcionários' do
+      tags 'Funcionários'
+      description 'Rota para atualizar, essa rota pode ser executada por usuário gerente ou RH'
+      security [Authorization: []]
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :string
+      parameter name: :data,
+                in: :body,
+                schema: { '$ref' => '#/components/schemas/employee_params' }
+
+      response '204', 'Not Content' do
+        let(:id) { resource.id }
+        let(:data) { valid_employee_attributes }
+        let(:Authorization) { authenticate_rh_user[:Authorization] }
+        # schema employee_response_schema.schema.as_json
+
+        run_test!
+      end
+
+      response '403', 'Forbidden' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_header[:Authorization] }
+        let(:data) { valid_employee_attributes }
+        run_test!
+      end
+
+      response '406', 'Not Acceptable' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_rh_user[:Authorization] }
+        let(:data) { valid_employee_attributes }
+        let(:Accept) { 'application/foo' }
+        run_test!
+      end
+
+      response '415', 'Unsupported Media Type' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
+        let(:data) { valid_employee_attributes }
+        let(:'Content-Type') { 'application/foo' }
+        run_test!
+      end
+
+      response '422', 'Unprocessable Entity' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
+        let(:data) { invalid_employee_attributes }
+        schema new_errors_validations_response.schema.as_json
+        it_behaves_like 'a error json endpoint', 422 do
+          let(:expected_response_schema) { new_errors_validations_response }
+          let(:error_title) { 'Validations Failed' }
+        end
       end
     end
   end

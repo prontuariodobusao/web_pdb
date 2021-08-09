@@ -1,6 +1,6 @@
 module Manager
   class EmployeesController < ApplicationController
-    before_action :set_employee, only: %i[show update destroy]
+    before_action :set_employee, only: %i[show update]
     before_action :autorize_manager_or_rh
 
     # GET /manager/employees
@@ -28,12 +28,6 @@ module Manager
     # PATCH/PUT /manager/employees/1
     def update
       @employee.update!(employee_params)
-      head :no_content
-    end
-
-    # DELETE /manager/employees/1
-    def destroy
-      @employee.destroy!
       head :no_content
     end
 
