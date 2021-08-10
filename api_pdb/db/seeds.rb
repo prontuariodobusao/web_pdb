@@ -3,6 +3,7 @@ driver = Occupation.create(name: 'Motorista', type_occupation: :driver)
 manager = Occupation.create(name: 'Gerente', type_occupation: :manager)
 mecanic = Occupation.create(name: 'Mecãnico', type_occupation: :mecanic)
 rh = Occupation.create(name: 'RH', type_occupation: :rh)
+visitor = Occupation.create(name: 'Prefeitura', type_occupation: :visitor)
 puts 'Occupations created'
 
 puts 'Create Employees...'
@@ -35,8 +36,9 @@ employee25 = Employee.create(name: 'Jean', identity: '317', occupation: manager)
 employee26 = Employee.create(name: 'Sabrina', identity: '318', occupation: manager)
 employee27 = Employee.create(name: 'Felipe', identity: '319', occupation: manager)
 employee28 = Employee.create(name: 'Diego', identity: '310', occupation: manager)
+rh = Employee.create(name: 'Tatiana', identity: '411', occupation: rh)
+pf = Employee.create(name: 'Prefeitura de teresina', identity: '412', occupation: visitor)
 
-employee29 = Employee.create(name: 'Tatiana', identity: '411', occupation: rh)
 puts 'Employees created'
 
 employees = []
@@ -57,26 +59,58 @@ employees.push(
   employee17,
   employee18,
   employee19,
-  employee20,
-  employee29
+  employee20
 )
 
 puts 'Create Users...'
+
+user_rh = User.new(username: rh.identity, password: 'abc123', password_confirmation: 'abc123', employee: rh)
+user_rh.save!
+user_rh.add_role :rh
+
+user_pf = User.new(username: pf.identity, password: 'abc123', password_confirmation: 'abc123', employee: pf)
+user_pf.save!
+user_pf.add_role :visitor
+
 employees.each do |employee|
-  User.create(username: employee.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee)
+  user = User.new(username: employee.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee)
+  user.save!
+  user.add_role :normal
 end
 
-User.create(username: employee1.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee1)
-User.create(username: employee2.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee2)
-User.create(username: employee3.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee3)
-User.create(username: employee21.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee21)
-User.create(username: employee22.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee22)
-User.create(username: employee23.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee23)
-User.create(username: employee24.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee24)
-User.create(username: employee25.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee25)
-User.create(username: employee26.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee26)
-User.create(username: employee27.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee27)
-User.create(username: employee28.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee28)
+u1 = User.new(username: employee1.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee1)
+u1.save!
+u1.add_role :admin
+u2 = User.new(username: employee2.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee2)
+u2.save!
+u2.add_role :admin
+u3 = User.new(username: employee3.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee3)
+u3.save!
+u3.add_role :admin
+u4 = User.new(username: employee21.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee21)
+u4.save!
+u4.add_role :admin
+u5 = User.new(username: employee22.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee22)
+u5.save!
+u5.add_role :admin
+u6 = User.new(username: employee23.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee23)
+u6.save!
+u6.add_role :admin
+u7 = User.new(username: employee24.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee24)
+u7.save!
+u7.add_role :admin
+u8 = User.new(username: employee25.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee25)
+u8.save!
+u8.add_role :admin
+u9 = User.new(username: employee26.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee26)
+u9.save!
+u9.add_role :admin
+u10 = User.new(username: employee27.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee27)
+u10.save!
+u1.add_role :admin
+u11 = User.new(username: employee28.identity, password: 'abc123', password_confirmation: 'abc123', employee: employee28)
+u11.save!
+u11.add_role :admin
 
 puts 'Create Categories...'
 enginer = Category.create(name: 'MOTOR')
