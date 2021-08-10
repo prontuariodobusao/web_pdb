@@ -3,7 +3,7 @@ require 'rails_helper'
 describe OrderPolicy do
   subject { described_class }
 
-  permissions :manager? do
+  permissions :admin? do
     context 'denies access if user is an driver, mecanic or th' do
       it { expect(subject).not_to permit(create(:user), Order.new) }
       it { expect(subject).not_to permit(create(:user, :mecanic_user), Order.new) }

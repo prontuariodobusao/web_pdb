@@ -34,7 +34,7 @@ module Manager
     private
 
     def autorize_manager_or_rh
-      authorize Employee, :manager_or_rh?
+      authorize Employee, :admin_or_rh?
     end
 
     def links(employee)

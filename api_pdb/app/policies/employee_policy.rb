@@ -1,5 +1,5 @@
 class EmployeePolicy < ApplicationPolicy
-  def manager_or_rh?
-    user.employee.occupation_type_occupation == 'manager' || user.employee.occupation_type_occupation == 'rh'
+  def admin_or_rh?
+    user.has_role?(:admin) || user.has_role?(:rh)
   end
 end

@@ -4,7 +4,7 @@ describe EmployeePolicy do
   subject { described_class }
 
 
-  permissions :manager_or_rh? do
+  permissions :admin_or_rh? do
     context 'denies access if user is an driver, mecanic or th' do
       it { expect(subject).not_to permit(create(:user), Employee.new) }
       it { expect(subject).not_to permit(create(:user, :mecanic_user), Employee.new) }

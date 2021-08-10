@@ -43,7 +43,7 @@ module Manager
     private
 
     def autorize_manager
-      authorize Order, :manager?
+      authorize Order, :admin?
     end
 
     def links(order)

@@ -31,10 +31,14 @@ class OrderManagerResponse
         object :manager do
           integer :id
           string :name
+          string :identity
+          string :occupation
         end
         object :car_mecanic do
           integer :id
           string :name
+          string :identity
+          string :occupation
         end
         object :status do
           integer :id
