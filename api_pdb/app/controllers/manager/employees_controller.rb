@@ -17,12 +17,13 @@ module Manager
 
     # POST /manager/employees
     def create
-      employee = Employee.new(employee_params)
+      result = Employees::CreateEmployeeUser.call(employee: Employee.new(employee_params))
+      employee = result[:data][:employee]
 
-      employee.save!
-
-      json_response_create(EmployeeBlueprint.render(employee, root: :data, meta: { links: links(employee) }),
-                           manager_employee_path(employee))
+      json_response({
+                      employee: EmployeeBlueprint.render_as_hash(employee, root: :data, meta: { links: links(employee) }),
+                      password: result[:data][:password]
+                    }, :created)
     end
 
     # PATCH/PUT /manager/employees/1
@@ -51,7 +52,8 @@ module Manager
       params.require(:data).permit(
         :name,
         :identity,
-        :occupation_id
+        :occupation_id,
+        :is_user
       )
     end
   end

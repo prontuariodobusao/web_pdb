@@ -7,4 +7,6 @@ class Employee < ApplicationRecord
   delegate :type_occupation, to: :occupation, prefix: true
 
   has_one :user
+
+  attr_accessor :is_user
 end

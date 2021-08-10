@@ -38,15 +38,25 @@ describe 'Manager::Employees', type: :request do
                 schema: { '$ref' => '#/components/schemas/employee_params' }
 
       response '201', 'Created' do
-        let(:data) { valid_employee_attributes }
+        let(:attributes) do
+          {
+            data: {
+              name: Faker::Name.name,
+              identity: Faker::Company.unique.ein,
+              occupation_id: occupation.id,
+              is_user: true
+            }
+          }
+        end 
+        let(:data) { attributes }
         let(:Authorization) { authenticate_manager_user[:Authorization] }
 
-        schema employee_response_schema.schema.as_json
+        schema create_employee_response_schema.schema.as_json
 
         it_behaves_like 'a json endpoint response', 201 do
-          let(:data) { valid_employee_attributes }
+          let(:data) { attributes }
           let(:Authorization) { authenticate_rh_user[:Authorization] }
-          let(:expected_response_schema) { employee_response_schema }
+          let(:expected_response_schema) { create_employee_response_schema }
         end
       end
 
