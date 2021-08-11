@@ -5,9 +5,11 @@ module Manager
 
     # GET /manager/employees
     def index
-      @employees = Employee.all
+      employees = Employee.page(current_page).per_page(per_page)
 
-      json_response EmployeeBlueprint.render @employees
+      options = pagination_meta_generator(request, employees.total_pages)
+
+      json_response serializer_blueprint(:employee, employees, meta: options)
     end
 
     # GET /manager/employees/1
@@ -21,7 +23,8 @@ module Manager
       employee = result[:data][:employee]
 
       json_response({
-                      employee: EmployeeBlueprint.render_as_hash(employee, root: :data, meta: { links: links(employee) }),
+                      employee: EmployeeBlueprint.render_as_hash(employee, root: :data,
+                                                                           meta: { links: links(employee) }),
                       password: result[:data][:password]
                     }, :created)
     end
