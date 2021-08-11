@@ -225,25 +225,30 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
+                  employee:
                     type: object
                     properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      identity:
-                        type: string
-                      occupation:
-                        type: string
-                  meta:
-                    type: object
-                    properties:
-                      links:
+                      data:
                         type: object
                         properties:
-                          self:
+                          id:
+                            type: integer
+                          name:
                             type: string
+                          identity:
+                            type: string
+                          occupation:
+                            type: string
+                      meta:
+                        type: object
+                        properties:
+                          links:
+                            type: object
+                            properties:
+                              self:
+                                type: string
+                  password:
+                    type: string
         '406':
           description: Not Acceptable
         '415':
@@ -277,70 +282,6 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/employee_params"
-    get:
-      summary: Obter lista de funcionários
-      tags:
-      - Funcionários
-      description: Rota para lista de OS por usuário, essa rota pode ser executada
-        por usuário gerente ou RH
-      security:
-      - Authorization: []
-      responses:
-        '200':
-          description: Sucesso
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    name:
-                      type: string
-                    identity:
-                      type: string
-                    occupation:
-                      type: string
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                        status:
-                          type: string
-                        details:
-                          type: string
-        '406':
-          description: Not Acceptable
-        '422':
-          description: Token não informado
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                        status:
-                          type: string
-                        details:
-                          type: string
   "/manager/employees/{id}":
     get:
       summary: API para visualizar funcionário
@@ -479,6 +420,98 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/employee_params"
+  "/manager/employees?page=3&per_page=5":
+    get:
+      summary: Obter lista de funcionários
+      tags:
+      - Funcionários
+      description: Rota para lista de OS por usuário, essa rota pode ser executada
+        por usuário gerente ou RH
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    maxItems: 5
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        identity:
+                          type: string
+                        occupation:
+                          type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                          first:
+                            type: string
+                          last:
+                            type: string
+                          next:
+                            type: string
+                          prev:
+                            type: string
+                      meta:
+                        type: object
+                        properties:
+                          current_page:
+                            type: integer
+                          total_pages:
+                            type: integer
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
   "/manager/orders/{id}/edit":
     get:
       summary: API para obter lista de rescursos para edição do gerente
@@ -628,12 +661,20 @@ paths:
                             type: integer
                           name:
                             type: string
+                          identity:
+                            type: string
+                          occupation:
+                            type: string
                       car_mecanic:
                         type: object
                         properties:
                           id:
                             type: integer
                           name:
+                            type: string
+                          identity:
+                            type: string
+                          occupation:
                             type: string
                       status:
                         type: object
