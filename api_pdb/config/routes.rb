@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   post 'auth/login', to: 'authentication#authenticate'
 
-  resources :users, only: %i[index show] do
+  resources :users, only: [] do
     resource :confirmation, only: :create
   end
 
@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   end
 
   namespace :manager do
+    resources :users, except: %i[destroy index] do
+      get 'locked', on: :member
+      get 'unlock', on: :member
+    end
     resources :orders, except: %i[destroy create] do
       get 'edit', on: :member
     end
