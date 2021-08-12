@@ -146,6 +146,14 @@ paths:
                         type: string
                       confirmation:
                         type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
         '403':
           description: Acesso negado - Token inválido
           content:
@@ -363,30 +371,6 @@ paths:
       responses:
         '204':
           description: Not Content
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      name:
-                        type: string
-                      identity:
-                        type: string
-                      occupation:
-                        type: string
-                  meta:
-                    type: object
-                    properties:
-                      links:
-                        type: object
-                        properties:
-                          self:
-                            type: string
         '403':
           description: Forbidden
         '406':
@@ -740,75 +724,6 @@ paths:
       responses:
         '204':
           description: Not Content
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      created_at:
-                        type: string
-                      reference:
-                        type: string
-                      owner:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          confirmation:
-                            type: boolean
-                          employee_name:
-                            type: string
-                          username:
-                            type: string
-                          occupation:
-                            type: string
-                      problem:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          description:
-                            type: string
-                          priority:
-                            type: string
-                          category:
-                            type: object
-                            properties:
-                              id:
-                                type: integer
-                              name:
-                                type: string
-                      status:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          color:
-                            type: string
-                          name:
-                            type: string
-                      vehicle:
-                        type: object
-                        properties:
-                          id:
-                            type: integer
-                          car_number:
-                            type: string
-                  meta:
-                    type: object
-                    properties:
-                      links:
-                        type: object
-                        properties:
-                          self:
-                            type: string
-                          image_url:
-                            type: string
         '403':
           description: Forbidden
         '406':
@@ -943,6 +858,213 @@ paths:
                           type: string
                         details:
                           type: string
+  "/manager/employees/{employee_id}/users":
+    post:
+      summary: API para cradastro de usuários
+      tags:
+      - Usuários
+      description: Rota para cadastro, essa rota é utilizada para castadrar usuários
+      security:
+      - Authorization: []
+      parameters:
+      - name: employee_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          username:
+                            type: string
+                          employee_name:
+                            type: string
+                          occupation:
+                            type: string
+                          confirmation:
+                            type: boolean
+                      meta:
+                        type: object
+                        properties:
+                          links:
+                            type: object
+                            properties:
+                              self:
+                                type: string
+                  password:
+                    type: string
+        '406':
+          description: Not Acceptable
+        '415':
+          description: Unsupported Media Type
+        '500':
+          description: Server  Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '403':
+          description: Forbidden
+  "/manager/users/{id}":
+    get:
+      summary: Buscar usuário
+      tags:
+      - Usuários
+      description: API para visualizar usuário
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+                      employee_name:
+                        type: string
+                      occupation:
+                        type: string
+                      confirmation:
+                        type: boolean
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '403':
+          description: Forbidden
+  "/manager/users/{id}/reset_password":
+    get:
+      summary: Resetar Senha de usuário
+      tags:
+      - Usuários
+      description: API para resetar senha de usuário
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          username:
+                            type: string
+                          employee_name:
+                            type: string
+                          occupation:
+                            type: string
+                          confirmation:
+                            type: boolean
+                      meta:
+                        type: object
+                        properties:
+                          links:
+                            type: object
+                            properties:
+                              self:
+                                type: string
+                  password:
+                    type: string
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '403':
+          description: Forbidden
   "/orders":
     post:
       summary: API para cradastro de ordens de serviços
@@ -1269,61 +1391,6 @@ paths:
                           type: string
                         details:
                           type: string
-  "/users/{id}":
-    get:
-      summary: Buscar usuário
-      tags:
-      - Usuários
-      description: API para visualizar usuário
-      security:
-      - Authorization: []
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                      username:
-                        type: string
-                      employee_name:
-                        type: string
-                      occupation:
-                        type: string
-                      confirmation:
-                        type: boolean
-        '406':
-          description: Not Acceptable
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        title:
-                          type: string
-                        status:
-                          type: string
-                        details:
-                          type: string
 components:
   securitySchemes:
     Authorization:
@@ -1358,6 +1425,18 @@ components:
         data:
           type: object
           properties:
+            password:
+              type: string
+            password_confirmation:
+              type: string
+    user_params:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            identity:
+              type: string
             password:
               type: string
             password_confirmation:

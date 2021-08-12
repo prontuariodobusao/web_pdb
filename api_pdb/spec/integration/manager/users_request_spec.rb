@@ -74,6 +74,13 @@ describe 'Manager::Users', type: :request do
           expect(example.metadata[:response]).to be_present
         end
       end
+
+      response '403', 'Forbidden' do
+        let(:id) { resource.id }
+        let(:employee_id) { employee.id }
+        let(:Authorization) { authenticate_header[:Authorization] }
+        run_test!
+      end
     end
   end
 
@@ -96,6 +103,12 @@ describe 'Manager::Users', type: :request do
       end
 
       include_context 'show errors response'
+
+      response '403', 'Forbidden' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_header[:Authorization] }
+        run_test!
+      end
     end
   end
 
@@ -118,6 +131,12 @@ describe 'Manager::Users', type: :request do
       end
 
       include_context 'show errors response'
+
+      response '403', 'Forbidden' do
+        let(:id) { resource.id }
+        let(:Authorization) { authenticate_header[:Authorization] }
+        run_test!
+      end
     end
   end
 end
