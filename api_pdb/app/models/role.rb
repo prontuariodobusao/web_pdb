@@ -9,7 +9,7 @@ class Role < ApplicationRecord
             inclusion: { in: Rolify.resource_types },
             allow_nil: true
 
-  validates :name, inclusion: { in: %w[admin visitor normal rh] }
+  validates :name, inclusion: { in: %w[admin visitor driver rh normal] }
 
   scopify
 end
