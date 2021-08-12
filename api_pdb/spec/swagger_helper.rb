@@ -74,6 +74,19 @@ RSpec.configure do |config|
               }
             }
           },
+          user_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  identity: { type: :string },
+                  password: { type: :string },
+                  password_confirmation: { type: :string }
+                }
+              }
+            }
+          },
           employee_params: {
             type: :object,
             properties: {

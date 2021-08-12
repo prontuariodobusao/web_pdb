@@ -5,12 +5,13 @@ module Manager
     before_action :autorize_manager_or_rh
 
     def show
-      json_response serializer_blueprint(:user, @user)
+      json_response UserBlueprint.render(@user, root: :data, meta: { links: links(@user) })
     end
 
     def create
-      user = User.create!(user_params)
-      json_response_create(OrderBlueprint.render(user, root: :data, meta: { links: links(user) }),
+      employee = Employee.find(params[:employee_id])
+      user = Employees::CreateUser.call(employee: employee)[:data][:user]
+      json_response_create(UserBlueprint.render(user, root: :data, meta: { links: links(user) }),
                            manager_user_url(user))
     end
 
@@ -36,16 +37,6 @@ module Manager
 
     def set_user
       @user = User.find(params[:id])
-    end
-
-    def user_params
-      params
-        .require(:data)
-        .permit(
-          :username,
-          :password,
-          :password_confirmation
-        )
     end
   end
 end

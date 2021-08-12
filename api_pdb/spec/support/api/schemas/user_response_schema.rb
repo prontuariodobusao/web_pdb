@@ -10,6 +10,11 @@ class UserResponse
         string :occupation
         boolean :confirmation
       end
+      object :meta do
+        object :links do
+          string :self
+        end
+      end
     end
   end
 end

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   end
 
   namespace :manager do
-    resources :users, except: %i[destroy index] do
+    resources :users, only: %i[show update] do
       get 'locked', on: :member
       get 'unlock', on: :member
     end
@@ -22,7 +22,9 @@ Rails.application.routes.draw do
       get 'edit', on: :member
     end
 
-    resources :employees, except: :destroy
+    resources :employees, except: :destroy do
+      resources :users, only: :create
+    end
   end
 
   resources :orders, except: %i[destroy update]
