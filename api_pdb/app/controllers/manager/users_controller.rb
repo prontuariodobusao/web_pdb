@@ -10,9 +10,14 @@ module Manager
 
     def create
       employee = Employee.find(params[:employee_id])
-      user = Employees::CreateUser.call(employee: employee)[:data][:user]
-      json_response_create(UserBlueprint.render(user, root: :data, meta: { links: links(user) }),
-                           manager_user_url(user))
+      result = Employees::CreateUser.call(employee: employee)
+
+      json_response({
+                      user: UserBlueprint.render_as_hash(result[:data][:user],
+                                                         root: :data,
+                                                         meta: { links: links(result[:data][:user]) }),
+                      password: result[:data][:password]
+                    }, :created)
     end
 
     def unlock

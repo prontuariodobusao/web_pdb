@@ -37,10 +37,10 @@ describe 'Manager::Users', type: :request do
       response '201', 'Created' do
         let(:employee_id) { employee.id }
         let(:Authorization) { authenticate_rh_user[:Authorization] }
-        schema user_response_schema.schema.as_json
+        schema create_user_response_schema.schema.as_json
 
         it_behaves_like 'a json endpoint response', 201 do
-          let(:expected_response_schema) { user_response_schema }
+          let(:expected_response_schema) { create_user_response_schema }
         end
       end
 
