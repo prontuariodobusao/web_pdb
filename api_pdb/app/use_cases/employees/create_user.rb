@@ -1,5 +1,5 @@
 module Employees
-  class CreateEmployeeUser
+  class CreateUser
     include UseCase
     include AddRoleToUsers
 
@@ -18,24 +18,19 @@ module Employees
 
     def create
       employee.transaction do
-        employee.save!
-        # create user
-        if employee.is_user
-          new_user.save!
-          add_role_to_employee(new_user, employee)
-        end
+        employee.create_user!(user_params)
+        add_role_to_employee(employee.user, employee)
       end
 
-      success({ employee: employee, password: password })
+      success({ user: employee.user, password: password })
     end
 
-    def new_user
-      User.new(
+    def user_params
+      {
         username: employee.identity,
         password: password,
-        password_confirmation: password,
-        employee: employee
-      )
+        password_confirmation: password
+      }
     end
   end
 end
