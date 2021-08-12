@@ -95,7 +95,8 @@ RSpec.configure do |config|
                 properties: {
                   name: { type: :string },
                   identity: { type: :string },
-                  occupation_id: { type: :integer }
+                  occupation_id: { type: :integer },
+                  is_user: { type: :boolean }
                 }
               }
             }

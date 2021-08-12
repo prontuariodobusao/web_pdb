@@ -1453,6 +1453,8 @@ components:
               type: string
             occupation_id:
               type: integer
+            is_user:
+              type: boolean
 servers:
 - url: http://localhost:3003
   variables:
