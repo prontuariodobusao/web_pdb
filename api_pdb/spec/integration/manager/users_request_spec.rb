@@ -98,4 +98,26 @@ describe 'Manager::Users', type: :request do
       include_context 'show errors response'
     end
   end
+
+  path '/manager/users/{id}/reset_password' do
+    get 'Resetar Senha de usuário' do
+      tags 'Usuários'
+      description 'API para resetar senha de usuário'
+      produces 'application/json'
+      security [Authorization: []]
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'Success' do
+        let(:Authorization) { authenticate_rh_user[:Authorization] }
+        let(:id) { resource.id }
+        schema create_user_response_schema.schema.as_json
+
+        it_behaves_like 'a json endpoint response', 200 do
+          let(:expected_response_schema) { create_user_response_schema }
+        end
+      end
+
+      include_context 'show errors response'
+    end
+  end
 end

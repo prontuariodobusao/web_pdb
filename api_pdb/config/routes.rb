@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :users, only: %i[show update] do
       get 'locked', on: :member
       get 'unlock', on: :member
+      get 'reset_password', on: :member
     end
     resources :orders, except: %i[destroy create] do
       get 'edit', on: :member

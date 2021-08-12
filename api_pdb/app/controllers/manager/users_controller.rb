@@ -1,7 +1,7 @@
 # app/controllers/users_controller.rb
 module Manager
   class UsersController < ApplicationController
-    before_action :set_user, only: %i[show update unlock]
+    before_action :set_user, only: %i[show update unlock reset_password]
     before_action :autorize_manager_or_rh
 
     def show
@@ -23,6 +23,16 @@ module Manager
     def unlock
       user = Users::Unlock.call(user: @user, attributes: user_params)[:data][:user]
       json_response serializer_blueprint(:user, user)
+    end
+
+    def reset_password
+      result = Users::ResetPassword.call(user: @user)
+      json_response({
+                      user: UserBlueprint.render_as_hash(result[:data][:user],
+                                                         root: :data,
+                                                         meta: { links: links(result[:data][:user]) }),
+                      password: result[:data][:password]
+                    })
     end
 
     def update
