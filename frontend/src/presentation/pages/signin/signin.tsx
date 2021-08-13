@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
-import {Card, Row, Col, Button} from 'react-bootstrap'
+import {Card, Row, Col} from 'react-bootstrap'
 import Breadcrumb from '../../layouts/AdminLayout/Breadcrumb'
 import logoPdb from '../../assets/images/logo-pdb.png'
 import {Authentication} from '../../../domain/usecases/auth/authentication'
 import useScriptRef from '../../hooks/useScriptRef'
+import {SubmitButton} from '../../components'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
@@ -14,6 +15,7 @@ type Props = {
 
 const SignIn: React.FC<Props> = ({authentication}: Props) => {
   const scriptedRef = useScriptRef()
+  const [loading, setLoading] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -27,6 +29,7 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
       password: Yup.string().max(255).required('Senha é obrigatóra'),
     }),
     onSubmit: async (values, {setErrors, setStatus, setSubmitting}) => {
+      setLoading(true)
       try {
         const response = await authentication.auth({
           username: values.username,
@@ -91,16 +94,16 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
                 </div>
                 <Row>
                   <Col>
-                    <Button
+                    <SubmitButton
                       className="btn-block"
                       color="primary"
                       disabled={formik.isSubmitting}
                       size="lg"
                       type="submit"
-                      variant="primary">
+                      variant="primary"
+                      loading={loading}>
                       Entrar
-                      <i className="feather icon-log-in" />
-                    </Button>
+                    </SubmitButton>
                   </Col>
                 </Row>
               </form>
