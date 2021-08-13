@@ -1,9 +1,9 @@
-import {GetStorage} from '../../../domain/protocols/cache'
+import {GetStorage} from '../../../../domain/protocols/cache'
 import {
   HttpClient,
   HttpRequest,
   HttpResponse,
-} from '../../../domain/protocols/http'
+} from '../../../../domain/protocols/http'
 
 export class AuthorizeHttpClientDecorator implements HttpClient {
   constructor(

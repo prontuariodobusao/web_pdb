@@ -1,7 +1,7 @@
-import {HttpClientSpy, mockHttpRequest} from '../../../data/test'
-import {HttpRequest} from '../../../domain/protocols/http'
-import {mockAccountModel} from '../../../domain/test/mock-authentication'
-import {GetStorageSpy} from '../../../domain/test/mock-cache'
+import {HttpClientSpy, mockHttpRequest} from '../../../../data/test'
+import {HttpRequest} from '../../../../domain/protocols/http'
+import {mockAccountModel} from '../../../../domain/test/mock-authentication'
+import {GetStorageSpy} from '../../../../domain/test/mock-cache'
 import faker from 'faker'
 import {AuthorizeHttpClientDecorator} from './authorize-http-client-decorator'
 
