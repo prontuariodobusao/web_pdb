@@ -20,7 +20,6 @@ type TokenData = {
 type StateData = {
   accessToken: string
   user: UserModel
-  isLoading?: boolean
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
