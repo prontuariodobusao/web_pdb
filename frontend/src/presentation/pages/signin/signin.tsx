@@ -1,10 +1,12 @@
-import React, {useState} from 'react'
-import {Card, Row, Col} from 'react-bootstrap'
+import React, {useState, useContext} from 'react'
+import {Card, Row, Col, Alert} from 'react-bootstrap'
 import Breadcrumb from '../../layouts/AdminLayout/Breadcrumb'
 import logoPdb from '../../assets/images/logo-pdb.png'
 import {Authentication} from '../../../domain/usecases/auth/authentication'
 import useScriptRef from '../../hooks/useScriptRef'
 import {SubmitButton} from '../../components'
+import {AuthContext} from '../../contexts'
+import {useHistory} from 'react-router-dom'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
@@ -16,6 +18,8 @@ type Props = {
 const SignIn: React.FC<Props> = ({authentication}: Props) => {
   const scriptedRef = useScriptRef()
   const [loading, setLoading] = useState(false)
+  const {saveAccount} = useContext(AuthContext)
+  const history = useHistory()
 
   const formik = useFormik({
     initialValues: {
@@ -35,15 +39,17 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
           username: values.username,
           password: values.password,
         })
+        await saveAccount(response.auth_token)
+        history.replace('/dashboard')
         if (scriptedRef.current) {
           setStatus({success: true})
           setSubmitting(false)
         }
         // await saveAccount(response.auth_token)
       } catch (error: any) {
-        console.log(error)
+        setLoading(false)
         setStatus({success: false})
-        setErrors({submit: error})
+        setErrors({submit: error.message})
         setSubmitting(false)
       }
     },
@@ -59,6 +65,13 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
               <div className="mb-4">
                 <img src={logoPdb} style={{height: 'auto', width: '60%'}} />
               </div>
+              {formik.errors.submit && (
+                <Row>
+                  <Col sm={12}>
+                    <Alert variant="danger">{formik.errors.submit}</Alert>
+                  </Col>
+                </Row>
+              )}
               <form noValidate onSubmit={formik.handleSubmit}>
                 <div className="form-group mb-3">
                   <input

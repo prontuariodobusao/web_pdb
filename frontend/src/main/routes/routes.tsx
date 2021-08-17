@@ -1,16 +1,19 @@
 import React from 'react'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import AdminLayout from '../../presentation/layouts/AdminLayout'
-import {SignIn} from '../../presentation/pages'
+import {createSignIn} from '../factories'
+import {AuthProvider} from '../../presentation/contexts/auth'
 
 const Routes: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/dashboard" exact component={AdminLayout} />
-        <Route path="/" exact component={SignIn} />
-      </Switch>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/dashboard" exact component={AdminLayout} />
+          <Route path="/" exact component={createSignIn} />
+        </Switch>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
