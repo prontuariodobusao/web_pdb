@@ -2,53 +2,58 @@ import React, {useState, useContext} from 'react'
 import {Card, Row, Col, Alert} from 'react-bootstrap'
 import Breadcrumb from '../../layouts/AdminLayout/Breadcrumb'
 import logoPdb from '../../assets/images/logo-pdb.png'
-import {Authentication} from '../../../domain/usecases/auth/authentication'
+import {Confirmation} from '../../../domain/usecases/confirm/confirmation'
+import {GetMessageError} from '../../../domain/errors'
+import {ErrorsModel} from '../../../data/models'
 import useScriptRef from '../../hooks/useScriptRef'
 import {SubmitButton} from '../../components'
 import {AuthContext} from '../../contexts'
-import {useHistory} from 'react-router-dom'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 
 type Props = {
-  authentication: Authentication
+  confirm: Confirmation
 }
 
-const SignIn: React.FC<Props> = ({authentication}: Props) => {
+const ConfirmationPage: React.FC<Props> = ({confirm}: Props) => {
   const scriptedRef = useScriptRef()
   const [loading, setLoading] = useState(false)
-  const {saveAccount} = useContext(AuthContext)
-  const history = useHistory()
+  const [messagesError, setMessagesError] = useState('')
+
+  const {updateStateAccount} = useContext(AuthContext)
 
   const formik = useFormik({
     initialValues: {
-      username: '',
       password: '',
-      submit: null,
-      isLoading: false,
+      passwordConfirmation: '',
     },
     validationSchema: Yup.object().shape({
-      username: Yup.string().max(255).required('Matricula é obrigatória'),
       password: Yup.string().max(255).required('Senha é obrigatóra'),
+      passwordConfirmation: Yup.string()
+        .max(255)
+        .required('Nova Senha é obrigatóra'),
     }),
-    onSubmit: async (values, {setErrors, setStatus, setSubmitting}) => {
+    onSubmit: async (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       try {
-        const response = await authentication.auth({
-          username: values.username,
-          password: values.password,
+        const response = await confirm.confirm({
+          data: {
+            password: values.password,
+            password_confirmation: values.passwordConfirmation,
+          },
         })
-        await saveAccount(response.auth_token)
-        history.replace('/confirmacao')
+        await updateStateAccount(response.data)
         if (scriptedRef.current) {
           setStatus({success: true})
           setSubmitting(false)
         }
       } catch (error: any) {
+        const errorObject = error as GetMessageError
+        const errors: ErrorsModel[] = errorObject.getErrors() as ErrorsModel[]
+        setMessagesError(errors.map(err => err.detail).join('; '))
         setLoading(false)
         setStatus({success: false})
-        setErrors({submit: error.message})
         setSubmitting(false)
       }
     },
@@ -64,30 +69,14 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
               <div className="mb-4">
                 <img src={logoPdb} style={{height: 'auto', width: '60%'}} />
               </div>
-              {formik.errors.submit && (
+              {messagesError && (
                 <Row>
                   <Col sm={12}>
-                    <Alert variant="danger">{formik.errors.submit}</Alert>
+                    <Alert variant="danger">{messagesError}</Alert>
                   </Col>
                 </Row>
               )}
               <form noValidate onSubmit={formik.handleSubmit}>
-                <div className="form-group mb-3">
-                  <input
-                    className="form-control"
-                    placeholder="Matrícula"
-                    name="username"
-                    type="text"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    value={formik.values.username}
-                  />
-                  {formik.touched.username && formik.errors.username && (
-                    <small className="text-danger form-text">
-                      {formik.errors.username}
-                    </small>
-                  )}
-                </div>
                 <div className="form-group mb-4">
                   <input
                     className="form-control"
@@ -104,6 +93,23 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
                     </small>
                   )}
                 </div>
+                <div className="form-group mb-4">
+                  <input
+                    className="form-control"
+                    placeholder="Confirmação da nova senha"
+                    name="passwordConfirmation"
+                    type="password"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    value={formik.values.passwordConfirmation}
+                  />
+                  {formik.touched.passwordConfirmation &&
+                    formik.errors.passwordConfirmation && (
+                      <small className="text-danger form-text">
+                        {formik.errors.passwordConfirmation}
+                      </small>
+                    )}
+                </div>
                 <Row>
                   <Col>
                     <SubmitButton
@@ -114,7 +120,7 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
                       type="submit"
                       variant="primary"
                       loading={loading}>
-                      Entrar
+                      Atualizar Senha
                     </SubmitButton>
                   </Col>
                 </Row>
@@ -127,4 +133,4 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
   )
 }
 
-export default SignIn
+export default ConfirmationPage

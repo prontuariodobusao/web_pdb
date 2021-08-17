@@ -16,7 +16,7 @@ describe('AsyncStorageAdapter', () => {
     const value: any = faker.random.objectElement<any>()
     const getItemSpy = jest
       .spyOn(localStorage, 'getItem')
-      .mockReturnValueOnce(JSON.stringify(value))
+      .mockReturnValueOnce(value)
 
     const obj = await sut.get(key)
 
