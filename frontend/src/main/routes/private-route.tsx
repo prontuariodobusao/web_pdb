@@ -3,9 +3,9 @@ import {AuthContext} from 'presentation/contexts'
 import {RouteProps, Route, Redirect} from 'react-router-dom'
 
 const PrivateRoute: React.FC<RouteProps> = (props: RouteProps) => {
-  const {user, token} = useContext(AuthContext)
+  const {getAccount} = useContext(AuthContext)
 
-  return token && user.confirmation ? (
+  return getAccount()?.accessToken && getAccount()?.confirmation ? (
     <Route {...props} />
   ) : (
     <Route {...props} component={() => <Redirect to="/login" />} />

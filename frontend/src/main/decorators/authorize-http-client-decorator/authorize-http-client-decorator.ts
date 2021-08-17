@@ -13,11 +13,11 @@ export class AuthorizeHttpClientDecorator implements HttpClient {
   ) {}
 
   async request(data: HttpRequest): Promise<HttpResponse> {
-    const accessToken = await this.getStorage.get('@pdb:access_token')
-    if (accessToken) {
+    const account = await this.getStorage.get('@pdb:account')
+    if (account?.accessToken) {
       Object.assign(data, {
         headers: Object.assign(data.headers || {}, {
-          Authorization: accessToken,
+          Authorization: account.accessToken,
           'Content-Type': this.contentType,
         }),
       })

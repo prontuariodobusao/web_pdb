@@ -1,11 +1,17 @@
 import React, {createContext, useState} from 'react'
 import jwtDecode from 'jwt-decode'
 import {UserModel} from '../../domain/models/user-model'
+import {
+  setCurrentAccountAdapter,
+  getCurrentAccountAdapter,
+  Account,
+} from '../../main/adapters'
 
 interface AuthContextData {
   token: string
   user: UserModel
   saveAccount: (accesaToken: string) => Promise<void>
+  getAccount: () => Account
   signOut: () => Promise<void>
   updateStateAccount: (user: UserModel) => void
 }
@@ -33,7 +39,12 @@ export const AuthProvider: React.FC = ({children}: any) => {
       const {user_id, name, confirmation, occupation} =
         jwtDecode<TokenData>(accessToken)
 
-      await localStorage.setItem('@pdb:access_token', accessToken)
+      setCurrentAccountAdapter({
+        accessToken,
+        name,
+        role: occupation,
+        confirmation,
+      })
 
       setData({
         ...data,
@@ -50,10 +61,17 @@ export const AuthProvider: React.FC = ({children}: any) => {
     }
   }
 
+  const getAccount = () => getCurrentAccountAdapter()
+
   const updateStateAccount = async (user: UserModel): Promise<void> => {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const {id, employee_name, confirmation, occupation} = user
-
+    setCurrentAccountAdapter({
+      accessToken: data.accessToken,
+      name: employee_name,
+      role: occupation,
+      confirmation,
+    })
     setData({
       ...data,
       user: {
@@ -76,6 +94,7 @@ export const AuthProvider: React.FC = ({children}: any) => {
       value={{
         token: data.accessToken,
         saveAccount,
+        getAccount,
         signOut,
         updateStateAccount,
         user: data.user,
