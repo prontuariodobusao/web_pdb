@@ -49,18 +49,18 @@ $inverse-color: $dark-color;
 $theme-border: #eaeaea;
 
 // header
-$brand-background: #3f4d67;
-$header-dark-background: #3f4d67;
+$brand-background: $primary-color;
+$header-dark-background: $primary-color;
 $header-dark-text-color: #fff;
 $header-light-background: #fff;
-$header-light-text-color: #3f4d67;
+$header-light-text-color: $primary-color;
 
 // Menu
-$menu-caption-color: #14171d;
-$menu-dark-background: #3f4d67;
-$menu-dark-text-color: #a9b7d0;
+$menu-caption-color: $dark-color;
+$menu-dark-background: $primary-color;
+$menu-dark-text-color: $light-color;
 $menu-light-background: #fff;
-$menu-light-text-color: #3f4d67;
+$menu-light-text-color: $primary-color;
 $menu-active-color: #04a9f5;
 
 // dark layout colors
@@ -89,7 +89,7 @@ $theme-font-family: 'Open Sans', sans-serif;
 $theme-font-size: 14px;
 $theme-background: #f4f7fa;
 $theme-font-color: #888;
-$theme-heading-color: #111;
+$theme-heading-color: #a6a6a6;
 
 $color-name: c-blue, c-red, c-green, c-yellow, c-purple;
 $color-color: $primary-color, $danger-color, $success-color, $warning-color, $purple-color;
