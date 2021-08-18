@@ -1,9 +1,9 @@
-import React, {Fragment, ReactNode} from 'react'
+import React, {Fragment, ReactNode, Suspense} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import AdminLayout from '../../presentation/layouts/AdminLayout'
 import {createSignIn} from '../factories'
 import {ConfirmOrMenu, Dashboard} from '../../presentation/pages'
-import {AuthGuard, GuestGuard} from '../../presentation/components'
+import {AuthGuard, GuestGuard, Loader} from '../../presentation/components'
 
 export type RoutesProps = {
   exact: boolean
@@ -22,32 +22,34 @@ export type RouterProps = {
 
 export const renderRoutes = (routes: RouterProps[] = []): any => {
   return (
-    <Switch>
-      {routes.map((route: any, i: any) => {
-        const Guard = route.guard || Fragment
-        const Layout = route.layout || Fragment
-        const Component = route.component
+    <Suspense fallback={<Loader />}>
+      <Switch>
+        {routes.map((route: any, i: any) => {
+          const Guard = route.guard || Fragment
+          const Layout = route.layout || Fragment
+          const Component = route.component
 
-        return (
-          <Route
-            key={i}
-            path={route.path}
-            exact={route.exact}
-            render={props => (
-              <Guard>
-                <Layout>
-                  {route.routes ? (
-                    renderRoutes(route.routes)
-                  ) : (
-                    <Component {...props} />
-                  )}
-                </Layout>
-              </Guard>
-            )}
-          />
-        )
-      })}
-    </Switch>
+          return (
+            <Route
+              key={i}
+              path={route.path}
+              exact={route.exact}
+              render={props => (
+                <Guard>
+                  <Layout>
+                    {route.routes ? (
+                      renderRoutes(route.routes)
+                    ) : (
+                      <Component {...props} />
+                    )}
+                  </Layout>
+                </Guard>
+              )}
+            />
+          )
+        })}
+      </Switch>
+    </Suspense>
   )
 }
 
