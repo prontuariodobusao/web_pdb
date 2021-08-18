@@ -1,23 +1,81 @@
-import React from 'react'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import React, {Fragment, ReactNode} from 'react'
+import {Switch, Route} from 'react-router-dom'
 import AdminLayout from '../../presentation/layouts/AdminLayout'
 import {createSignIn} from '../factories'
-import {AuthProvider} from '../../presentation/contexts/auth'
-import {ConfirmOrMenu} from '../../presentation/pages'
-import PrivateRoute from './private-route'
+import {ConfirmOrMenu, Dashboard} from '../../presentation/pages'
+import {AuthGuard, GuestGuard} from '../../presentation/components'
 
-const Routes: React.FC = () => {
+export type RoutesProps = {
+  exact: boolean
+  path: string
+  component: ReactNode
+}
+
+export type RouterProps = {
+  exact?: boolean
+  guard: ReactNode
+  path: string
+  component?: ReactNode
+  layout?: any
+  routes?: RoutesProps[]
+}
+
+export const renderRoutes = (routes: RouterProps[] = []): any => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/login" exact component={createSignIn} />
-          <Route path="/confirmacao" exact component={ConfirmOrMenu} />
-          <PrivateRoute path="/dashboard" exact component={AdminLayout} />
-        </Switch>
-      </BrowserRouter>
-    </AuthProvider>
+    <Switch>
+      {routes.map((route: any, i: any) => {
+        const Guard = route.guard || Fragment
+        const Layout = route.layout || Fragment
+        const Component = route.component
+
+        return (
+          <Route
+            key={i}
+            path={route.path}
+            exact={route.exact}
+            render={props => (
+              <Guard>
+                <Layout>
+                  {route.routes ? (
+                    renderRoutes(route.routes)
+                  ) : (
+                    <Component {...props} />
+                  )}
+                </Layout>
+              </Guard>
+            )}
+          />
+        )
+      })}
+    </Switch>
   )
 }
 
-export default Routes
+const routes: RouterProps[] = [
+  {
+    exact: true,
+    guard: GuestGuard,
+    path: '/login',
+    component: createSignIn,
+  },
+  {
+    exact: true,
+    guard: GuestGuard,
+    path: '/confirmacao',
+    component: ConfirmOrMenu,
+  },
+  {
+    guard: AuthGuard,
+    path: '*',
+    layout: AdminLayout,
+    routes: [
+      {
+        exact: true,
+        path: '/dashboard',
+        component: Dashboard,
+      },
+    ],
+  },
+]
+
+export default routes

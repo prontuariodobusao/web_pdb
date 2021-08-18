@@ -1,15 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Routes from './main/routes/routes'
+import App from './main/App'
 import reportWebVitals from './reportWebVitals'
-import {ConfigProvider} from 'presentation/contexts/ConfigContext'
+import {ConfigProvider} from './presentation/contexts/ConfigContext'
+import {AuthProvider} from './presentation/contexts/auth'
 import 'presentation/styles/index.scss'
 
 ReactDOM.render(
   <React.StrictMode>
-    <ConfigProvider>
-      <Routes />
-    </ConfigProvider>
+    <AuthProvider>
+      <ConfigProvider>
+        <App />
+      </ConfigProvider>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 )

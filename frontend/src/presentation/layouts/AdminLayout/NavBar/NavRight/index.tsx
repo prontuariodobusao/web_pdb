@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {ListGroup, Dropdown} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-
-import avatar1 from '../../../../assets/images/user/avatar-1.jpg'
+import {AuthContext} from '../../../../contexts'
 
 const NavRight: React.FC = () => {
   const [listOpen, setListOpen] = useState(false)
+  const {signOut, getAccount} = useContext(AuthContext)
 
   return (
     <>
@@ -25,9 +25,12 @@ const NavRight: React.FC = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu alignRight className="profile-notification">
               <div className="pro-head">
-                <img src={avatar1} className="img-radius" alt="User Profile" />
-                <span>User Menu</span>
-                <Link to="#" className="dud-logout" title="Logout">
+                <span>{getAccount()?.name}</span>
+                <Link
+                  to="#"
+                  className="dud-logout"
+                  title="Logout"
+                  onClick={signOut}>
                   <i className="feather icon-log-out" />
                 </Link>
               </div>
@@ -38,12 +41,12 @@ const NavRight: React.FC = () => {
                 className="pro-body">
                 <ListGroup.Item as="li" bsPrefix=" ">
                   <Link to="#" className="dropdown-item">
-                    <i className="feather icon-settings" /> Settings
+                    <i className="feather icon-settings" /> Conta
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item as="li" bsPrefix=" ">
-                  <Link to="#" className="dropdown-item">
-                    <i className="feather icon-log-out" /> Logout
+                  <Link to="#" className="dropdown-item" onClick={signOut}>
+                    <i className="feather icon-log-out" /> Sair
                   </Link>
                 </ListGroup.Item>
               </ListGroup>
