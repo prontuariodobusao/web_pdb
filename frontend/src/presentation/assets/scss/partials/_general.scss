@@ -136,7 +136,7 @@ p.text-muted {
 
         h5 {
             margin-bottom: 0;
-            color: #000;
+            color: #a6a6a6;
             font-size: 17px;
             font-weight: 400;
             display: inline-block;
@@ -215,7 +215,7 @@ p.text-muted {
 
     .card-block,
     .card-body {
-        padding: 30px 25px;
+        padding: 15px 30px;
     }
 
     &.card-load {
@@ -883,3 +883,8 @@ p.text-muted {
     -webkit-font-smoothing: antialiased;
 }
 /* material icon for material datetime picker */
+/* ============== add Dev ===================== */
+.card-number {
+    font-size: 3rem;
+}
+/* ============== add Dev ===================== */
