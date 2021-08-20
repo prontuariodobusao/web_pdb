@@ -22,6 +22,28 @@ const menuItems = {
         },
       ],
     },
+    {
+      id: 'resource',
+      title: 'Cadastros',
+      type: 'group',
+      icon: 'icon-ui',
+      children: [
+        {
+          id: 'basic',
+          title: 'Cadastros',
+          type: 'collapse',
+          icon: 'feather icon-plus-square',
+          children: [
+            {
+              id: 'workers',
+              title: 'Funcionários',
+              type: 'item',
+              url: '/funcionarios',
+            },
+          ],
+        },
+      ],
+    },
   ],
 }
 
