@@ -1,6 +1,8 @@
 import React from 'react'
 import {Row, Col, Card} from 'react-bootstrap'
 import {PierBasicChart, BarBasicChart} from '../../components'
+import HiPierChart from 'presentation/components/charts/hi-pier-chart'
+import HiBarChart from 'presentation/components/charts/hi-bar-chart'
 
 const Dashboard: React.FC = () => {
   return (
@@ -84,11 +86,11 @@ const Dashboard: React.FC = () => {
           <Card>
             <Card.Header>
               <Card.Title as="h5">
-                Veículos em manutenção por problemas
+                Veículos em manutenção por categorias
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              <PierBasicChart />
+              <HiPierChart />
             </Card.Body>
           </Card>
         </Col>
@@ -96,11 +98,11 @@ const Dashboard: React.FC = () => {
           <Card>
             <Card.Header>
               <Card.Title as="h5">
-                Veículos em manutenção por categorias
+                Veículos em manutenção por problemas
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              <BarBasicChart />
+              <HiBarChart />
             </Card.Body>
           </Card>
         </Col>
