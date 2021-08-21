@@ -5,11 +5,29 @@ module Manager
 
     # GET /manager/employees
     def index
-      employees = Employee.page(current_page).per_page(per_page)
+      # employees = Employee.page(current_page).per_page(per_page)
 
-      options = pagination_meta_generator(request, employees.total_pages)
+      # options = pagination_meta_generator(request, employees.total_pages)
 
-      json_response serializer_blueprint(:employee, employees, meta: options)
+      # json_response serializer_blueprint(:employee, employees, meta: options)
+
+      @employees = Employee.all
+      if params[:sortField].present?
+        sort_hash = {}
+        sort_hash[params[:sortField].to_sym] = params[:sortDirection].to_sym
+        @employees = @employees.order(sort_hash)
+      end
+      if params[:searchValue].present?
+        search = "%#{params[:searchValue]}%"
+        @employees = @employees.where('official_name ILIKE ?', search)
+      end
+      @total = @employees.count
+
+      @employees = @employees.page(params[:page]).per_page(params[:per_page])
+
+      @draw = params[:draw]
+
+      json_response({ draw: @draw, totalRecords: @total, data: EmployeeBlueprint.render_as_hash(@employees) })
     end
 
     # GET /manager/employees/1
