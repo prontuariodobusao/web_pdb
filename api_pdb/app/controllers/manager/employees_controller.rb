@@ -5,20 +5,22 @@ module Manager
 
     # GET /manager/employees
     def index
-      # employees = Employee.page(current_page).per_page(per_page)
+      employees = Employee.page(current_page).per_page(per_page)
 
-      # options = pagination_meta_generator(request, employees.total_pages)
+      options = pagination_meta_generator(request, employees.total_pages)
 
-      # json_response serializer_blueprint(:employee, employees, meta: options)
+      json_response serializer_blueprint(:employee, employees, meta: options)
+    end
 
+    def datatable
       @employees = Employee.all
-      if params[:sortField].present?
+      if params[:sort_field].present?
         sort_hash = {}
-        sort_hash[params[:sortField].to_sym] = params[:sortDirection].to_sym
+        sort_hash[params[:sort_field].to_sym] = params[:sort_direction].to_sym
         @employees = @employees.order(sort_hash)
       end
-      if params[:searchValue].present?
-        search = "%#{params[:searchValue]}%"
+      if params[:search_value].present?
+        search = "%#{params[:search_value]}%"
         @employees = @employees.where('official_name ILIKE ?', search)
       end
       @total = @employees.count

@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     resources :employees, except: :destroy do
       resources :users, only: :create
     end
+    namespace :employees do
+      post 'datatable'
+    end
   end
 
   resources :orders, except: %i[destroy update]
