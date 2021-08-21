@@ -1,8 +1,6 @@
 import React from 'react'
 import {Row, Col, Card} from 'react-bootstrap'
-import {PierBasicChart, BarBasicChart} from '../../components'
-import HiPierChart from 'presentation/components/charts/hi-pier-chart'
-import HiBarChart from 'presentation/components/charts/hi-bar-chart'
+import {HiPierChart, HiBarChart} from '../../components'
 
 const Dashboard: React.FC = () => {
   return (
