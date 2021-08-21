@@ -1,16 +1,6 @@
 import {EmployeeDataTableModel} from '../../models/employee-models'
+import {DataTableParams, DataTable} from '../datatable'
 
-export type EmployeeDataTableParams = {
-  draw: number
-  page: number
-  per_page: number
-  sort_field?: any
-  sort_direction: string
-  search_value?: string
-}
-
-export interface EmployeeDataTable {
-  datatable: (
-    params: EmployeeDataTableParams,
-  ) => Promise<EmployeeDataTableModel>
+export interface EmployeeDataTable extends DataTable<EmployeeDataTableModel> {
+  datatable: (params: DataTableParams) => Promise<EmployeeDataTableModel>
 }

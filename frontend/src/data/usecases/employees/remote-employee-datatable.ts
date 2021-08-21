@@ -1,11 +1,9 @@
 import {ErrorsDetailsModel} from '../../models'
 import {DetailError} from '../../../domain/errors'
 import {HttpClient, StatusCode} from '../../../domain/protocols/http'
-import {
-  EmployeeDataTable,
-  EmployeeDataTableParams,
-} from 'domain/usecases/employees/employee-datatable'
-import {EmployeeDataTableModel} from 'domain/models/employee-models'
+import {EmployeeDataTable} from '../../../domain/usecases/employees/employee-datatable'
+import {EmployeeDataTableModel} from '../../../domain/models/employee-models'
+import {DataTableParams} from '../../../domain/usecases/datatable'
 
 export class RemoteEmployeeDatatable implements EmployeeDataTable {
   constructor(
@@ -15,9 +13,7 @@ export class RemoteEmployeeDatatable implements EmployeeDataTable {
     >,
   ) {}
 
-  async datatable(
-    params: EmployeeDataTableParams,
-  ): Promise<EmployeeDataTableModel> {
+  async datatable(params: DataTableParams): Promise<EmployeeDataTableModel> {
     const httpResponse = await this.httpClient.request({
       url: this.url,
       method: 'post',
