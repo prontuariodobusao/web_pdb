@@ -17,7 +17,7 @@ export const DataTableReducer = (
         data: action.payload.data,
         loading: false,
         draw: 1,
-        ajax: action.payload.ajax,
+        request: action.payload.request,
         totalRecords: action.payload.totalRecords,
         fields: action.payload.fields,
         idField: action.payload.idField,
@@ -31,6 +31,7 @@ export const DataTableReducer = (
       }
 
     case actionType.SEARCH_TABLE:
+      console.log(action.payload.page)
       return {
         ...state,
         loading: false,

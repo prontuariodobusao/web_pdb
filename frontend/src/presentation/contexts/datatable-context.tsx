@@ -20,7 +20,7 @@ type DataTableData = {
   ellipLeft: () => void
   goToPage: () => void
   ellipRight: () => void
-  searchTable: () => void
+  searchTable: (schValue: any) => void
   changePerPage: () => void
 }
 
@@ -30,7 +30,7 @@ const initialState: DataTableState = {
   perPage: 5,
   data: [],
   loading: true,
-  ajax: '',
+  request: null,
   totalRecords: 0,
   fields: {},
   idField: '',
@@ -83,7 +83,7 @@ export const DataTableContextProvider: React.FC = ({children}: any) => {
       type: 'initialize_table',
       payload: {
         data: response.data,
-        ajax: '',
+        request,
         totalRecords: response.totalRecords,
         fields: fields,
         idField: idField,
@@ -116,8 +116,27 @@ export const DataTableContextProvider: React.FC = ({children}: any) => {
     dispatch({type: 'sort_table', payload: ''})
   }
 
-  const searchTable = () => {
-    dispatch({type: 'sort_table', payload: ''})
+  const searchTable = async (searchValue: any) => {
+    if (searchValue.length < 3) searchValue = ''
+    dispatch({type: 'table_loading', payload: {}})
+    const {request, draw, perPage, sortField, sortDirection} = state
+    const response = (await requestData(request, {
+      draw,
+      per_page: perPage,
+      sort_field: sortField,
+      sort_direction: sortDirection,
+      search_value: searchValue,
+    })) as ResponseDataTableModel
+    const newPage = 1
+    dispatch({
+      type: 'sort_table',
+      payload: {
+        data: response.data,
+        request,
+        totalRecords: response.totalRecords,
+        page: newPage,
+      },
+    })
   }
 
   const changePerPage = () => {

@@ -4,7 +4,7 @@ export type DataTableState = {
   perPage: number
   data: any
   loading: boolean
-  ajax: string
+  request: any
   totalRecords: number
   fields: any
   idField: string

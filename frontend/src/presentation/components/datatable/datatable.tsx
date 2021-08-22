@@ -1,6 +1,13 @@
 import React, {useEffect, useContext, useState} from 'react'
 import {RemoteDataTable} from '../../../domain/usecases/remote-datatable'
-import {Table, Pagination, Col, FormGroup, FormControl} from 'react-bootstrap'
+import {
+  Table,
+  Pagination,
+  Col,
+  FormGroup,
+  FormControl,
+  FormControlProps,
+} from 'react-bootstrap'
 import {DataTableContext} from '../../contexts'
 
 import Loading from './datatable-loading'
@@ -41,6 +48,7 @@ const DataTable: React.FC<Props> = ({
   } = useContext(DataTableContext)
 
   const [loading, setLoading] = useState(true)
+  const [timer, setTimer] = useState(0)
 
   const loadData = async (): Promise<void> => {
     await initializeDataTable(remoteRequestRecords, fields, idField)
@@ -254,37 +262,38 @@ const DataTable: React.FC<Props> = ({
   //   }
   // }
 
-  // const handleSearchChange = event => {
-  //   const value = event.target.value
-  //   clearTimeout(this.timer)
-  //   this.timer = setTimeout(() => {
-  //     if (value !== null) searchTable(value)
-  //   }, WAIT_INTERVAL)
-  // }
-
   // const renderLoading = () => {
   //   if (!state.loading) return
   //   return <Loading />
   // }
 
-  // const renderSearch = () => {
-  //   return (
-  //     <FormGroup>
-  //       <FormControl
-  //         type="text"
-  //         placeholder="Search"
-  //         onChange={handleSearchChange.bind(this)}
-  //       />
-  //     </FormGroup>
-  //   )
-  // }
+  const handleSearchChange = (event: any) => {
+    const value = event.target.value
+    window.clearTimeout(timer)
+    const newTimer = window.setTimeout(() => {
+      if (value !== null) searchTable(value)
+    }, WAIT_INTERVAL)
+    setTimer(newTimer)
+  }
+
+  const renderSearch = () => {
+    return (
+      <FormGroup>
+        <FormControl
+          type="text"
+          placeholder="Search"
+          onChange={handleSearchChange.bind(this)}
+        />
+      </FormGroup>
+    )
+  }
 
   return (
     <div className="table-wrapper">
-      {/* <Col xs={8} md={4}>
+      <Col xs={8} md={4}>
         {renderSearch()}
-      </Col> */}
-      {loading ? (
+      </Col>
+      {state.loading ? (
         <span>Carregando...</span>
       ) : (
         <Table responsive hover>

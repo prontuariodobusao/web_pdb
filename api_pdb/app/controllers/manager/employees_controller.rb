@@ -21,12 +21,11 @@ module Manager
       end
       if params[:search_value].present?
         search = "%#{params[:search_value]}%"
-        @employees = @employees.where('official_name ILIKE ?', search)
+        @employees = @employees.where('name ILIKE ?', search)
       end
       @total = @employees.count
 
       @employees = @employees.page(params[:page]).per_page(params[:per_page])
-
       @draw = params[:draw]
 
       json_response({ draw: @draw, totalRecords: @total, data: EmployeeBlueprint.render_as_hash(@employees) })
