@@ -2,7 +2,20 @@ import React, {createContext, ReactNode, useReducer} from 'react'
 import {DataTableState} from './states/datatable-state'
 import {DataTableReducer} from './reducers/datatable-reducer'
 
-const DataTableContext = createContext<DataTableState>({} as DataTableState)
+type DataTableData = {
+  state: DataTableState
+  initializeDataTable: () => void
+  sort: () => void
+  previousPage: () => void
+  nextPage: () => void
+  ellipLeft: () => void
+  goToPage: () => void
+  ellipRight: () => void
+  searchTable: () => void
+  changePerPage: () => void
+}
+
+const DataTableContext = createContext<DataTableData>({} as DataTableData)
 
 const initialState = {
   draw: 0,
@@ -23,15 +36,55 @@ export type Props = {
   children: ReactNode
 }
 
-const DataTableContextProvider = ({children}: Props): ReactNode => {
+export const DataTableContextProvider = ({children}: Props): ReactNode => {
   const [state, dispatch] = useReducer(DataTableReducer, initialState)
 
   const initializeDataTable = (payload: DataTableState) => {
     dispatch({type: 'initialize_table', payload})
   }
 
+  const sort = () => {
+    dispatch({type: 'sort_table', payload: ''})
+  }
+
+  const previousPage = () => {
+    dispatch({type: 'sort_table', payload: ''})
+  }
+
+  const nextPage = () => {
+    dispatch({type: 'sort_table', payload: ''})
+  }
+
+  const ellipLeft = () => {
+    dispatch({type: 'sort_table', payload: ''})
+  }
+
+  const ellipRight = () => {
+    dispatch({type: 'sort_table', payload: ''})
+  }
+
+  const goToPage = () => {
+    dispatch({type: 'sort_table', payload: ''})
+  }
+
+  const searchTable = () => {
+    dispatch({type: 'sort_table', payload: ''})
+  }
+
+  const changePerPage = () => {
+    dispatch({type: 'sort_table', payload: ''})
+  }
+
   const contextValues = {
     initializeDataTable,
+    sort,
+    previousPage,
+    nextPage,
+    ellipLeft,
+    goToPage,
+    ellipRight,
+    searchTable,
+    changePerPage,
     ...state,
   }
 
@@ -42,4 +95,4 @@ const DataTableContextProvider = ({children}: Props): ReactNode => {
   )
 }
 
-export default DataTableContextProvider
+export default DataTableContext

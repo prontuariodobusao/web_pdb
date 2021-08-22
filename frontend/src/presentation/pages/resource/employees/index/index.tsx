@@ -3,7 +3,7 @@ import {Row, Col, Card, Table, Button} from 'react-bootstrap'
 import {useTable, useGlobalFilter} from 'react-table'
 import {GlobalFilter} from 'presentation/components'
 
-const Workers: React.FC = () => {
+const Employees: React.FC = () => {
   const DATA = [
     {
       identify: '123',
@@ -128,4 +128,4 @@ const Workers: React.FC = () => {
   )
 }
 
-export default Workers
+export default Employees
