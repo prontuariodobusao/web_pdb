@@ -5,6 +5,7 @@ import {AuthorizeHttpClientDecorator} from '../decorators'
 import {AxiosHttpClient} from '../../infra/http'
 import {LocalStorageAdapter} from '../../infra/cache'
 import {EmployeeDt} from '../../presentation/pages'
+import {DataTableContextProvider} from '../../presentation/contexts/datatable-context'
 
 const remoteEmployeeDatatable = (): RemoteEmployeeDatatable => {
   const authHttpClient = new AuthorizeHttpClientDecorator(
@@ -19,5 +20,7 @@ const remoteEmployeeDatatable = (): RemoteEmployeeDatatable => {
 }
 
 export const createEmployeeDataTable: React.FC = () => (
-  <EmployeeDt remoteEmployeeDataTable={remoteEmployeeDatatable()} />
+  <DataTableContextProvider>
+    <EmployeeDt remoteEmployeeDataTable={remoteEmployeeDatatable()} />
+  </DataTableContextProvider>
 )

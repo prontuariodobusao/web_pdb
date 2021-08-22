@@ -2,18 +2,20 @@ import {ErrorsDetailsModel} from '../../models'
 import {DetailError} from '../../../domain/errors'
 import {HttpClient, StatusCode} from '../../../domain/protocols/http'
 import {EmployeeDataTable} from '../../../domain/usecases/employees/employee-datatable'
-import {EmployeeDataTableModel} from '../../../domain/models/employee-models'
-import {DataTableParams} from '../../../domain/usecases/remote-datatable'
+import {
+  DataTableParams,
+  ResponseDataTableModel,
+} from '../../../domain/usecases/remote-datatable'
 
 export class RemoteEmployeeDatatable implements EmployeeDataTable {
   constructor(
     private readonly url: string,
     private readonly httpClient: HttpClient<
-      EmployeeDataTableModel | ErrorsDetailsModel
+      ResponseDataTableModel | ErrorsDetailsModel
     >,
   ) {}
 
-  async datatable(params: DataTableParams): Promise<EmployeeDataTableModel> {
+  async datatable(params: DataTableParams): Promise<ResponseDataTableModel> {
     const httpResponse = await this.httpClient.request({
       url: this.url,
       method: 'post',
@@ -21,7 +23,7 @@ export class RemoteEmployeeDatatable implements EmployeeDataTable {
     })
 
     if (httpResponse.statusCode === StatusCode.ok)
-      return httpResponse.body as EmployeeDataTableModel
+      return httpResponse.body as ResponseDataTableModel
 
     throw new DetailError(httpResponse.body as ErrorsDetailsModel)
   }

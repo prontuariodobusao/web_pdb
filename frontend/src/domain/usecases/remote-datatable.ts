@@ -7,6 +7,12 @@ export type DataTableParams = {
   search_value?: string
 }
 
-export interface RemoteDataTable<T> {
-  datatable: (params: DataTableParams) => Promise<T>
+export type ResponseDataTableModel = {
+  draw: number
+  totalRecords: number
+  data: any[]
+}
+
+export interface RemoteDataTable {
+  datatable: (params: DataTableParams) => Promise<ResponseDataTableModel>
 }

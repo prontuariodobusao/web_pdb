@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react'
+import React, {useEffect, useContext, useState} from 'react'
 import {RemoteDataTable} from '../../../domain/usecases/remote-datatable'
 import {Table, Pagination, Col, FormGroup, FormControl} from 'react-bootstrap'
 import {DataTableContext} from '../../contexts'
@@ -17,7 +17,7 @@ const sortLinkStyle = {
 }
 
 type Props = {
-  remoteRequestRecords: RemoteDataTable<any>
+  remoteRequestRecords: RemoteDataTable
   fields: Record<string, unknown>
   idField: string
 }
@@ -40,9 +40,16 @@ const DataTable: React.FC<Props> = ({
     state,
   } = useContext(DataTableContext)
 
-  // useEffect(() => {
-  //   initializeDataTable()
-  // }, [])
+  const [loading, setLoading] = useState(true)
+
+  const loadData = async (): Promise<void> => {
+    await initializeDataTable(remoteRequestRecords, fields, idField)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
 
   const columnSize = () => {
     const tableSize = Object.keys(fields).length
@@ -70,30 +77,7 @@ const DataTable: React.FC<Props> = ({
 
   const renderBody = () => {
     const values = Object.values(fields)
-    const data = [
-      {
-        id: 1,
-        confirmation: 'false',
-        identity: '111',
-        name: 'Edson',
-        occupation: 'driver',
-      },
-      {
-        id: 2,
-        confirmation: 'false',
-        identity: '112',
-        name: 'Albert',
-        occupation: 'driver',
-      },
-      {
-        id: 3,
-        confirmation: 'false',
-        identity: '113',
-        name: 'Galdino',
-        occupation: 'driver',
-      },
-    ]
-
+    const data = state.data
     const tr = data.map((datum: any) => {
       const td = values.map((field: any) => {
         const tdId = String(datum[idField]) + '-' + field
@@ -300,10 +284,14 @@ const DataTable: React.FC<Props> = ({
       {/* <Col xs={8} md={4}>
         {renderSearch()}
       </Col> */}
-      <Table responsive hover>
-        {renderHead()}
-        {renderBody()}
-      </Table>
+      {loading ? (
+        <span>Carregando...</span>
+      ) : (
+        <Table responsive hover>
+          {renderHead()}
+          {renderBody()}
+        </Table>
+      )}
       {/* {renderLoading()} */}
       {/* <Col xs={8}>
         <div>

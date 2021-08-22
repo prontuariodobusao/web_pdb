@@ -11,4 +11,5 @@ export type DataTableState = {
   sortField: any
   sortDirection: any
   searchValue: string
+  messageError: string
 }

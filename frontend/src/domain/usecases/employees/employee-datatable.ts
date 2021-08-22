@@ -1,7 +1,9 @@
-import {EmployeeDataTableModel} from '../../models/employee-models'
-import {DataTableParams, RemoteDataTable} from '../remote-datatable'
+import {
+  DataTableParams,
+  RemoteDataTable,
+  ResponseDataTableModel,
+} from '../remote-datatable'
 
-export interface EmployeeDataTable
-  extends RemoteDataTable<EmployeeDataTableModel> {
-  datatable: (params: DataTableParams) => Promise<EmployeeDataTableModel>
+export interface EmployeeDataTable extends RemoteDataTable {
+  datatable: (params: DataTableParams) => Promise<ResponseDataTableModel>
 }
