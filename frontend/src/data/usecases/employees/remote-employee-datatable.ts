@@ -3,7 +3,7 @@ import {DetailError} from '../../../domain/errors'
 import {HttpClient, StatusCode} from '../../../domain/protocols/http'
 import {EmployeeDataTable} from '../../../domain/usecases/employees/employee-datatable'
 import {EmployeeDataTableModel} from '../../../domain/models/employee-models'
-import {DataTableParams} from '../../../domain/usecases/datatable'
+import {DataTableParams} from '../../../domain/usecases/remote-datatable'
 
 export class RemoteEmployeeDatatable implements EmployeeDataTable {
   constructor(

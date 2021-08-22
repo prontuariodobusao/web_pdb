@@ -1,7 +1,7 @@
 import faker from 'faker'
 import {UserDataModel} from '../models/user-model'
 import {ConfirmDataParams} from '../usecases/confirm/confirmation'
-import {EmployeeDataTableParams} from '../usecases/employees/employee-datatable'
+import {DataTableParams} from '../../domain/usecases/remote-datatable'
 
 export const mockUserDataModel = (): UserDataModel => ({
   data: {
@@ -24,7 +24,7 @@ export const mockConfirmationParams = (): ConfirmDataParams => {
   }
 }
 
-export const mockEmployeeDataTableParams = (): EmployeeDataTableParams => {
+export const mockEmployeeDataTableParams = (): DataTableParams => {
   return {
     draw: 1,
     page: 1,

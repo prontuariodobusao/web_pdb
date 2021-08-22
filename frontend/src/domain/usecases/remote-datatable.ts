@@ -7,6 +7,6 @@ export type DataTableParams = {
   search_value?: string
 }
 
-export interface DataTable<T> {
+export interface RemoteDataTable<T> {
   datatable: (params: DataTableParams) => Promise<T>
 }

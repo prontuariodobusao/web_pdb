@@ -4,7 +4,7 @@ import {basUrl} from '../../services'
 import {AuthorizeHttpClientDecorator} from '../decorators'
 import {AxiosHttpClient} from '../../infra/http'
 import {LocalStorageAdapter} from '../../infra/cache'
-import {DataTable} from '../../presentation/components'
+import {EmployeeDt} from '../../presentation/pages'
 
 const remoteEmployeeDatatable = (): RemoteEmployeeDatatable => {
   const authHttpClient = new AuthorizeHttpClientDecorator(
@@ -18,16 +18,6 @@ const remoteEmployeeDatatable = (): RemoteEmployeeDatatable => {
   )
 }
 
-export const CreateEmployeeDataTable: React.FC = () => (
-  <DataTable
-    remoteRequestDatatable={remoteEmployeeDatatable()}
-    fields={{
-      id: 'id',
-      name: 'name',
-      identity: 'identity',
-      confitmation: 'confitmation',
-      occupation: ' occupation: string',
-    }}
-    idField="id"
-  />
+export const createEmployeeDataTable: React.FC = () => (
+  <EmployeeDt remoteEmployeeDataTable={remoteEmployeeDatatable()} />
 )

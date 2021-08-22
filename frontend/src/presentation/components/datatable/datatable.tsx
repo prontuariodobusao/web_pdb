@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react'
-import {DataTable} from '../../../domain/usecases/datatable'
+import {RemoteDataTable} from '../../../domain/usecases/remote-datatable'
 import {Table, Pagination, Col, FormGroup, FormControl} from 'react-bootstrap'
 import {DataTableContext} from '../../contexts'
 
@@ -17,13 +17,13 @@ const sortLinkStyle = {
 }
 
 type Props = {
-  remoteRequestDatatable: DataTable<any>
+  remoteRequestRecords: RemoteDataTable<any>
   fields: Record<string, unknown>
   idField: string
 }
 
 const DataTable: React.FC<Props> = ({
-  remoteRequestDatatable,
+  remoteRequestRecords,
   fields,
   idField,
 }: Props) => {
@@ -40,9 +40,9 @@ const DataTable: React.FC<Props> = ({
     state,
   } = useContext(DataTableContext)
 
-  useEffect(() => {
-    initializeDataTable()
-  }, [])
+  // useEffect(() => {
+  //   initializeDataTable()
+  // }, [])
 
   const columnSize = () => {
     const tableSize = Object.keys(fields).length
@@ -70,15 +70,37 @@ const DataTable: React.FC<Props> = ({
 
   const renderBody = () => {
     const values = Object.values(fields)
-    const data = state.data
+    const data = [
+      {
+        id: 1,
+        confirmation: 'false',
+        identity: '111',
+        name: 'Edson',
+        occupation: 'driver',
+      },
+      {
+        id: 2,
+        confirmation: 'false',
+        identity: '112',
+        name: 'Albert',
+        occupation: 'driver',
+      },
+      {
+        id: 3,
+        confirmation: 'false',
+        identity: '113',
+        name: 'Galdino',
+        occupation: 'driver',
+      },
+    ]
 
     const tr = data.map((datum: any) => {
       const td = values.map((field: any) => {
-        const tdId = String(datum[state.idField]) + '-' + field
+        const tdId = String(datum[idField]) + '-' + field
         return <td key={tdId}>{datum[field]}</td>
       })
 
-      return <tr key={datum[state.idField]}>{td}</tr>
+      return <tr key={datum[idField]}>{td}</tr>
     })
     return <tbody>{tr}</tbody>
   }
@@ -278,7 +300,7 @@ const DataTable: React.FC<Props> = ({
       {/* <Col xs={8} md={4}>
         {renderSearch()}
       </Col> */}
-      <Table bordered hover>
+      <Table responsive hover>
         {renderHead()}
         {renderBody()}
       </Table>
