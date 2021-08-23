@@ -4,13 +4,15 @@ import {
   Table,
   Pagination,
   Col,
+  Form,
   FormGroup,
   FormControl,
   FormControlProps,
+  Row,
 } from 'react-bootstrap'
 import {DataTableContext} from '../../contexts'
 
-import Loading from './datatable-loading'
+import DataTableLoading from './datatable-loading'
 
 const WAIT_INTERVAL = 1000
 const ENTER_KEY = 13
@@ -47,16 +49,10 @@ const DataTable: React.FC<Props> = ({
     state,
   } = useContext(DataTableContext)
 
-  const [loading, setLoading] = useState(true)
   const [timer, setTimer] = useState(0)
 
-  const loadData = async (): Promise<void> => {
-    await initializeDataTable(remoteRequestRecords, fields, idField)
-    setLoading(false)
-  }
-
   useEffect(() => {
-    loadData()
+    initializeDataTable(remoteRequestRecords, fields, idField)
   }, [])
 
   const columnSize = () => {
@@ -263,10 +259,10 @@ const DataTable: React.FC<Props> = ({
     }
   }
 
-  // const renderLoading = () => {
-  //   if (!state.loading) return
-  //   return <Loading />
-  // }
+  const renderLoading = () => {
+    if (!state.loading) return
+    return <DataTableLoading />
+  }
 
   const handleSearchChange = (event: any) => {
     const value = event.target.value
@@ -279,35 +275,47 @@ const DataTable: React.FC<Props> = ({
 
   const renderSearch = () => {
     return (
-      <FormGroup>
-        <FormControl
-          type="text"
-          placeholder="Search"
-          onChange={handleSearchChange.bind(this)}
-        />
-      </FormGroup>
+      <Form.Control
+        type="text"
+        placeholder="Pesquisar"
+        onChange={handleSearchChange.bind(this)}
+      />
     )
   }
 
   return (
-    <div className="table-wrapper">
-      <Col xs={8} md={4}>
-        {renderSearch()}
-      </Col>
-      {state.loading ? (
-        <span>Carregando...</span>
-      ) : (
-        <Table responsive hover>
+    <>
+      <div className="table-wrapper">
+        <Form.Row className="align-items-center">
+          <Col xs="auto">{renderSearch()}</Col>
+          <Col xs="auto" className="my-1">
+            <Form.Control
+              as="select"
+              className="mr-sm-2"
+              style={pageInputStyle}
+              value={state.perPage}
+              onChange={(event: any) => changePerPage(event.target.value)}>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+            </Form.Control>
+          </Col>
+        </Form.Row>
+
+        <Table hover>
           {renderHead()}
           {renderBody()}
         </Table>
-      )}
-      {/* {renderLoading()} */}
-      <Col xs={8}>
-        {/* <div>
-          Page
-          <span>
-            <input
+        {renderLoading()}
+        <Row>
+          <Col>
+            {renderPageButtons()} Página {String(state.page)} {''} de{' '}
+            {getTotalPages()}
+          </Col>
+          <Col>
+            <div>
+              {/* <span>
+                <input
               type="text"
               style={pageInputStyle}
               className="text-center page-input"
@@ -316,27 +324,12 @@ const DataTable: React.FC<Props> = ({
               onKeyDown={event => handlePageInputKeyDown(event)}
               placeholder={String(state.page)}
             />
-            of {getTotalPages()}
-          </span>
-        </div> */}
-        {renderPageButtons()}
-      </Col>
-      <Col xs={4} className="text-right">
-        <div>
-          <span>
-            <select
-              style={pageInputStyle}
-              value={state.perPage}
-              onChange={(event: any) => changePerPage(event.target.value)}>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </select>
-            per page
-          </span>
-        </div>
-      </Col>
-    </div>
+              </span> */}
+            </div>
+          </Col>
+        </Row>
+      </div>
+    </>
   )
 }
 
