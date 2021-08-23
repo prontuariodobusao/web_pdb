@@ -63,11 +63,11 @@ const DataTable: React.FC<Props> = ({
   }
 
   const renderHead = () => {
-    const keys = Object.keys(fields)
-    const th = keys.map(key => {
+    const keys = Object.entries(fields)
+    const th = keys.map(([key, value]: any) => {
       return (
         <th key={key} className={columnSize()}>
-          {key}
+          {value}
           {/* <span>{renderSort(fields[key])}</span> */}
         </th>
       )
@@ -80,10 +80,10 @@ const DataTable: React.FC<Props> = ({
   }
 
   const renderBody = () => {
-    const values = Object.values(fields)
+    const keys = Object.keys(fields)
     const data = state.data
     const tr = data.map((datum: any) => {
-      const td = values.map((field: any) => {
+      const td = keys.map((field: any) => {
         const tdId = String(datum[idField]) + '-' + field
         return <td key={tdId}>{datum[field]}</td>
       })

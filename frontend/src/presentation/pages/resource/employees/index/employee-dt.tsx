@@ -21,10 +21,10 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
                 remoteRequestRecords={remoteEmployeeDataTable}
                 fields={{
                   id: 'id',
-                  Nome: 'name',
-                  Matricula: 'identity',
-                  Confirmação: 'confirmation',
-                  Cargo: 'occupation',
+                  name: 'Nome',
+                  identity: 'Matricula',
+                  confirmation: 'Confirmação',
+                  occupation: 'Cargo',
                 }}
                 idField="id"
               />
