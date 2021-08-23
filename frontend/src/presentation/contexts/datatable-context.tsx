@@ -14,14 +14,14 @@ type DataTableData = {
     fields: Record<string, unknown>,
     idField: string,
   ) => void
-  sort: () => void
+  sort: (field: number, direction: string) => void
   previousPage: () => void
   nextPage: () => void
   ellipLeft: () => void
-  goToPage: () => void
+  goToPage: (page: number) => void
   ellipRight: () => void
   searchTable: (schValue: any) => void
-  changePerPage: () => void
+  changePerPage: (perPage: number) => void
 }
 
 const initialState: DataTableState = {
@@ -92,30 +92,6 @@ export const DataTableContextProvider: React.FC = ({children}: any) => {
     })
   }
 
-  const sort = () => {
-    dispatch({type: 'sort_table', payload: ''})
-  }
-
-  const previousPage = () => {
-    dispatch({type: 'sort_table', payload: ''})
-  }
-
-  const nextPage = () => {
-    dispatch({type: 'sort_table', payload: ''})
-  }
-
-  const ellipLeft = () => {
-    dispatch({type: 'sort_table', payload: ''})
-  }
-
-  const ellipRight = () => {
-    dispatch({type: 'sort_table', payload: ''})
-  }
-
-  const goToPage = () => {
-    dispatch({type: 'sort_table', payload: ''})
-  }
-
   const searchTable = async (searchValue: any) => {
     if (searchValue.length < 3) searchValue = ''
     dispatch({type: 'table_loading', payload: {}})
@@ -139,8 +115,207 @@ export const DataTableContextProvider: React.FC = ({children}: any) => {
     })
   }
 
-  const changePerPage = () => {
-    dispatch({type: 'sort_table', payload: ''})
+  const goToPage = async (page: number) => {
+    console.log(page)
+    const {
+      request,
+      draw,
+      perPage,
+      totalRecords,
+      sortDirection,
+      sortField,
+      searchValue,
+    } = state
+    if (page > 0 && page <= Math.ceil(totalRecords / perPage)) {
+      dispatch({type: 'table_loading', payload: {}})
+      const response = (await requestData(request, {
+        draw,
+        page,
+        per_page: perPage,
+        sort_field: sortField,
+        sort_direction: sortDirection,
+        search_value: searchValue,
+      })) as ResponseDataTableModel
+      dispatch({
+        type: 'go_to_page',
+        payload: {
+          data: response.data,
+          page,
+        },
+      })
+    }
+  }
+  const previousPage = async () => {
+    const {
+      request,
+      draw,
+      page,
+      perPage,
+      sortDirection,
+      sortField,
+      searchValue,
+    } = state
+
+    if (page > 1) {
+      dispatch({type: 'table_loading', payload: {}})
+      const newPage = page - 1
+      const response = (await requestData(request, {
+        draw,
+        page: newPage,
+        per_page: perPage,
+        sort_field: sortField,
+        sort_direction: sortDirection,
+        search_value: searchValue,
+      })) as ResponseDataTableModel
+      dispatch({
+        type: 'previous_page',
+        payload: {
+          data: response.data,
+        },
+      })
+    }
+  }
+
+  const nextPage = async () => {
+    const {
+      request,
+      draw,
+      page,
+      perPage,
+      totalRecords,
+      sortDirection,
+      sortField,
+      searchValue,
+    } = state
+
+    if (page * perPage + 1 <= totalRecords) {
+      dispatch({type: 'table_loading', payload: {}})
+      const newPage = page + 1
+      const response = (await requestData(request, {
+        draw,
+        page: newPage,
+        per_page: perPage,
+        sort_field: sortField,
+        sort_direction: sortDirection,
+        search_value: searchValue,
+      })) as ResponseDataTableModel
+      dispatch({
+        type: 'next_page',
+        payload: {
+          data: response.data,
+        },
+      })
+    }
+  }
+
+  const ellipLeft = async () => {
+    const {
+      request,
+      draw,
+      page,
+      perPage,
+      sortDirection,
+      sortField,
+      searchValue,
+    } = state
+    if (page >= 4) {
+      dispatch({type: 'table_loading', payload: {}})
+      const newPage = page - 4
+      const response = (await requestData(request, {
+        draw,
+        page: newPage,
+        per_page: perPage,
+        sort_field: sortField,
+        sort_direction: sortDirection,
+        search_value: searchValue,
+      })) as ResponseDataTableModel
+      dispatch({
+        type: 'go_to_page',
+        payload: {
+          data: response.data,
+          page: newPage,
+        },
+      })
+    }
+  }
+
+  const ellipRight = async () => {
+    const {
+      request,
+      draw,
+      page,
+      perPage,
+      totalRecords,
+      sortDirection,
+      sortField,
+      searchValue,
+    } = state
+    const totalPages = Math.ceil(totalRecords / perPage)
+    if (totalPages - 4 >= page) {
+      dispatch({type: 'table_loading', payload: {}})
+      const newPage = page + 4
+      const response = (await requestData(request, {
+        draw,
+        page: newPage,
+        per_page: perPage,
+        sort_field: sortField,
+        sort_direction: sortDirection,
+        search_value: searchValue,
+      })) as ResponseDataTableModel
+      dispatch({
+        type: 'go_to_page',
+        payload: {
+          data: response.data,
+          page: newPage,
+        },
+      })
+    }
+  }
+
+  const changePerPage = async (perPage: number) => {
+    const {request, draw, sortDirection, sortField, searchValue} = state
+    const newPerPage = Number(perPage)
+    if ([5, 10, 15].includes(newPerPage)) {
+      dispatch({type: 'table_loading', payload: {}})
+      const response = (await requestData(request, {
+        draw,
+        page: 1,
+        per_page: newPerPage,
+        sort_field: sortField,
+        sort_direction: sortDirection,
+        search_value: searchValue,
+      })) as ResponseDataTableModel
+      dispatch({
+        type: 'change_per_page',
+        payload: {
+          data: response.data,
+          perPage: newPerPage,
+        },
+      })
+    }
+  }
+
+  const sort = async (field: number, direction = 'asc') => {
+    const {request, draw, perPage, page, fields, searchValue} = state
+    if (Object.values(fields).includes(field) || field === null) {
+      dispatch({type: 'table_loading', payload: {}})
+      const response = (await requestData(request, {
+        draw,
+        page,
+        per_page: perPage,
+        sort_field: field,
+        sort_direction: direction,
+        search_value: searchValue,
+      })) as ResponseDataTableModel
+      dispatch({
+        type: 'sort_table',
+        payload: {
+          data: response.data,
+          sortField: field,
+          sortDirection: direction,
+        },
+      })
+    }
   }
 
   const contextValues = {

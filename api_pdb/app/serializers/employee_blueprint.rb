@@ -6,6 +6,6 @@ class EmployeeBlueprint < Blueprinter::Base
     employee.occupation_type_occupation
   end
   field :confirmation do |employee|
-    employee.user.confirmed?
+    employee.user ? employee.user.confirmed? : 'N/U'
   end
 end
