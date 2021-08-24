@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
-import React from 'react'
+import React, {useState} from 'react'
 import {Row, Col, Card, Button} from 'react-bootstrap'
-import {DataTable} from '../../../../components'
+import {DataTable, VerticallyCenteredModal} from '../../../../components'
 import {EmployeeDataTable} from '../../../../../domain/usecases/employees/employee-datatable'
 
 type Props = {
@@ -9,8 +9,24 @@ type Props = {
 }
 
 const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
+  const [modalShow, setModalShow] = useState(false)
+
   return (
     <>
+      <Row>
+        <Col>
+          <Button
+            className="btn button-plus label"
+            onClick={() => setModalShow(true)}>
+            <i className="feather icon-user-plus" /> Cadastrar Funcionário
+          </Button>
+        </Col>
+      </Row>
+      <VerticallyCenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}>
+        <h1>Teste</h1>
+      </VerticallyCenteredModal>
       <Row>
         <Col md={12}>
           <Card>
