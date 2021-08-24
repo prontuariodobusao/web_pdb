@@ -3,9 +3,26 @@ class EmployeeBlueprint < Blueprinter::Base
 
   fields :name, :identity
   field :occupation do |employee|
-    employee.occupation_type_occupation
+    case employee.occupation_type_occupation
+    when 'driver'
+      'Motorista'
+    when 'mecanic'
+      'Mecãnico'
+    when 'manager'
+      'Gerente'
+    when 'rh'
+      'RH'
+    else
+      employee.occupation_type_occupation
+    end
   end
   field :confirmation do |employee|
-    employee.user ? employee.user.confirmed? : 'N/U'
+    if employee.user && employee.user.confirmed? == true
+      'Sim'
+    elsif employee.user && employee.user.confirmed? == false
+      'Não'
+    else
+      'N/L'
+    end
   end
 end

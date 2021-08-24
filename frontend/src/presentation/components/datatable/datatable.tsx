@@ -80,12 +80,16 @@ const DataTable: React.FC<Props> = ({
   }
 
   const renderBody = () => {
-    const keys = Object.keys(fields)
+    const objects = Object.entries(fields)
     const data = state.data
     const tr = data.map((datum: any) => {
-      const td = keys.map((field: any) => {
-        const tdId = String(datum[idField]) + '-' + field
-        return <td key={tdId}>{datum[field]}</td>
+      const td = objects.map(([key, value]: any) => {
+        const tdId = String(datum[idField]) + '-' + key
+        if (String(key) !== 'cell') {
+          return <td key={tdId}>{datum[key]}</td>
+        } else {
+          return <td key={tdId}>{value()}</td>
+        }
       })
 
       return <tr key={datum[idField]}>{td}</tr>
@@ -136,7 +140,7 @@ const DataTable: React.FC<Props> = ({
         disabled={!previousActive}
         key="prev"
         onClick={() => previousPage()}>
-        Previous
+        <i className="feather icon-chevrons-left" />
       </Pagination.Item>
     )
     const nextLink = (
@@ -144,7 +148,7 @@ const DataTable: React.FC<Props> = ({
         disabled={!nextActive}
         key="next"
         onClick={() => nextPage()}>
-        Next
+        <i className="feather icon-chevrons-right" />
       </Pagination.Item>
     )
 
@@ -302,7 +306,7 @@ const DataTable: React.FC<Props> = ({
           </Col>
         </Form.Row>
 
-        <Table hover>
+        <Table responsive hover>
           {renderHead()}
           {renderBody()}
         </Table>

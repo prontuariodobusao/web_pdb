@@ -1,5 +1,6 @@
+/* eslint-disable react/display-name */
 import React from 'react'
-import {Row, Col, Card} from 'react-bootstrap'
+import {Row, Col, Card, Button} from 'react-bootstrap'
 import {DataTable} from '../../../../components'
 import {EmployeeDataTable} from '../../../../../domain/usecases/employees/employee-datatable'
 
@@ -20,11 +21,15 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
               <DataTable
                 remoteRequestRecords={remoteEmployeeDataTable}
                 fields={{
-                  id: 'id',
                   name: 'Nome',
                   identity: 'Matricula',
-                  confirmation: 'Confirmação',
+                  confirmation: 'Confirmação de Login',
                   occupation: 'Cargo',
+                  cell: () => (
+                    <Button className="label theme-bg text-white f-12 button-table">
+                      Editar
+                    </Button>
+                  ),
                 }}
                 idField="id"
               />
