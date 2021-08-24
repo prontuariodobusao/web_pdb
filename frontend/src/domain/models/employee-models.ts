@@ -10,3 +10,20 @@ export type EmployeeDataTableModel = {
   totalRecords: number
   data: EmployeeModel[]
 }
+
+export type EmployeePasswordModel = {
+  employee: {
+    data: {
+      id: number
+      name: string
+      identity: string
+      occupation: string
+    }
+    meta: {
+      links: {
+        self: string
+      }
+    }
+  }
+  password: string
+}

@@ -2,6 +2,7 @@ import faker from 'faker'
 import {UserDataModel} from '../models/user-model'
 import {ConfirmDataParams} from '../usecases/confirm/confirmation'
 import {DataTableParams} from '../../domain/usecases/remote-datatable'
+import {EmployeeParams} from '../../domain/usecases/employees/create-employee'
 
 export const mockUserDataModel = (): UserDataModel => ({
   data: {
@@ -32,6 +33,17 @@ export const mockEmployeeDataTableParams = (): DataTableParams => {
     sort_field: null,
     sort_direction: 'asc',
     search_value: '',
+  }
+}
+
+export const mockCreateEmployeeParams = (): EmployeeParams => {
+  return {
+    data: {
+      name: 'Nome teste',
+      identity: '1234',
+      occupation_id: 1,
+      is_user: true,
+    },
   }
 }
 
