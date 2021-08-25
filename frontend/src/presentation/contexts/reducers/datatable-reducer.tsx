@@ -47,6 +47,14 @@ export const DataTableReducer = (
         page: action.payload.page,
         data: action.payload.data,
       }
+    case actionType.RELOAD_TABLE:
+      return {
+        ...state,
+        data: action.payload.data,
+        perPage: 5,
+        page: 1,
+        loading: false,
+      }
     case actionType.CHANGE_PER_PAGE:
       return {
         ...state,

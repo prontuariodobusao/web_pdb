@@ -22,6 +22,7 @@ type DataTableData = {
   ellipRight: () => void
   searchTable: (schValue: any) => void
   changePerPage: (perPage: number) => void
+  reloadTable: () => void
 }
 
 const initialState: DataTableState = {
@@ -111,6 +112,22 @@ export const DataTableContextProvider: React.FC = ({children}: any) => {
         request,
         totalRecords: response.totalRecords,
         page: newPage,
+      },
+    })
+  }
+
+  const reloadTable = async () => {
+    const {request, draw, sortDirection} = state
+    const response = (await requestData(request, {
+      draw,
+      page: 1,
+      per_page: 5,
+      sort_direction: sortDirection,
+    })) as ResponseDataTableModel
+    dispatch({
+      type: 'reload_table',
+      payload: {
+        data: response.data,
       },
     })
   }
@@ -328,6 +345,7 @@ export const DataTableContextProvider: React.FC = ({children}: any) => {
     ellipRight,
     searchTable,
     changePerPage,
+    reloadTable,
     state,
   }
 

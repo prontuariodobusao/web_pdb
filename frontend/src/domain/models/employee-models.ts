@@ -1,6 +1,6 @@
 export type EmployeeModel = {
   id: number
-  confirmation: boolean
+  confirmation?: boolean
   identity: string
   name: string
   occupation: string
