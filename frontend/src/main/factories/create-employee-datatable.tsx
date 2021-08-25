@@ -19,7 +19,7 @@ const remoteEmployeeDatatable = (): RemoteEmployeeDatatable => {
   )
 }
 
-export const createEmployeeDataTable: React.FC = () => (
+export const CreateEmployeeDataTable: React.FC = () => (
   <DataTableContextProvider>
     <EmployeeDt remoteEmployeeDataTable={remoteEmployeeDatatable()} />
   </DataTableContextProvider>

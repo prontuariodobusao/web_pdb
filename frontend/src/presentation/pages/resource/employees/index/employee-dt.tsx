@@ -2,7 +2,8 @@
 import React, {useState} from 'react'
 import {Row, Col, Card, Button} from 'react-bootstrap'
 import {DataTable, VerticallyCenteredModal} from '../../../../components'
-import {EmployeeDataTable} from '../../../../../domain/usecases/employees/employee-datatable'
+import {EmployeeDataTable} from '../../../../../domain/usecases/employees'
+import {CreateEmployeeForm} from '../../../../../main/factories'
 
 type Props = {
   remoteEmployeeDataTable: EmployeeDataTable
@@ -23,9 +24,10 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
         </Col>
       </Row>
       <VerticallyCenteredModal
+        title="Cadastrar Funcionário"
         show={modalShow}
         onHide={() => setModalShow(false)}>
-        <h1>Teste</h1>
+        <CreateEmployeeForm />
       </VerticallyCenteredModal>
       <Row>
         <Col md={12}>

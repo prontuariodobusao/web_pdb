@@ -1,16 +1,18 @@
 import React, {ReactNode} from 'react'
-import {Button, Modal} from 'react-bootstrap'
+import {Modal} from 'react-bootstrap'
 
 type ModalProps = {
   show: boolean
-  onHide: (value: React.SetStateAction<boolean>) => void
+  onHide: (value: any) => void
   children: ReactNode
+  title: string
 }
 
 const VerticallyCenteredModal: React.FC<ModalProps> = ({
   show,
   onHide,
   children,
+  title,
 }: ModalProps) => {
   return (
     <Modal
@@ -20,14 +22,9 @@ const VerticallyCenteredModal: React.FC<ModalProps> = ({
       aria-labelledby="contained-modal-title-vcenter"
       centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{children}</Modal.Body>
-      <Modal.Footer>
-        <Button>Close</Button>
-      </Modal.Footer>
     </Modal>
   )
 }

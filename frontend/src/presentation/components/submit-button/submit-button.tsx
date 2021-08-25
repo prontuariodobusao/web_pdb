@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {ReactNode} from 'react'
 import {ButtonContainer, ButtonText} from './styles'
 import {ButtonProps, Spinner} from 'react-bootstrap'
 
 interface ButtonProp extends ButtonProps {
-  children: string
+  children: ReactNode
   loading?: boolean
 }
 
@@ -19,7 +19,6 @@ const SubmitButton: React.FC<ButtonProp> = ({
       ) : (
         <>
           <ButtonText>{children}</ButtonText>
-          <i className="feather icon-log-in" />
         </>
       )}
     </ButtonContainer>

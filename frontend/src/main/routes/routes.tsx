@@ -1,8 +1,8 @@
 import React, {Fragment, ReactNode, Suspense} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import AdminLayout from '../../presentation/layouts/AdminLayout'
-import {createSignIn, createEmployeeDataTable} from '../factories'
-import {ConfirmOrMenu, Dashboard, Workers} from '../../presentation/pages'
+import {createSignIn, CreateEmployeeDataTable} from '../factories'
+import {ConfirmOrMenu, Dashboard} from '../../presentation/pages'
 import {AuthGuard, GuestGuard, Loader} from '../../presentation/components'
 
 export type RoutesProps = {
@@ -79,7 +79,7 @@ const routes: RouterProps[] = [
       {
         exact: true,
         path: '/funcionarios',
-        component: createEmployeeDataTable,
+        component: CreateEmployeeDataTable,
       },
     ],
   },

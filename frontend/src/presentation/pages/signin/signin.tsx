@@ -114,7 +114,9 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
                       type="submit"
                       variant="primary"
                       loading={loading}>
-                      Entrar
+                      <span>
+                        Entrar <i className="feather icon-log-in" />
+                      </span>
                     </SubmitButton>
                   </Col>
                 </Row>
