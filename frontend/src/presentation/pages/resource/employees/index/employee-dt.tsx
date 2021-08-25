@@ -3,7 +3,10 @@ import React, {useState} from 'react'
 import {Row, Col, Card, Button} from 'react-bootstrap'
 import {DataTable, VerticallyCenteredModal} from '../../../../components'
 import {EmployeeDataTable} from '../../../../../domain/usecases/employees'
-import {CreateEmployeeForm} from '../../../../../main/factories'
+import {
+  CreateEmployeeForm,
+  CreateEmployeeEdit,
+} from '../../../../../main/factories'
 
 type Props = {
   remoteEmployeeDataTable: EmployeeDataTable
@@ -42,7 +45,7 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
         show={modalShow}
         onHide={() => setModalShow(false)}>
         {stateEdit.modalEdit ? (
-          <p>{stateEdit.idResource}</p>
+          <CreateEmployeeEdit idParams={String(stateEdit.idResource)} />
         ) : (
           <CreateEmployeeForm />
         )}
@@ -65,7 +68,7 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
                     <Button
                       className="label theme-bg text-white f-12 button-table"
                       onClick={() => showModalEdit(id)}>
-                      Editar
+                      <i className="feather icon-edit" /> Editar
                     </Button>
                   ),
                 }}

@@ -7,7 +7,9 @@ import {EmployeeDataModel} from '../../../../domain/models/employee-models'
 export class RemoteGetEmployee implements GetEmployee {
   constructor(
     private readonly url: string,
-    private readonly httpClient: HttpClient,
+    private readonly httpClient: HttpClient<
+      EmployeeDataModel | ErrorsDetailsModel
+    >,
   ) {}
 
   async get(): Promise<EmployeeDataModel> {

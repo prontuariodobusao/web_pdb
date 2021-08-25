@@ -3,6 +3,7 @@ export type EmployeeModel = {
   confirmation?: boolean
   identity: string
   name: string
+  occupation_id?: number
   occupation: string
 }
 export type EmployeeDataTableModel = {
@@ -29,17 +30,16 @@ export type EmployeePasswordModel = {
 }
 
 export type EmployeeDataModel = {
-  employee: {
-    data: {
-      id: number
-      name: string
-      identity: string
-      occupation: string
-    }
-    meta: {
-      links: {
-        self: string
-      }
+  data: {
+    id: number
+    name: string
+    identity: string
+    occupation: string
+    occupation_id: number
+  }
+  meta: {
+    links: {
+      self: string
     }
   }
 }

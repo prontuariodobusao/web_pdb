@@ -2,7 +2,6 @@ import faker from 'faker'
 import {HttpClientSpy, mockErrorsDetails} from '../../../../data/test'
 import {DetailError} from '../../../../domain/errors'
 import {StatusCode} from '../../../../domain/protocols/http'
-import {mockEditEmployeeParams} from '../../../../domain/test/mock-confirmation'
 import {RemoteGetEmployee} from './remote-get-employee'
 
 type SutTypes = {

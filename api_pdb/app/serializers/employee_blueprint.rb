@@ -2,6 +2,7 @@ class EmployeeBlueprint < Blueprinter::Base
   identifier :id
 
   fields :name, :identity
+  field :occupation_id
   field :occupation do |employee|
     case employee.occupation_type_occupation
     when 'driver'
