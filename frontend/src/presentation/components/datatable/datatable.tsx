@@ -88,7 +88,7 @@ const DataTable: React.FC<Props> = ({
         if (String(key) !== 'cell') {
           return <td key={tdId}>{datum[key]}</td>
         } else {
-          return <td key={tdId}>{value()}</td>
+          return <td key={tdId}>{value(datum[idField])}</td>
         }
       })
 

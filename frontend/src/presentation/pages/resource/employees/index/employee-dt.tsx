@@ -11,6 +11,20 @@ type Props = {
 
 const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
   const [modalShow, setModalShow] = useState(false)
+  const [stateEdit, setStateEdit] = useState({
+    modalEdit: false,
+    idResource: 0,
+  })
+
+  const showModalEdit = (id: number): void => {
+    setStateEdit({modalEdit: true, idResource: id})
+    setModalShow(true)
+  }
+
+  const showModalCreate = (): void => {
+    setStateEdit({modalEdit: false, idResource: 0})
+    setModalShow(true)
+  }
 
   return (
     <>
@@ -18,7 +32,7 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
         <Col>
           <Button
             className="btn button-plus label"
-            onClick={() => setModalShow(true)}>
+            onClick={() => showModalCreate()}>
             <i className="feather icon-user-plus" /> Cadastrar Funcionário
           </Button>
         </Col>
@@ -27,7 +41,11 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
         title="Cadastrar Funcionário"
         show={modalShow}
         onHide={() => setModalShow(false)}>
-        <CreateEmployeeForm />
+        {stateEdit.modalEdit ? (
+          <p>{stateEdit.idResource}</p>
+        ) : (
+          <CreateEmployeeForm />
+        )}
       </VerticallyCenteredModal>
       <Row>
         <Col md={12}>
@@ -43,8 +61,10 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
                   identity: 'Matricula',
                   confirmation: 'Confirmação de Login',
                   occupation: 'Cargo',
-                  cell: () => (
-                    <Button className="label theme-bg text-white f-12 button-table">
+                  cell: (id: number) => (
+                    <Button
+                      className="label theme-bg text-white f-12 button-table"
+                      onClick={() => showModalEdit(id)}>
                       Editar
                     </Button>
                   ),
