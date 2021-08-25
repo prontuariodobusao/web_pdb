@@ -50,8 +50,8 @@ module Manager
 
     # PATCH/PUT /manager/employees/1
     def update
-      @employee.update!(employee_params)
-      head :no_content
+      @employee.update!(employee_edit_params)
+      json_response EmployeeBlueprint.render(@employee, root: :data, meta: { links: links(@employee) })
     end
 
     private
@@ -76,6 +76,14 @@ module Manager
         :identity,
         :occupation_id,
         :is_user
+      )
+    end
+
+    def employee_edit_params
+      params.require(:data).permit(
+        :name,
+        :identity,
+        :occupation_id
       )
     end
   end

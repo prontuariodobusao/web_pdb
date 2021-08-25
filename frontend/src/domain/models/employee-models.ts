@@ -27,3 +27,19 @@ export type EmployeePasswordModel = {
   }
   password: string
 }
+
+export type EmployeeDataModel = {
+  employee: {
+    data: {
+      id: number
+      name: string
+      identity: string
+      occupation: string
+    }
+    meta: {
+      links: {
+        self: string
+      }
+    }
+  }
+}
