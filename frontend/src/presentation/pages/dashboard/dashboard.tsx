@@ -1,8 +1,31 @@
-import React from 'react'
-import {Row, Col, Card} from 'react-bootstrap'
+import React, {useState, useEffect} from 'react'
+import {Row, Col, Card, Spinner} from 'react-bootstrap'
 import {HiPierChart, HiBarChart} from '../../components'
+import {ChartsReport} from '../../../domain/usecases/charts/charts_report'
+import {ReportChartModel} from '../../../domain/models/charts-model'
 
-const Dashboard: React.FC = () => {
+type Props = {
+  chartsReport: ChartsReport
+}
+
+const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
+  const [loading, setLoading] = useState(true)
+  const [state, setState] = useState<ReportChartModel>({} as ReportChartModel)
+
+  const loadCharts = async (): Promise<void> => {
+    try {
+      const response = await chartsReport.get()
+      setState(response)
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    loadCharts()
+  }, [])
+
   return (
     <>
       <Row>
@@ -18,7 +41,15 @@ const Dashboard: React.FC = () => {
                 </div>
 
                 <div className="col-6 text-right">
-                  <span className="m-b-0 card-number text-c-yellow ">20</span>
+                  {loading ? (
+                    <Spinner animation="grow" variant="info" />
+                  ) : (
+                    <>
+                      <span className="m-b-0 card-number text-c-yellow ">
+                        {state.qtds.os_waiting}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </Card.Body>
@@ -36,7 +67,15 @@ const Dashboard: React.FC = () => {
                 </div>
 
                 <div className="col-6 text-right">
-                  <span className="m-b-0 card-number text-c-blue">20</span>
+                  {loading ? (
+                    <Spinner animation="grow" variant="info" />
+                  ) : (
+                    <>
+                      <span className="m-b-0 card-number text-c-blue ">
+                        {state.qtds.os_maintenance}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </Card.Body>
@@ -54,7 +93,15 @@ const Dashboard: React.FC = () => {
                 </div>
 
                 <div className="col-6 text-right">
-                  <span className="m-b-0 card-number text-c-red">20</span>
+                  {loading ? (
+                    <Spinner animation="grow" variant="info" />
+                  ) : (
+                    <>
+                      <span className="m-b-0 card-number text-c-red ">
+                        {state.qtds.os_canceled}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </Card.Body>
@@ -72,7 +119,15 @@ const Dashboard: React.FC = () => {
                 </div>
 
                 <div className="col-6 text-right">
-                  <span className="m-b-0 card-number text-c-green">20</span>
+                  {loading ? (
+                    <Spinner animation="grow" variant="info" />
+                  ) : (
+                    <>
+                      <span className="m-b-0 card-number text-c-green ">
+                        {state.qtds.os_finish}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </Card.Body>
@@ -88,7 +143,11 @@ const Dashboard: React.FC = () => {
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              <HiPierChart />
+              {loading ? (
+                <Spinner animation="grow" variant="info" />
+              ) : (
+                <HiPierChart data={state.categories} />
+              )}
             </Card.Body>
           </Card>
         </Col>
@@ -100,7 +159,11 @@ const Dashboard: React.FC = () => {
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              <HiBarChart />
+              {loading ? (
+                <Spinner animation="grow" variant="info" />
+              ) : (
+                <HiBarChart data={state.problems} />
+              )}
             </Card.Body>
           </Card>
         </Col>

@@ -1,8 +1,12 @@
 import React, {Fragment, ReactNode, Suspense} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import AdminLayout from '../../presentation/layouts/AdminLayout'
-import {createSignIn, CreateEmployeeDataTable} from '../factories'
-import {ConfirmOrMenu, Dashboard} from '../../presentation/pages'
+import {
+  createSignIn,
+  CreateEmployeeDataTable,
+  CreateDashboard,
+} from '../factories'
+import {ConfirmOrMenu} from '../../presentation/pages'
 import {AuthGuard, GuestGuard, Loader} from '../../presentation/components'
 
 export type RoutesProps = {
@@ -74,7 +78,7 @@ const routes: RouterProps[] = [
       {
         exact: true,
         path: '/dashboard',
-        component: Dashboard,
+        component: CreateDashboard,
       },
       {
         exact: true,
