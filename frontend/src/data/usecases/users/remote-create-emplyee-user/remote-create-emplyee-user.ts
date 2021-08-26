@@ -16,6 +16,7 @@ export class RemoteUserCreateEmployeeUser implements CreateEmployeeUser {
     const httpResponse = await this.httpClient.request({
       url: this.url,
       method: 'post',
+      body: {},
     })
 
     if (httpResponse.statusCode === StatusCode.created)
