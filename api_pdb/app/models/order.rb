@@ -47,6 +47,11 @@ class Order < ApplicationRecord
     ).includes(:status, :problem).where(state: state)
   }
 
+  scope :waiting, -> { where(status_id: 1) }
+  scope :maintenance, -> { where(status_id: 2) }
+  scope :canceled, -> { where(status_id: 3) }
+  scope :finish, -> { where(status_id: 4) }
+
   def image_url
     # get url path
     Rails.application.routes.url_helpers.url_for(image) if image.attached?

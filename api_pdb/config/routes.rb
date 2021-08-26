@@ -29,6 +29,10 @@ Rails.application.routes.draw do
     namespace :employees do
       post 'datatable'
     end
+
+    namespace :charts do
+      get 'report'
+    end
   end
 
   resources :orders, except: %i[destroy update]
