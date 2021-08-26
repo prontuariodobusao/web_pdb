@@ -26,4 +26,7 @@ class EmployeeBlueprint < Blueprinter::Base
       'N/L'
     end
   end
+  field :user_id do |employee|
+    employee.user.id unless employee.user.nil?
+  end
 end
