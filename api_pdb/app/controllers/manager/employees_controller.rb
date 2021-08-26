@@ -13,7 +13,7 @@ module Manager
     end
 
     def datatable
-      @employees = Employee.all
+      @employees = Employee.includes(:user, :occupation).order(:name)
       if params[:sort_field].present?
         sort_hash = {}
         sort_hash[params[:sort_field].to_sym] = params[:sort_direction].to_sym
