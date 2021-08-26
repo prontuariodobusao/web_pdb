@@ -7,6 +7,7 @@ import {
   CreateEmployeeForm,
   CreateEmployeeEdit,
   CreateUserResetPassword,
+  CreateAddEmployeeUser,
 } from '../../../../../main/factories'
 
 type Props = {
