@@ -6,8 +6,6 @@ import {EmployeeDataTable} from '../../../../../domain/usecases/employees'
 import {
   CreateEmployeeForm,
   CreateEmployeeEdit,
-  CreateUserResetPassword,
-  CreateAddEmployeeUser,
 } from '../../../../../main/factories'
 
 type Props = {
@@ -51,11 +49,6 @@ const EmployeesDt: React.FC<Props> = ({remoteEmployeeDataTable}: Props) => {
         {stateEdit.modalEdit ? (
           <>
             <CreateEmployeeEdit idParams={String(stateEdit.idResource)} />
-            <hr />
-            <h5>Conta de Usuário</h5>
-            <CreateUserResetPassword
-              userIdParams={String(stateEdit.idResource)}
-            />
           </>
         ) : (
           <CreateEmployeeForm />

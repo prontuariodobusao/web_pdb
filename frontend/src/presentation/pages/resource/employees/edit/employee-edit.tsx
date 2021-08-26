@@ -9,6 +9,10 @@ import {
 } from '../../../../../domain/usecases/employees'
 import {EmployeeModel} from '../../../../../domain/models/employee-models'
 import {DataTableContext} from '../../../../contexts'
+import {
+  CreateUserResetPassword,
+  CreateAddEmployeeUser,
+} from '../../../../../main/factories'
 
 type Props = {
   remoteEditEmployee: EditEmployee
@@ -193,6 +197,18 @@ const EmployeeEdit: React.FC<Props> = ({
               Editar <i className="feather icon-edit" />
             </SubmitButton>
           </Form>
+        </>
+      )}
+      <hr />
+      {state.employee.user_id ? (
+        <>
+          <h5>Conta de Usuário</h5>
+          <CreateUserResetPassword userIdParams={String(state.employee.id)} />
+        </>
+      ) : (
+        <>
+          <h5>Este funcionário não possui conta de usuário!</h5>
+          <CreateAddEmployeeUser employeeId={String(state.employee.id)} />
         </>
       )}
     </>

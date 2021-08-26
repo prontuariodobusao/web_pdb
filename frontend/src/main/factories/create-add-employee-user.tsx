@@ -7,7 +7,7 @@ import {LocalStorageAdapter} from '../../infra/cache'
 import {CreateEmployeeUserPage} from '../../presentation/pages'
 
 export const remoteUserCreateEmployeeUser = (
-  id: string,
+  employee_id: string,
 ): RemoteUserCreateEmployeeUser => {
   const authHttpClient = new AuthorizeHttpClientDecorator(
     new LocalStorageAdapter(),
@@ -15,7 +15,7 @@ export const remoteUserCreateEmployeeUser = (
   )
 
   return new RemoteUserCreateEmployeeUser(
-    `${basUrl}/manager/users/${id}/reset_password`,
+    `${basUrl}/manager/employees/${employee_id}/users`,
     authHttpClient,
   )
 }

@@ -81,7 +81,8 @@ const CreateEmployeeUserPage: React.FC<Props> = ({
             <Button
               className="btn button-plus label"
               onClick={handleCreateEmployeeUser}>
-              <i className="feather icon-lock" /> Criar Conta de Usuário
+              <i className="feather icon-user-plus" /> Cadastrar Conta de
+              Usuário
             </Button>
           </Col>
         </Row>

@@ -5,6 +5,7 @@ export type EmployeeModel = {
   name: string
   occupation_id?: number
   occupation: string
+  user_id?: number
 }
 export type EmployeeDataTableModel = {
   draw: number
