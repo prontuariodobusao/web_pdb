@@ -5,7 +5,7 @@ body {
     font-family: $theme-font-family;
     font-size: $theme-font-size;
     color: $theme-font-color;
-    font-weight: 400;
+    // font-weight: 400;
     background: $theme-background;
     position: relative;
 }
@@ -118,8 +118,8 @@ p.text-muted {
 }
 
 .card {
-    border-radius: 0;
-    box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+    border-radius: 10px;
+    box-shadow: 0 10px 20px 0 rgba(69, 90, 100, 0.08);
     border: none;
     margin-bottom: 30px;
     transition: all 0.5s ease-in-out;

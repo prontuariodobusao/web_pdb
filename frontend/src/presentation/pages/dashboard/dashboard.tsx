@@ -3,6 +3,7 @@ import {Row, Col, Card, Spinner} from 'react-bootstrap'
 import {HiPierChart, HiBarChart} from '../../components'
 import {ChartsReport} from '../../../domain/usecases/charts/charts_report'
 import {ReportChartModel} from '../../../domain/models/charts-model'
+import {SpanNumber, SpanText} from './styles'
 
 type Props = {
   chartsReport: ChartsReport
@@ -28,6 +29,22 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
 
   return (
     <>
+      <Row>
+        <Col md={6}>
+          <SpanText>Total de OS</SpanText>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>
+          {loading ? (
+            <Spinner animation="grow" variant="info" />
+          ) : (
+            <>
+              <SpanNumber>{state.qtds.total}</SpanNumber>
+            </>
+          )}
+        </Col>
+      </Row>
       <Row>
         <Col md={6} xl={3}>
           <Card>

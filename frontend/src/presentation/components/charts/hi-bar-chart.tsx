@@ -53,12 +53,12 @@ const HiBarChart: React.FC<Props> = ({data, props}: Props) => {
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
       pointFormat:
-        '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>',
+        '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> do total<br/>',
     },
 
     series: [
       {
-        name: 'Browsers',
+        name: 'Problemas',
         colorByPoint: true,
         data: data,
       },

@@ -40,7 +40,7 @@ const HiPierChart: React.FC<Props> = ({data, props}: Props) => {
       text: 'Categorias',
     },
     tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+      pointFormat: '{series.name}: <b>{point.y}</b>',
     },
     accessibility: {
       point: {
@@ -69,7 +69,7 @@ const HiPierChart: React.FC<Props> = ({data, props}: Props) => {
     },
     series: [
       {
-        name: 'Brands',
+        name: 'Qtd',
         colorByPoint: true,
         data: data,
       },

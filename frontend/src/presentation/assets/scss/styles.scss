@@ -27,6 +27,10 @@ File: style.css
 @import 'partials/generic';
 @import 'partials/mixins/function';
 
+// Fonts
+@import 'partials/font/raleway-font';
+@import 'partials/font/roboto-font';
+
 // icon
 @import 'partials/font/next-icon';
 @import 'partials/font/feather';
@@ -50,3 +54,4 @@ File: style.css
 // Other
 @import 'partials/other/chat';
 @import 'partials/third-party/third-party';
+
