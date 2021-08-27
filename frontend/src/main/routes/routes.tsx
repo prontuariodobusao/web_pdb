@@ -5,8 +5,9 @@ import {
   createSignIn,
   CreateEmployeeDataTable,
   CreateDashboard,
+  CreateChartsByDate,
 } from '../factories'
-import {ConfirmOrMenu, ChartsByDatePage} from '../../presentation/pages'
+import {ConfirmOrMenu} from '../../presentation/pages'
 import {AuthGuard, GuestGuard, Loader} from '../../presentation/components'
 
 export type RoutesProps = {
@@ -83,7 +84,7 @@ const routes: RouterProps[] = [
       {
         exact: true,
         path: '/indicadores',
-        component: ChartsByDatePage,
+        component: CreateChartsByDate,
       },
       {
         exact: true,
