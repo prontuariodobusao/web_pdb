@@ -6,6 +6,7 @@ import NavRight from './NavRight'
 
 import {ConfigContext} from '../../../contexts/ConfigContext'
 import * as actionType from '../../../store/actions'
+import logoPdb from '../../../../assets/images/log_pdb_bar.png'
 
 const NavBar: React.FC = () => {
   const configContext = useContext(ConfigContext)
@@ -44,7 +45,6 @@ const NavBar: React.FC = () => {
           <div className="b-bg">
             <i className="feather icon-trending-up" />
           </div>
-          <span className="b-title">Datta</span>
         </Link>
         {/* <Link to='#' className={moreClass.join(' ')} onClick={() => setMoreToggle(!moreToggle)}>
                     <i className="feather icon-more-vertical"/>

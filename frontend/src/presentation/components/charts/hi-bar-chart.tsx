@@ -34,7 +34,7 @@ const HiBarChart: React.FC<Props> = ({data, props}: Props) => {
     },
     yAxis: {
       title: {
-        text: 'Total percent market share',
+        text: 'Quantidade',
       },
     },
     legend: {

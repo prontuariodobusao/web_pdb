@@ -203,13 +203,12 @@ const EmployeeEdit: React.FC<Props> = ({
       {state.employee.user_id ? (
         <>
           <h5>Conta de Usuário</h5>
-          <CreateUserResetPassword userIdParams={String(state.employee.id)} />
+          <CreateUserResetPassword
+            userIdParams={String(state.employee.user_id)}
+          />
         </>
       ) : (
-        <>
-          <h5>Este funcionário não possui conta de usuário!</h5>
-          <CreateAddEmployeeUser employeeId={String(state.employee.id)} />
-        </>
+        <CreateAddEmployeeUser employeeId={String(state.employee.id)} />
       )}
     </>
   )

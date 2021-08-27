@@ -77,6 +77,9 @@ const CreateEmployeeUserPage: React.FC<Props> = ({
               <Alert variant="danger">{state.messageError}</Alert>
             </Col>
           )}
+          <Col sm={12}>
+            <h5>Este funcionário não possui conta de usuário!</h5>
+          </Col>
           <Col>
             <Button
               className="btn button-plus label"
