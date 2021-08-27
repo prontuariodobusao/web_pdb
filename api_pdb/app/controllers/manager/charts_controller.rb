@@ -34,7 +34,16 @@ module Manager
                     })
     end
 
-    def report_by_dates; end
+    def report_by_dates
+      report = Order.query_by_dates(dates_params[:initial_date], dates_params[:end_date],
+                                    dates_params[:type_report]).map do |problem|
+        {
+          name: problem.name,
+          y: problem.quantity
+        }
+      end
+      json_response({ report: report })
+    end
 
     private
 

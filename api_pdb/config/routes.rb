@@ -32,6 +32,7 @@ Rails.application.routes.draw do
 
     namespace :charts do
       get 'report'
+      post 'report_by_dates'
     end
   end
 
