@@ -3,13 +3,8 @@ module Manager
     before_action :autorize_manager_or_rh
 
     def report
-      categories = Order
-                   .select("count(problems.category_id) as quantity,
-                   categories.name as name")
-                   .joins(problem: :category)
-                   .group('categories.name')
-                   .order('quantity asc')
-                   .map do |status|
+      categories = Order.by_categories
+                        .map do |status|
         {
           name: status.name,
           y: status.quantity
@@ -17,13 +12,7 @@ module Manager
       end
 
       problems = Order
-                 .select(
-                   "count(orders.problem_id) as quantity,
-            problems.description as name"
-                 )
-                 .joins(:problem)
-                 .group('problems.description')
-                 .order('quantity desc')
+                 .by_problems
                  .limit(10)
                  .map do |problem|
         {
@@ -45,7 +34,13 @@ module Manager
                     })
     end
 
+    def report_by_dates; end
+
     private
+
+    def dates_params
+      params.require(:data).permit(:type_report, :initial_date, :end_date)
+    end
 
     def autorize_manager_or_rh
       authorize Employee, :admin_or_rh?

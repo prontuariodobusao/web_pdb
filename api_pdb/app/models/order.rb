@@ -51,6 +51,8 @@ class Order < ApplicationRecord
   scope :maintenance, -> { where(status_id: 2) }
   scope :canceled, -> { where(status_id: 3) }
   scope :finish, -> { where(status_id: 4) }
+  scope :by_categories, -> { OrdersQueries::OrdersByCategoryQuery.call }
+  scope :by_problems, -> { OrdersQueries::OrdersByProblemQuery.call }
 
   def image_url
     # get url path
