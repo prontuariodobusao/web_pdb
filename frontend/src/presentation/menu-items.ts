@@ -13,6 +13,13 @@ const menuItems = {
           url: '/dashboard',
           icon: 'feather icon-home',
         },
+        {
+          id: 'chart',
+          title: 'Indicadores',
+          type: 'item',
+          url: '/indicadores',
+          icon: 'feather icon-pie-chart',
+        },
       ],
     },
     {

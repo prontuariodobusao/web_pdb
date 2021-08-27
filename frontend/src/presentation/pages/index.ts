@@ -8,3 +8,4 @@ export {default as EmployeeForm} from './resource/employees/create/employee-form
 export {default as EmployeeEdit} from './resource/employees/edit/employee-edit'
 export {default as UserResetPasswordPage} from './resource/users/user-reset-password/user-reset-password-page'
 export {default as CreateEmployeeUserPage} from './resource/users/create-employee-user/create-employee-user-page'
+export {default as ChartsByDatePage} from './charts/charts-by-dates/charts-by-date-page'

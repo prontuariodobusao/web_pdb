@@ -6,7 +6,7 @@ import {
   CreateEmployeeDataTable,
   CreateDashboard,
 } from '../factories'
-import {ConfirmOrMenu} from '../../presentation/pages'
+import {ConfirmOrMenu, ChartsByDatePage} from '../../presentation/pages'
 import {AuthGuard, GuestGuard, Loader} from '../../presentation/components'
 
 export type RoutesProps = {
@@ -79,6 +79,11 @@ const routes: RouterProps[] = [
         exact: true,
         path: '/dashboard',
         component: CreateDashboard,
+      },
+      {
+        exact: true,
+        path: '/indicadores',
+        component: ChartsByDatePage,
       },
       {
         exact: true,
