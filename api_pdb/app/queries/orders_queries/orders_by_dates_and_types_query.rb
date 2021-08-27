@@ -20,6 +20,8 @@ module OrdersQueries
         OrdersQueries::OrdersByCategoryQuery.call.where('orders.created_at between ? and ?', start, end_time)
       when 2
         OrdersQueries::OrdersByProblemQuery.call.where('orders.created_at between ? and ?', start, end_time)
+      when 3
+        OrdersQueries::OrdersByStatusQuery.call.where('orders.created_at between ? and ?', start, end_time)
       end
     end
   end
