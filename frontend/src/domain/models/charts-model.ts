@@ -14,3 +14,7 @@ export type ReportChartModel = {
   categories: ChartModel[]
   problems: ChartModel[]
 }
+
+export type ReportModel = {
+  report: ChartModel[]
+}
