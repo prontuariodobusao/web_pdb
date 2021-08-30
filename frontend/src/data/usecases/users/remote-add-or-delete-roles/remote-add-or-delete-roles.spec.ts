@@ -25,7 +25,7 @@ describe('RemoteAddOrRemoveRoles', () => {
     const url = faker.internet.url()
     const {sut, httpClientSpy} = makeSut(url)
     httpClientSpy.response = {
-      statusCode: StatusCode.created,
+      statusCode: StatusCode.ok,
     }
     const authenticationParams = mockRoleParams()
 

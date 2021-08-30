@@ -1,3 +1,5 @@
+import {UserModel} from './user-model'
+
 export type EmployeeModel = {
   id: number
   confirmation?: boolean
@@ -5,7 +7,7 @@ export type EmployeeModel = {
   name: string
   occupation_id?: number
   occupation: string
-  user_id?: number
+  user?: UserModel
 }
 export type EmployeeDataTableModel = {
   draw: number

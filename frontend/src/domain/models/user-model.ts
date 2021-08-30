@@ -6,7 +6,7 @@ export type UserModel = {
   username?: string
   employee_name: string
   occupation: string
-  roles: RoleModel[]
+  roles?: RoleModel[]
 }
 
 export type UserDataModel = {

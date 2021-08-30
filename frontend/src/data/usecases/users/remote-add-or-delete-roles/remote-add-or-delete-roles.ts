@@ -20,7 +20,7 @@ export class RemoteAddOrRemoveRoles implements AddOrRemoveRoles {
       body: params,
     })
 
-    if (httpResponse.statusCode === StatusCode.created)
+    if (httpResponse.statusCode === StatusCode.ok)
       return httpResponse.body as UserDataModel
 
     throw new DetailError(httpResponse.body as ErrorsDetailsModel)

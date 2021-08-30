@@ -12,6 +12,7 @@ import {DataTableContext} from '../../../../contexts'
 import {
   CreateUserResetPassword,
   CreateAddEmployeeUser,
+  CreateAddOrRemoveRolesPage,
 } from '../../../../../main/factories'
 
 type Props = {
@@ -200,12 +201,15 @@ const EmployeeEdit: React.FC<Props> = ({
         </>
       )}
       <hr />
-      {state.employee.user_id ? (
+      {state.employee.user?.id ? (
         <>
           <h5>Conta de Usuário</h5>
           <CreateUserResetPassword
-            userIdParams={String(state.employee.user_id)}
+            userIdParams={String(state.employee.user?.id)}
           />
+          <hr />
+          <h5>Níveis de usuários</h5>
+          <CreateAddOrRemoveRolesPage user={state.employee.user} />
         </>
       ) : (
         <CreateAddEmployeeUser employeeId={String(state.employee.id)} />
