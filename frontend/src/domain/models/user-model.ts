@@ -1,9 +1,12 @@
+import {RoleModel} from './role-model'
+
 export type UserModel = {
   id: string
   confirmation?: boolean
   username?: string
   employee_name: string
   occupation: string
+  roles: RoleModel[]
 }
 
 export type UserDataModel = {
