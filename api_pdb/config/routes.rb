@@ -18,7 +18,9 @@ Rails.application.routes.draw do
       get 'locked', on: :member
       get 'unlock', on: :member
       get 'reset_password', on: :member
+      post 'add_or_remove_role', on: :member, as: :roles
     end
+
     resources :orders, except: %i[destroy create] do
       get 'edit', on: :member
     end

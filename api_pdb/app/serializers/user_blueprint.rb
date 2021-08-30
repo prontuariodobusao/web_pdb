@@ -6,6 +6,7 @@ class UserBlueprint < Blueprinter::Base
   field :employee_name do |user|
     user.employee_name
   end
+  association :roles, blueprint: RoleBlueprint
 
   field :occupation do |user|
     user.employee.occupation_type_occupation

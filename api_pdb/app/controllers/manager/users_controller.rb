@@ -1,7 +1,7 @@
 # app/controllers/users_controller.rb
 module Manager
   class UsersController < ApplicationController
-    before_action :set_user, only: %i[show update unlock reset_password]
+    before_action :set_user, only: %i[show update unlock reset_password add_or_remove_role]
     before_action :autorize_manager_or_rh
 
     def show
@@ -38,6 +38,13 @@ module Manager
     def update
       @user.update!(user_params)
       head :no_content
+    end
+
+    def add_or_remove_role
+      role = params.require(:data).permit(:name)
+      @user.add_or_remove_role role[:name]
+
+      json_response UserBlueprint.render(@user, root: :data)
     end
 
     private
