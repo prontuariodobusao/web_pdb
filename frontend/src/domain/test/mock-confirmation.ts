@@ -4,6 +4,13 @@ import {ConfirmDataParams} from '../usecases/confirm/confirmation'
 import {DataTableParams} from '../../domain/usecases/remote-datatable'
 import {EmployeeParams} from '../../domain/usecases/employees/create-employee'
 import {EmployeeEditParams} from '../../domain/usecases/employees/edit-employee'
+import {RoleParams} from '../usecases/users/add-or-remove-roles/add-or-remove-roles'
+
+export const mockRoleParams = (): RoleParams => ({
+  data: {
+    name: 'admin',
+  },
+})
 
 export const mockUserDataModel = (): UserDataModel => ({
   data: {
@@ -12,6 +19,7 @@ export const mockUserDataModel = (): UserDataModel => ({
     username: 'user_1',
     employee_name: 'Fulano',
     occupation: 'manager',
+    roles: [{id: 1, name: 'admin'}],
   },
 })
 
