@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import {ResetPassword} from '../../../../../domain/usecases/users/reset-password/reset-password'
-import {Row, Col, Button, Alert, Form} from 'react-bootstrap'
+import {Row, Col, Alert, Form} from 'react-bootstrap'
 import {UserWithPasswordModel} from '../../../../../domain/models/user-model'
+import {SubButton} from '../../../../components'
 
 type Props = {
   resetPassword: ResetPassword
@@ -19,8 +20,10 @@ const UserResetPasswordPage: React.FC<Props> = ({resetPassword}: Props) => {
     infoSucess: false,
     reload_user: {} as UserWithPasswordModel,
   })
+  const [loading, setLoading] = useState(false)
 
   const handleResetPassword = async () => {
+    setLoading(true)
     try {
       const response = await resetPassword.resetPassword()
       setState({...state, reload_user: response, infoSucess: true})
@@ -31,6 +34,8 @@ const UserResetPasswordPage: React.FC<Props> = ({resetPassword}: Props) => {
         infoSucess: false,
         messageError: 'Não foi possível resetar a senha',
       })
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -66,11 +71,12 @@ const UserResetPasswordPage: React.FC<Props> = ({resetPassword}: Props) => {
             </Col>
           )}
           <Col>
-            <Button
+            <SubButton
+              loading={loading}
               className="btn button-plus label"
               onClick={handleResetPassword}>
-              <i className="feather icon-lock" /> Resetar Senha
-            </Button>
+              <i className="feather icon-lock" /> Resetar Senha{' '}
+            </SubButton>
           </Col>
         </Row>
       )}
