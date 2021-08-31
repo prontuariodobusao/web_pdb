@@ -5,7 +5,7 @@ import {AuthContext} from '../../../../contexts'
 
 const NavRight: React.FC = () => {
   const [listOpen, setListOpen] = useState(false)
-  const {signOut, getAccount} = useContext(AuthContext)
+  const {signOut, user} = useContext(AuthContext)
 
   return (
     <>
@@ -25,7 +25,7 @@ const NavRight: React.FC = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu alignRight className="profile-notification">
               <div className="pro-head">
-                <span>{getAccount()?.name}</span>
+                <span>{user.employee_name}</span>
                 <Link
                   to="#"
                   className="dud-logout"

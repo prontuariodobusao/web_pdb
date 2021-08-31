@@ -4,7 +4,6 @@ import {UserModel} from '../../domain/models/user-model'
 import {
   setCurrentAccountAdapter,
   getCurrentAccountAdapter,
-  Account,
 } from '../../main/adapters'
 import {remoteCheckTokenValid} from '../../main/factories'
 
@@ -12,7 +11,7 @@ interface AuthContextData {
   token: string
   user: UserModel
   saveAccount: (accesaToken: string) => Promise<void>
-  getAccount: () => Account
+  getAccount: () => void
   signOut: () => Promise<void>
   updateStateAccount: (user: UserModel) => void
   checkTokenValid: () => Promise<void>
@@ -42,6 +41,7 @@ export const AuthProvider: React.FC = ({children}: any) => {
         jwtDecode<TokenData>(accessToken)
 
       setCurrentAccountAdapter({
+        id: user_id,
         accessToken,
         name,
         role: occupation,
@@ -71,12 +71,28 @@ export const AuthProvider: React.FC = ({children}: any) => {
     }
   }
 
-  const getAccount = () => getCurrentAccountAdapter()
+  const getAccount = () => {
+    const account = getCurrentAccountAdapter()
+    if (account) {
+      const {id, accessToken, name, confirmation, role} = account
+      setData({
+        ...data,
+        accessToken,
+        user: {
+          id,
+          employee_name: name,
+          confirmation,
+          occupation: role,
+        },
+      })
+    }
+  }
 
   const updateStateAccount = async (user: UserModel): Promise<void> => {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const {id, employee_name, confirmation, occupation} = user
     setCurrentAccountAdapter({
+      id,
       accessToken: data.accessToken,
       name: employee_name,
       role: occupation,

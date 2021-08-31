@@ -1,5 +1,6 @@
 import {LocalStorageAdapter} from '../../../infra/cache'
 export type Account = {
+  id: string
   accessToken: string
   name: string
   role: string

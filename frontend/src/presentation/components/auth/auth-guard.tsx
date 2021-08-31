@@ -7,14 +7,13 @@ type Props = {
 }
 
 const AuthGuard: React.FC<Props> = ({children}: Props) => {
-  const {getAccount, checkTokenValid} = useContext(AuthContext)
-  checkTokenValid()
+  const {user, token} = useContext(AuthContext)
 
-  if (!getAccount()?.accessToken && !getAccount()?.confirmation) {
-    return <Redirect to="/login" />
+  if (!!token && user.confirmation) {
+    return <>{children}</>
   }
 
-  return <>{children}</>
+  return <Redirect to="/login" />
 }
 
 export default AuthGuard
