@@ -15,6 +15,7 @@ interface AuthContextData {
   getAccount: () => Account
   signOut: () => Promise<void>
   updateStateAccount: (user: UserModel) => void
+  checkTokenValid: () => Promise<void>
 }
 
 type TokenData = {
@@ -62,7 +63,7 @@ export const AuthProvider: React.FC = ({children}: any) => {
     }
   }
 
-  const checkTokenValid = async () => {
+  const checkTokenValid = async (): Promise<void> => {
     try {
       await remoteCheckTokenValid().check()
     } catch (error) {
@@ -106,6 +107,7 @@ export const AuthProvider: React.FC = ({children}: any) => {
         getAccount,
         signOut,
         updateStateAccount,
+        checkTokenValid,
         user: data.user,
       }}>
       {children}
