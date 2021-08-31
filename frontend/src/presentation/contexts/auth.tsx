@@ -6,6 +6,7 @@ import {
   getCurrentAccountAdapter,
   Account,
 } from '../../main/adapters'
+import {remoteCheckTokenValid} from '../../main/factories'
 
 interface AuthContextData {
   token: string
@@ -58,6 +59,14 @@ export const AuthProvider: React.FC = ({children}: any) => {
       })
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  const checkTokenValid = async () => {
+    try {
+      await remoteCheckTokenValid().check()
+    } catch (error) {
+      await localStorage.removeItem('@pdb:account')
     }
   }
 
