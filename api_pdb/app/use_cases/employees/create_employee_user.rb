@@ -17,12 +17,13 @@ module Employees
     attr_accessor :employee, :password
 
     def create
+      user = new_user
       employee.transaction do
         employee.save!
         # create user
         if employee.is_user
-          new_user.save!
-          add_role_to_employee(new_user, employee)
+          user.save!
+          add_role_to_employee(user, employee)
         end
       end
 
