@@ -10,7 +10,9 @@ type Props = {
 const GuestGuard: React.FC<Props> = ({children}: Props) => {
   const {user, token, getAccount} = useContext(AuthContext)
 
-  getAccount()
+  useEffect(() => {
+    getAccount()
+  }, [user])
 
   if (!!token && user.confirmation) {
     return <Redirect to={BASE_URL} />

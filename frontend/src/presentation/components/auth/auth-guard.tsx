@@ -1,4 +1,4 @@
-import React, {ReactNode, useContext} from 'react'
+import React, {ReactNode, useContext, useEffect, useState} from 'react'
 import {Redirect} from 'react-router-dom'
 import {AuthContext} from 'presentation/contexts'
 
@@ -7,13 +7,21 @@ type Props = {
 }
 
 const AuthGuard: React.FC<Props> = ({children}: Props) => {
-  const {user, token} = useContext(AuthContext)
+  const {user, token, checkTokenValid, getCurrentAccount} =
+    useContext(AuthContext)
+  const [loading, setLoading] = useState(true)
+  const [access, setAccess] = useState(true)
 
-  if (!!token && user.confirmation) {
-    return <>{children}</>
-  }
+  useEffect(() => {
+    checkTokenValid()
+  }, [])
 
-  return <Redirect to="/login" />
+  return getCurrentAccount()?.accessToken &&
+    getCurrentAccount()?.confirmation ? (
+    <>{children}</>
+  ) : (
+    <Redirect to="/login" />
+  )
 }
 
 export default AuthGuard

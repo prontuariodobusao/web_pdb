@@ -4,6 +4,7 @@ import {UserModel} from '../../domain/models/user-model'
 import {
   setCurrentAccountAdapter,
   getCurrentAccountAdapter,
+  Account,
 } from '../../main/adapters'
 import {remoteCheckTokenValid} from '../../main/factories'
 
@@ -11,7 +12,8 @@ interface AuthContextData {
   token: string
   user: UserModel
   saveAccount: (accesaToken: string) => Promise<void>
-  getAccount: () => void
+  getAccount: () => Promise<void>
+  getCurrentAccount: () => Account
   signOut: () => Promise<void>
   updateStateAccount: (user: UserModel) => void
   checkTokenValid: () => Promise<void>
@@ -66,13 +68,27 @@ export const AuthProvider: React.FC = ({children}: any) => {
   const checkTokenValid = async (): Promise<void> => {
     try {
       await remoteCheckTokenValid().check()
+      const account = await getCurrentAccountAdapter()
+
+      const {id, accessToken, name, confirmation, role} = account
+      setData({
+        ...data,
+        accessToken,
+        user: {
+          id,
+          employee_name: name,
+          confirmation,
+          occupation: role,
+        },
+      })
     } catch (error) {
       await localStorage.removeItem('@pdb:account')
+      setData({} as StateData)
     }
   }
 
-  const getAccount = () => {
-    const account = getCurrentAccountAdapter()
+  const getAccount = async (): Promise<void> => {
+    const account = await getCurrentAccountAdapter()
     if (account) {
       const {id, accessToken, name, confirmation, role} = account
       setData({
@@ -87,6 +103,8 @@ export const AuthProvider: React.FC = ({children}: any) => {
       })
     }
   }
+
+  const getCurrentAccount = (): Account => getCurrentAccountAdapter()
 
   const updateStateAccount = async (user: UserModel): Promise<void> => {
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -124,6 +142,7 @@ export const AuthProvider: React.FC = ({children}: any) => {
         signOut,
         updateStateAccount,
         checkTokenValid,
+        getCurrentAccount,
         user: data.user,
       }}>
       {children}

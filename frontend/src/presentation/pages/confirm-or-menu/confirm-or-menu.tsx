@@ -5,7 +5,7 @@ import {Redirect} from 'react-router-dom'
 
 const ConfirmOrMenu: React.FC = () => {
   const {user} = useContext(AuthContext)
-  console.log(user.confirmation)
+
   return user.confirmation ? (
     <Redirect to="/dashboard" />
   ) : (
