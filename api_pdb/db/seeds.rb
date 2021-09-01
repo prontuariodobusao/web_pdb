@@ -17,14 +17,14 @@ employee7 = Employee.create(name: 'Francisco', identity: '117', occupation: driv
 employee8 = Employee.create(name: 'Antônio Sousa', identity: '118', occupation: driver)
 employee9 = Employee.create(name: 'Pacheco', identity: '119', occupation: driver)
 employee10 = Employee.create(name: 'Braga', identity: '110', occupation: driver)
-employee11 = Employee.create(name: 'Ivan', identity: '211', occupation: mecanic)
-employee12 = Employee.create(name: 'Nonato', identity: '212', occupation: mecanic)
-employee13 = Employee.create(name: 'Osvaldo', identity: '213', occupation: mecanic)
-employee14 = Employee.create(name: 'Josenildo', identity: '214', occupation: mecanic)
-employee15 = Employee.create(name: 'Walisson', identity: '215', occupation: mecanic)
-employee16 = Employee.create(name: 'Chico Velho', identity: '216', occupation: mecanic)
-employee17 = Employee.create(name: 'Marcos', identity: '217', occupation: mecanic)
-employee18 = Employee.create(name: 'Bena', identity: '218', occupation: mecanic)
+Employee.create(name: 'Ivan', identity: '211', occupation: mecanic)
+Employee.create(name: 'Nonato', identity: '212', occupation: mecanic)
+Employee.create(name: 'Osvaldo', identity: '213', occupation: mecanic)
+Employee.create(name: 'Josenildo', identity: '214', occupation: mecanic)
+Employee.create(name: 'Walisson', identity: '215', occupation: mecanic)
+Employee.create(name: 'Chico Velho', identity: '216', occupation: mecanic)
+Employee.create(name: 'Marcos', identity: '217', occupation: mecanic)
+Employee.create(name: 'Bena', identity: '218', occupation: mecanic)
 
 employee19 = Employee.create(name: 'Marcos', identity: '311', occupation: manager)
 employee20 = Employee.create(name: 'Cesar', identity: '312', occupation: manager)
@@ -50,14 +50,6 @@ employees.push(
   employee8,
   employee9,
   employee10,
-  employee11,
-  employee12,
-  employee13,
-  employee14,
-  employee15,
-  employee16,
-  employee17,
-  employee18,
   employee19,
   employee20
 )
