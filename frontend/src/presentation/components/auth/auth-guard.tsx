@@ -1,4 +1,4 @@
-import React, {ReactNode, useContext, useEffect, useState} from 'react'
+import React, {ReactNode, useContext, useEffect} from 'react'
 import {Redirect} from 'react-router-dom'
 import {AuthContext} from 'presentation/contexts'
 
@@ -7,11 +7,7 @@ type Props = {
 }
 
 const AuthGuard: React.FC<Props> = ({children}: Props) => {
-  const {user, token, checkTokenValid, getCurrentAccount} =
-    useContext(AuthContext)
-  const [loading, setLoading] = useState(true)
-  const [access, setAccess] = useState(true)
-
+  const {checkTokenValid, getCurrentAccount} = useContext(AuthContext)
   useEffect(() => {
     checkTokenValid()
   }, [])
