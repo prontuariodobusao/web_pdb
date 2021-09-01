@@ -128,8 +128,7 @@ export const AuthProvider: React.FC = ({children}: any) => {
   }
 
   const signOut = async (): Promise<void> => {
-    await localStorage.removeItem('@pdb:account')
-
+    localStorage.removeItem('@pdb:account')
     setData({} as StateData)
   }
 

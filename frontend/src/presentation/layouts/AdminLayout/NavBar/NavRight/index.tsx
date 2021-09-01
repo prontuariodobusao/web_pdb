@@ -5,7 +5,7 @@ import {AuthContext} from '../../../../contexts'
 
 const NavRight: React.FC = () => {
   const [listOpen, setListOpen] = useState(false)
-  const {signOut, user, getCurrentAccount} = useContext(AuthContext)
+  const {signOut, getCurrentAccount} = useContext(AuthContext)
 
   return (
     <>
