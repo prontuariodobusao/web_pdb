@@ -29,7 +29,7 @@ export const renderRoutes = (routes: RouterProps[] = []): any => {
   return (
     <Suspense fallback={<Loader />}>
       <Switch>
-        {/* <Route path="/login" exact component={createSignIn} /> */}
+        <Route path="/confirmacao" exact component={ConfirmOrMenu} />
         {routes.map((route: any, i: any) => {
           const Guard = route.guard || Fragment
           const Layout = route.layout || Fragment
@@ -66,12 +66,12 @@ const routes: RouterProps[] = [
     path: '/login',
     component: createSignIn,
   },
-  {
-    exact: true,
-    guard: GuestGuard,
-    path: '/confirmacao',
-    component: ConfirmOrMenu,
-  },
+  // {
+  //   exact: true,
+  //   guard: GuestGuard,
+  //   path: '/confirmacao',
+  //   component: ConfirmOrMenu,
+  // },
   {
     guard: AuthGuard,
     path: '*',
