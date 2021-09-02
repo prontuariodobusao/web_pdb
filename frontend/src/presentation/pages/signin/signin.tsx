@@ -7,6 +7,7 @@ import useScriptRef from '../../hooks/useScriptRef'
 import {SubmitButton} from '../../components'
 import {AuthContext} from '../../contexts'
 import {useHistory} from 'react-router-dom'
+import jwtDecode from 'jwt-decode'
 
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
@@ -39,6 +40,10 @@ const SignIn: React.FC<Props> = ({authentication}: Props) => {
           username: values.username,
           password: values.password,
         })
+        const {occupation} = jwtDecode<any>(response.auth_token)
+        if (occupation === 'driver' || occupation === 'mecanic') {
+          throw new Error('Usuário não permitido')
+        }
         await saveAccount(response.auth_token)
         history.replace('/confirmacao')
         if (scriptedRef.current) {
