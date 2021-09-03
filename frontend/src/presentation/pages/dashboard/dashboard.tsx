@@ -127,7 +127,7 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
         <Col md={6} xl={3}>
           <Card>
             <Card.Body>
-              <h5>FInalizada</h5>
+              <h5>Finalizada</h5>
               <div className="row d-flex align-items-center">
                 <div className="col-6">
                   <h3 className="f-w-300 d-flex align-items-center m-b-0">

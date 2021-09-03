@@ -45,7 +45,7 @@ const HiBarChart: React.FC<Props> = ({data, props}: Props) => {
         borderWidth: 0,
         dataLabels: {
           enabled: true,
-          format: '{point.y:.1f}%',
+          format: '{point.y}',
         },
       },
     },

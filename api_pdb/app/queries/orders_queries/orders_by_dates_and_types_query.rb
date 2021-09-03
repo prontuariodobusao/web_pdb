@@ -13,7 +13,7 @@ module OrdersQueries
 
     def call
       start = Date.strptime(initial_date, '%d/%m/%Y')
-      end_time = Date.strptime(end_date, '%d/%m/%Y')
+      end_time = Date.strptime(end_date, '%d/%m/%Y') + 1.day
 
       case type_report
       when 1
