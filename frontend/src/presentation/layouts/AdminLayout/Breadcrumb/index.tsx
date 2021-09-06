@@ -68,7 +68,7 @@ const Breadcrumb: React.FC = () => {
                     as="li"
                     bsPrefix=" "
                     className="breadcrumb-item">
-                    <Link to="/">
+                    <Link to="/dashboard">
                       <i className="feather icon-home" />
                     </Link>
                   </ListGroup.Item>

@@ -39,11 +39,11 @@ const NavRight: React.FC = () => {
                 bsPrefix=" "
                 variant="flush"
                 className="pro-body">
-                <ListGroup.Item as="li" bsPrefix=" ">
+                {/* <ListGroup.Item as="li" bsPrefix=" ">
                   <Link to="#" className="dropdown-item">
                     <i className="feather icon-settings" /> Conta
                   </Link>
-                </ListGroup.Item>
+                </ListGroup.Item> */}
                 <ListGroup.Item as="li" bsPrefix=" ">
                   <Link to="#" className="dropdown-item" onClick={signOut}>
                     <i className="feather icon-log-out" /> Sair

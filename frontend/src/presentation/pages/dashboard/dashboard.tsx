@@ -163,7 +163,7 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
               {loading ? (
                 <Spinner animation="grow" variant="info" />
               ) : (
-                <HiPierChart data={state.categories} />
+                <HiPierChart data={state.categories} title="Categorias" />
               )}
             </Card.Body>
           </Card>

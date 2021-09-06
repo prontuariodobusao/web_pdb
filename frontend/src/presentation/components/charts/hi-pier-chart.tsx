@@ -71,11 +71,12 @@ import {ChartModel} from '../../../domain/models/charts-model'
 // }
 
 type Props = {
+  title: string
   data: ChartModel[]
   props?: HighchartsReact.Props
 }
 
-const HiPierChart: React.FC<Props> = ({data, props}: Props) => {
+const HiPierChart: React.FC<Props> = ({data, props, title}: Props) => {
   const options = {
     credits: {
       enabled: false,
@@ -87,7 +88,7 @@ const HiPierChart: React.FC<Props> = ({data, props}: Props) => {
       type: 'pie',
     },
     title: {
-      text: 'Categorias',
+      text: title,
     },
     tooltip: {
       pointFormat: '{series.name}: <b>{point.y}</b>',

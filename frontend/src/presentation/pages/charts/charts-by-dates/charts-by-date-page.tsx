@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
-import {Row, Col, Card, Form, Spinner} from 'react-bootstrap'
+import {Row, Col, Card, Form, Spinner, FormControlProps} from 'react-bootstrap'
 import {InputDatePicker, SubmitButton, HiPierChart} from '../../../components'
 import {ChartsReportByDates} from '../../../../domain/usecases/charts/charts-report-by-dates'
 import {ReportModel} from '../../../../domain/models/charts-model'
 import {dateFormatStr} from '../../../../services'
+import {initialState} from 'presentation/store/accountReducer'
 
 type Props = {
   chartsReportByDates: ChartsReportByDates
@@ -13,6 +14,7 @@ type InitialState = {
   startDate: Date
   endDate: Date
   typeReport: string
+  titleReport: string
   showChart: boolean
 }
 
@@ -21,6 +23,7 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
   const [chart, setChart] = useState<ReportModel>({} as ReportModel)
   const [state, setState] = useState<InitialState>({
     typeReport: '1',
+    titleReport: 'Categorias',
     startDate: new Date(),
     endDate: new Date(),
     showChart: false,
@@ -46,6 +49,35 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
     }
   }
 
+  const handleTipeChart = (e: React.ChangeEvent<any>) => {
+    switch (e.target.value) {
+      case '1':
+        setState({
+          ...state,
+          typeReport: String(e.target.value),
+          showChart: false,
+          titleReport: 'Categorias',
+        })
+        break
+      case '2':
+        setState({
+          ...state,
+          typeReport: String(e.target.value),
+          showChart: false,
+          titleReport: 'Problemas',
+        })
+        break
+      case '3':
+        setState({
+          ...state,
+          typeReport: String(e.target.value),
+          showChart: false,
+          titleReport: 'Status',
+        })
+        break
+    }
+  }
+
   return (
     <>
       <Row>
@@ -65,9 +97,7 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
                       as="select"
                       name="occupation_id"
                       value={state.typeReport}
-                      onChange={event =>
-                        setState({...state, typeReport: event.target.value})
-                      }>
+                      onChange={event => handleTipeChart(event)}>
                       <option value="1">Categorias</option>
                       <option value="2">Problemas</option>
                       <option value="3">Status</option>
@@ -111,7 +141,9 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
             </Card.Header>
             <Card.Body>
               {loading && <Spinner animation="grow" variant="info" />}
-              {state.showChart && <HiPierChart data={chart.report} />}
+              {state.showChart && (
+                <HiPierChart data={chart.report} title={state.titleReport} />
+              )}
             </Card.Body>
           </Card>
         </Col>
