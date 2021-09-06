@@ -20,13 +20,26 @@ module Orders
       order.manager = user.employee
       order.state = :closed if finish?
 
-      order.update!(order_params)
+      order.transaction do
+        order.update!(order_params)
+        # create history
+        order.histories.create!(history_attr)
+      end
 
       success(order: order)
     end
 
     def finish?
       order_params[:status_id].to_i == 3 || order_params[:status_id].to_i == 4
+    end
+
+    def history_attr
+      {
+        km: order.km,
+        description: order.description,
+        status: order.status,
+        owner: user
+      }
     end
   end
 end

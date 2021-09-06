@@ -22,6 +22,8 @@ class Order < ApplicationRecord
   belongs_to :car_mecanic, class_name: 'Employee', optional: true
   delegate :name, to: :manager, prefix: true
 
+  has_many :histories
+
   validates_presence_of :km
   validates :reference, uniqueness: true, presence: true
 
@@ -44,6 +46,16 @@ class Order < ApplicationRecord
       :problem_id
     ).includes(:status, :problem).where(state: state)
   }
+
+  scope :waiting, -> { where(status_id: 1) }
+  scope :maintenance, -> { where(status_id: 2) }
+  scope :canceled, -> { where(status_id: 3) }
+  scope :finish, -> { where(status_id: 4) }
+  scope :by_categories, -> { OrdersQueries::OrdersByCategoryQuery.call }
+  scope :by_problems, -> { OrdersQueries::OrdersByProblemQuery.call }
+  scope :query_by_dates, lambda { |initial_date, end_date, type_report|
+                           OrdersQueries::OrdersByDatesAndTypesQuery.call(initial_date: initial_date, end_date: end_date, type_report: type_report)
+                         }
 
   def image_url
     # get url path

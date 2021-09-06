@@ -18,6 +18,16 @@ module ApiHelper
       'Content-Type': 'application/json'
     }
   end
+  
+  def authenticate_rh_user
+    user = create(:user, :rh_user)
+    response = Auth::Authenticate.call(username: user.username, password: user.password)
+    {
+      Authorization: "Bearer #{response.data[:token]}",
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  end
 
   def authenticate_user
     user = create(:user)

@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  rolify
   has_secure_password
 
   validates :username, uniqueness: true, presence: true
@@ -23,5 +24,9 @@ class User < ApplicationRecord
 
   def confirmed?
     !confirmed_at.nil?
+  end
+
+  def add_or_remove_role(role_name)
+    has_role?(role_name) ? remove_role(role_name) : add_role(role_name)
   end
 end

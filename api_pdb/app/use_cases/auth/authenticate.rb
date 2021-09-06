@@ -16,13 +16,14 @@ module Auth
     attr_accessor :username, :password
 
     def auth
+      user = find_user
       success(
         token: ApiPack::JsonWebToken.encode(
           {
-            user_id: find_user.id,
-            name: find_user.employee_name,
-            confirmation: find_user.confirmed?,
-            occupation: find_user.employee.occupation_type_occupation
+            user_id: user.id,
+            name: user.employee_name,
+            confirmation: user.confirmed?,
+            occupation: user.employee.occupation_type_occupation
           }
         )
       )

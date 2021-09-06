@@ -13,21 +13,23 @@ module Paginations
     def schema
       object do
         array :data do
-          max_items 10
+          max_items 5
           items do |parent|
             object_child(parent)
           end
         end
         object :meta do
-          integer :current_page
-          integer :total_pages
-        end
-        object :links do
-          string :self
-          string :first
-          string :last
-          string :next
-          string :prev
+          object :links do
+            string :self
+            string :first
+            string :last
+            string :next
+            string :prev
+          end
+          object :meta do
+            integer :current_page
+            integer :total_pages
+          end
         end
       end
     end

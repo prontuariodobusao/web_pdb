@@ -1,5 +1,5 @@
 class OrderPolicy < ApplicationPolicy
-  def manager?
-    user.employee.occupation_type_occupation == 'manager'
+  def admin?
+    user.has_role?(:admin)
   end
 end
