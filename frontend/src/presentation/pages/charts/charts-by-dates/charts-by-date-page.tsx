@@ -142,7 +142,11 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
             <Card.Body>
               {loading && <Spinner animation="grow" variant="info" />}
               {state.showChart && (
-                <HiPierChart data={chart.report} title={state.titleReport} />
+                <HiPierChart
+                  data={chart.report}
+                  title={state.titleReport}
+                  format="{point.name}<br> Qtd: {point.y}"
+                />
               )}
             </Card.Body>
           </Card>

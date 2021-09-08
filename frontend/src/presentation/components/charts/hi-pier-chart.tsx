@@ -74,9 +74,15 @@ type Props = {
   title: string
   data: ChartModel[]
   props?: HighchartsReact.Props
+  format?: string
 }
 
-const HiPierChart: React.FC<Props> = ({data, props, title}: Props) => {
+const HiPierChart: React.FC<Props> = ({
+  data,
+  props,
+  title,
+  format = '{point.name}<br>{point.percentage:.1f} %',
+}: Props) => {
   const options = {
     credits: {
       enabled: false,
@@ -105,7 +111,7 @@ const HiPierChart: React.FC<Props> = ({data, props, title}: Props) => {
         colors: ['#3ebfea', '#1de9b6', '#f4c22b', '#ff8a65'],
         dataLabels: {
           enabled: true,
-          format: '{point.name}<br>{point.percentage:.1f} %',
+          format,
           distance: -40,
           filter: {
             property: 'percentage',
