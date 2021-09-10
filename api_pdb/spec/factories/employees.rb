@@ -26,7 +26,7 @@ FactoryBot.define do
 
     trait :user do
       before(:create) do |employee|
-        employee.user = create(:user)
+        employee.user = create(:user, :manager_user)
       end
     end
 

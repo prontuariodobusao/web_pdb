@@ -141,45 +141,45 @@ describe 'Manager::Employees', type: :request do
     end
   end
 
-  path '/manager/employees?page=3&per_page=5' do
-    get 'Obter lista de funcionários' do
-      tags 'Funcionários'
-      description 'Rota para lista de OS por usuário, essa rota pode ser executada por usuário gerente ou RH'
-      security [Authorization: []]
-      produces 'application/json'
+  # path '/manager/employees?page=3&per_page=5' do
+  #   get 'Obter lista de funcionários' do
+  #     tags 'Funcionários'
+  #     description 'Rota para lista de OS por usuário, essa rota pode ser executada por usuário gerente ou RH'
+  #     security [Authorization: []]
+  #     produces 'application/json'
 
-      response('200', 'Sucesso') do
-        middle_paginations_response = new_middle_paginations_response_schema(employees_response_schema)
-        schema middle_paginations_response.schema.as_json
+  #     response('200', 'Sucesso') do
+  #       middle_paginations_response = new_middle_paginations_response_schema(employees_response_schema)
+  #       schema middle_paginations_response.schema.as_json
 
-        context 'list of employees' do
-          before do |example|
-            user = create(:user, :rh_user)
-            response = Auth::Authenticate.call(username: user.username, password: user.password)
-            create_list(:driver_employee, 20)
-            @auth_token = response.data[:token]
-            submit_request(example.metadata)
-          end
+  #       context 'list of employees' do
+  #         before do |example|
+  #           user = create(:user, :rh_user)
+  #           response = Auth::Authenticate.call(username: user.username, password: user.password)
+  #           create_list(:driver_employee, 10, :user)
+  #           @auth_token = response.data[:token]
+  #           submit_request(example.metadata)
+  #         end
 
-          let(:Authorization) { @auth_token }
+  #         let(:Authorization) { @auth_token }
 
-          context 'Count values response in data' do
-            it { expect(parse_json(response)['data'].count).to eq 5 }
-          end
+  #         context 'Count values response in data' do
+  #           it { expect(parse_json(response)['data'].count).to eq 5 }
+  #         end
 
-          it_behaves_like 'a json endpoint response', 200 do
-            let(:expected_response_schema) { middle_paginations_response }
-          end
-        end
-      end
-      include_context 'with errors response test'
+  #         it_behaves_like 'a json endpoint response', 200 do
+  #           let(:expected_response_schema) { middle_paginations_response }
+  #         end
+  #       end
+  #     end
+  #     include_context 'with errors response test'
 
-      response '403', 'Forbidden' do
-        let(:Authorization) { authenticate_header[:Authorization] }
-        run_test!
-      end
-    end
-  end
+  #     response '403', 'Forbidden' do
+  #       let(:Authorization) { authenticate_header[:Authorization] }
+  #       run_test!
+  #     end
+  #   end
+  # end
 
   path '/manager/employees/{id}' do
     put 'API para atualizar funcionários' do
