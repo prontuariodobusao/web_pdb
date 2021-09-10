@@ -25,5 +25,7 @@ FactoryBot.define do
         user.add_role :rh
       end
     end
+
+    factory :user_with_role_admin, traits: [:manager_user]
   end
 end

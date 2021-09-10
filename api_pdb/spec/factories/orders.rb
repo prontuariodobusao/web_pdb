@@ -7,7 +7,7 @@ FactoryBot.define do
     association :solution
     association :vehicle
     association :status
-    association :owner, factory: :user
+    association :owner, factory: :user_with_role_admin
     association :manager, factory: :manager_employee
     association :car_mecanic, factory: :mecanic_employee
 

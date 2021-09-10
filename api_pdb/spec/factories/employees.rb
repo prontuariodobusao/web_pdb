@@ -11,11 +11,15 @@ FactoryBot.define do
     trait :manager do
       before(:create) do |employee|
         employee.occupation = create(:occupation, :manager)
+        employee.user = create(:user)
+        employee.user.add_role :admin
       end
     end
     trait :mecanic do
       before(:create) do |employee|
         employee.occupation = create(:occupation, :mecanic)
+        employee.user = create(:user)
+        employee.user.add_role :normal
       end
     end
     trait :rh do
