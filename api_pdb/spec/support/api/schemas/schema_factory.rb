@@ -50,6 +50,10 @@ module SchemaFactory
   def user_response_schema
     UserResponse.new
   end
+  
+  def user_confirmation_response_schema
+    UserConfirmationResponse.new
+  end
 
   def new_paginate_response_schema(response_schema)
     Paginations::OnlyPageSchema.new(response_schema)

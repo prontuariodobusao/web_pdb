@@ -1,7 +1,7 @@
 require 'swagger_helper'
 
 describe 'Manager::Employees', type: :request do
-  let(:resource) { create(:driver_employee) }
+  let(:resource) { create(:driver_employee, :user) }
   let(:occupation) { create(:occupation, :driver) }
 
   let(:valid_employee_attributes) do
@@ -193,7 +193,7 @@ describe 'Manager::Employees', type: :request do
                 in: :body,
                 schema: { '$ref' => '#/components/schemas/employee_params' }
 
-      response '204', 'Not Content' do
+      response '200', 'Not Content' do
         let(:id) { resource.id }
         let(:data) { valid_employee_attributes }
         let(:Authorization) { authenticate_rh_user[:Authorization] }

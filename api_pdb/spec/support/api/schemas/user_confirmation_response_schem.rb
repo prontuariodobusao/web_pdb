@@ -1,4 +1,4 @@
-class UserResponse
+class UserConfirmationResponse
   include JSON::SchemaBuilder
 
   def schema
@@ -16,11 +16,6 @@ class UserResponse
               string :name
             end
           end
-        end
-      end
-      object :meta do
-        object :links do
-          string :self
         end
       end
     end

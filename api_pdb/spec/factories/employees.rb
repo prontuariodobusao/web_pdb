@@ -24,6 +24,12 @@ FactoryBot.define do
       end
     end
 
+    trait :user do
+      before(:create) do |employee|
+        employee.user = create(:user)
+      end
+    end
+
     factory :driver_employee, traits: %i[driver]
     factory :manager_employee, traits: %i[manager]
     factory :mecanic_employee, traits: %i[mecanic]

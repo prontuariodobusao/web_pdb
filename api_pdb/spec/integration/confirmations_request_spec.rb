@@ -28,7 +28,7 @@ describe 'Confirmations', type: :request do
         let(:user_id) { user.id }
         let(:confirmation_params) { valid_params }
 
-        schema user_response_schema.schema.as_json
+        schema user_confirmation_response_schema.schema.as_json
 
         context 'retun a user confirmated' do
           before do |example|
@@ -42,7 +42,7 @@ describe 'Confirmations', type: :request do
 
         it_behaves_like 'a json endpoint response', 201 do
           let(:confirmation_params) { valid_params }
-          let(:expected_response_schema) { user_response_schema }
+          let(:expected_response_schema) { user_confirmation_response_schema }
         end
       end
 
