@@ -5,7 +5,7 @@ describe Employees::CreateUser do
 
   context 'on success' do
     context 'create valid User' do
-      let(:employee) { create(:driver_employee) }
+      let(:employee) { create(:employee, :occupation_driver) }
       it { expect(create_user.success?).to be_truthy }
       it { expect(create_user.data[:user]).to be_a User }
       it 'is expected the Employee to be present' do

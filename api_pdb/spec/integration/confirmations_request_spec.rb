@@ -1,7 +1,7 @@
 require 'swagger_helper'
 
 describe 'Confirmations', type: :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :driver_user) }
   let(:valid_params) do
     {
       data: {

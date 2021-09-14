@@ -30,7 +30,7 @@ module ApiHelper
   end
 
   def authenticate_user
-    user = create(:user)
+    user = create(:user, :driver_user)
     { username: user.username, password: user.password }
   end
 

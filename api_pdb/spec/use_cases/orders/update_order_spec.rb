@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Orders::UpdateOrder do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :driver_user) }
   let(:order) { create(:order, reference: 'OS_00001/2021') }
   let(:mecanic) { create(:mecanic_employee) }
   let(:solution) { create(:solution) }

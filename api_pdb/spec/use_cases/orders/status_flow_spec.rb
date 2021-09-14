@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Orders::StatusFlow do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :driver_user) }
   let(:order) { build(:order) }
 
   before :all do

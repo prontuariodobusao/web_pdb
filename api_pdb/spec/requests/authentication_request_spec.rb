@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Authentications', type: :request do
   describe 'POST /auth/login' do
-    let!(:user) { create(:user) }
+    let!(:user) { create(:user, :driver_user) }
 
     let(:headers) { valid_headers.except('Authorization') }
 

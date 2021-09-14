@@ -126,7 +126,7 @@ describe 'Orders', type: :request do
 
         context 'list of orders' do
           before do |example|
-            user = create(:user)
+            user = create(:user, :driver_user)
             response = Auth::Authenticate.call(username: user.username, password: user.password)
             create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10))
             create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10))
