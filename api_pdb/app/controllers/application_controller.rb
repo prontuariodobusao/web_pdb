@@ -5,6 +5,7 @@ class ApplicationController < ActionController::API
   include ApiPack::ApiHelper
   include Serializable
   include Pundit
+  include DatatableSimple
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
