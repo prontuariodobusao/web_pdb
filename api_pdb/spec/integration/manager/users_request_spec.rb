@@ -1,8 +1,8 @@
 require 'swagger_helper'
 
 describe 'Manager::Users', type: :request do
-  let(:resource) { create(:user) }
-  let(:employee) { create(:driver_employee) }
+  let(:resource) { create(:user, :driver_user) }
+  let(:employee) { create(:employee, :occupation_driver) }
   let(:password) { 'abc123' }
 
   let(:valid_user_attributes) do

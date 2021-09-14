@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Users::ResetPassword do
   context 'on success' do
-    let(:user) { create(:user, locked_at: DateTime.current, confirmed_at: DateTime.current) }
+    let(:user) { create(:user, :driver_user, locked_at: DateTime.current, confirmed_at: DateTime.current) }
 
     subject { described_class.call(user: user) }
 

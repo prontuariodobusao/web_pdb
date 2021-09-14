@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Auth::AuthorizeApiRequest do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :driver_user) }
   let(:header) { { 'Authorization' => token_generator(user.id) } }
 
   subject(:invalid_request_obj) { described_class.call(headers: {}) }

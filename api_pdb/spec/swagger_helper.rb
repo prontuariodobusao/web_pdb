@@ -100,7 +100,18 @@ RSpec.configure do |config|
                 }
               }
             }
-          }
+          },
+          datatable_params: {
+            type: :object,
+            properties: {
+              draw: { type: :integer },
+              page: { type: :integer },
+              per_page: { type: :integer },
+              sort_field: { type: :string },
+              sort_direction: { type: :string },
+              search_value: { type: :string }
+            }
+          },
         }
       },
       servers: [

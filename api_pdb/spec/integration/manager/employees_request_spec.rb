@@ -1,7 +1,7 @@
 require 'swagger_helper'
 
 describe 'Manager::Employees', type: :request do
-  let(:resource) { create(:driver_employee) }
+  let(:resource) { create(:driver_employee, :user) }
   let(:occupation) { create(:occupation, :driver) }
 
   let(:valid_employee_attributes) do
@@ -47,7 +47,7 @@ describe 'Manager::Employees', type: :request do
               is_user: true
             }
           }
-        end 
+        end
         let(:data) { attributes }
         let(:Authorization) { authenticate_manager_user[:Authorization] }
 
@@ -81,7 +81,7 @@ describe 'Manager::Employees', type: :request do
       end
 
       response '403', 'Forbidden - Token inválido' do
-        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}"  }
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
         let(:data) { valid_employee_attributes }
         run_test!
       end
@@ -141,42 +141,81 @@ describe 'Manager::Employees', type: :request do
     end
   end
 
-  path '/manager/employees?page=3&per_page=5' do
-    get 'Obter lista de funcionários' do
+  path '/manager/employees/datatable' do
+    post 'Datatable funcionários' do
       tags 'Funcionários'
-      description 'Rota para lista de OS por usuário, essa rota pode ser executada por usuário gerente ou RH'
+      description 'Rota para datatable, essa rota pode ser executada por usuário gerente ou RH'
       security [Authorization: []]
+      consumes 'application/json'
       produces 'application/json'
 
-      response('200', 'Sucesso') do
-        middle_paginations_response = new_middle_paginations_response_schema(employees_response_schema)
-        schema middle_paginations_response.schema.as_json
+      parameter name: :data,
+                in: :body,
+                schema: { '$ref' => '#/components/schemas/datatable_params' }
+
+      response '200', 'Sucesso' do
+        schema employee_datatable_response_schema.schema.as_json
 
         context 'list of employees' do
           before do |example|
-            user = create(:user, :rh_user)
-            response = Auth::Authenticate.call(username: user.username, password: user.password)
-            create_list(:driver_employee, 20)
+            employee = create(:manager_employee)
+            response = Auth::Authenticate.call(username: employee.user.username, password: employee.user.password)
+            create_list(:manager_employee, 5)
             @auth_token = response.data[:token]
             submit_request(example.metadata)
           end
 
           let(:Authorization) { @auth_token }
-
-          context 'Count values response in data' do
-            it { expect(parse_json(response)['data'].count).to eq 5 }
+          let(:data) do
+            {
+              draw: 1,
+              page: 1,
+              per_page: 5,
+              sort_field: '',
+              sort_direction: 'asc',
+              search_value: ''
+            }
           end
 
           it_behaves_like 'a json endpoint response', 200 do
-            let(:expected_response_schema) { middle_paginations_response }
+            let(:expected_response_schema) { employee_datatable_response_schema }
           end
         end
       end
-      include_context 'with errors response test'
 
       response '403', 'Forbidden' do
         let(:Authorization) { authenticate_header[:Authorization] }
+        let(:data) { {} }
         run_test!
+      end
+
+      response '403', 'Acesso negado - Token inválido' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
+        let(:data) { {} }
+        schema new_errors_response.schema.as_json
+
+        it_behaves_like 'a error json endpoint', 403 do
+          let(:expected_response_schema) { new_errors_response }
+          let(:error_title) { 'Access Denied - Invalid Token' }
+        end
+      end
+
+      response '406', 'Not Acceptable' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
+        let(:Accept) { 'application/foo' }
+        let(:data) { {} }
+        run_test!
+      end
+
+      response '422', 'Token não informado' do
+        let(:Authorization) { nil }
+        schema new_errors_response.schema.as_json
+        let(:data) { {} }
+
+        it_behaves_like 'a error json endpoint', 422 do
+          let(:expected_response_schema) { new_errors_response }
+          let(:error_title) { 'Missing Token' }
+        end
       end
     end
   end
@@ -193,7 +232,7 @@ describe 'Manager::Employees', type: :request do
                 in: :body,
                 schema: { '$ref' => '#/components/schemas/employee_params' }
 
-      response '204', 'Not Content' do
+      response '200', 'Not Content' do
         let(:id) { resource.id }
         let(:data) { valid_employee_attributes }
         let(:Authorization) { authenticate_rh_user[:Authorization] }

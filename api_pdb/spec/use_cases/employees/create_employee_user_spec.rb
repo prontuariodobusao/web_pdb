@@ -22,7 +22,7 @@ describe Employees::CreateEmployeeUser do
     context 'when occupation is driver, this role is expected to be driver' do
       let(:employee_occupation) { create(:occupation, :driver) }
       let(:employee) { build(:employee, occupation_id: employee_occupation.id, is_user: true) }
-      it { expect(create_employee_user[:data][:employee].user.has_role?(:driver)).to be_truthy }
+      it { expect(create_employee_user[:data][:employee].user.has_role?(:normal)).to be_truthy }
     end
 
     context 'when occupation is manager, this role is expected to be admin' do

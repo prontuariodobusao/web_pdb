@@ -11,7 +11,7 @@ describe Users::Unlock do
   end
 
   context 'on success' do
-    let(:user) { create(:user, locked_at: DateTime.current) }
+    let(:user) { create(:user, :driver_user, locked_at: DateTime.current) }
     
     before do
       @result = described_class.call(user: user, attributes: attributes)

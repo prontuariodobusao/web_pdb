@@ -1,6 +1,6 @@
 module ApiHelper
   def authenticate_header
-    user = create(:user)
+    user = create(:user, :driver_user)
     response = Auth::Authenticate.call(username: user.username, password: user.password)
     {
       Authorization: "Bearer #{response.data[:token]}",
@@ -30,7 +30,7 @@ module ApiHelper
   end
 
   def authenticate_user
-    user = create(:user)
+    user = create(:user, :driver_user)
     { username: user.username, password: user.password }
   end
 

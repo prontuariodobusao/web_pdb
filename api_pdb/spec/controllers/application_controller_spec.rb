@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe ApplicationController, type: :controller do
-  let!(:user) { create(:user) }
+  let!(:user) { create(:user, :driver_user) }
 
   let(:headers) { { 'Authorization' => token_generator(user.id) } }
   let(:invalid_headers) { { 'Authorization' => nil } }

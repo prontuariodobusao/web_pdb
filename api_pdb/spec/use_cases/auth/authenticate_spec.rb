@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Auth::Authenticate do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :driver_user) }
   subject(:valid_auth_obj) { described_class.call(username: user.username, password: user.password) }
   subject(:invalid_auth_obj) { described_class.call(username: 'foo', password: 'bar') }
 

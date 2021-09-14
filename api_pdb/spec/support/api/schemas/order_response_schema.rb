@@ -13,6 +13,14 @@ class OrderResponse
           string :employee_name
           string :username
           string :occupation
+          array :roles do
+            items do
+              object do
+                integer :id
+                string :name
+              end
+            end
+          end
         end
         object :problem do
           integer :id

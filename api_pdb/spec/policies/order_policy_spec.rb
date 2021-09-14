@@ -5,7 +5,7 @@ describe OrderPolicy do
 
   permissions :admin? do
     context 'denies access if user is an driver, mecanic or th' do
-      it { expect(subject).not_to permit(create(:user), Order.new) }
+      it { expect(subject).not_to permit(create(:user, :driver_user), Order.new) }
       it { expect(subject).not_to permit(create(:user, :mecanic_user), Order.new) }
       it { expect(subject).not_to permit(create(:user, :rh_user), Order.new) }
     end

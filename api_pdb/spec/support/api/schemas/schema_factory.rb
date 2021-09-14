@@ -11,6 +11,10 @@ module SchemaFactory
     EmployeeResponse.new
   end
   
+  def employee_datatable_response_schema
+    EmployeeDatatableResponse.new
+  end
+  
   def create_employee_response_schema
     CreateEmployeeResponse.new
   end
@@ -49,6 +53,10 @@ module SchemaFactory
 
   def user_response_schema
     UserResponse.new
+  end
+  
+  def user_confirmation_response_schema
+    UserConfirmationResponse.new
   end
 
   def new_paginate_response_schema(response_schema)

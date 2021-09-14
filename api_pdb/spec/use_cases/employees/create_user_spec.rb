@@ -5,7 +5,7 @@ describe Employees::CreateUser do
 
   context 'on success' do
     context 'create valid User' do
-      let(:employee) { create(:driver_employee) }
+      let(:employee) { create(:employee, :occupation_driver) }
       it { expect(create_user.success?).to be_truthy }
       it { expect(create_user.data[:user]).to be_a User }
       it 'is expected the Employee to be present' do
@@ -13,10 +13,10 @@ describe Employees::CreateUser do
       end
     end
 
-    context 'when occupation is driver, this role is expected to be driver' do
+    context 'when occupation is driver, this role is expected to be normal' do
       let(:employee_occupation) { create(:occupation, :driver) }
       let(:employee) { create(:employee, occupation_id: employee_occupation.id, is_user: true) }
-      it { expect(create_user[:data][:user].has_role?(:driver)).to be_truthy }
+      it { expect(create_user[:data][:user].has_role?(:normal)).to be_truthy }
     end
 
     context 'when occupation is manager, this role is expected to be admin' do

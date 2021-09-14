@@ -14,6 +14,14 @@ class OrderManagerResponse
           string :employee_name
           string :username
           string :occupation
+          array :roles do
+            items do
+              object do
+                integer :id
+                string :name
+              end
+            end
+          end
         end
         object :problem do
           integer :id
@@ -32,13 +40,47 @@ class OrderManagerResponse
           integer :id
           string :name
           string :identity
+          string :confirmation
           string :occupation
+          integer :occupation_id
+          object :user do
+            integer :id
+            string :username
+            string :employee_name
+            string :occupation
+            boolean :confirmation
+            array :roles do
+              items do
+                object do
+                  integer :id
+                  string :name
+                end
+              end
+            end
+          end
         end
         object :car_mecanic do
           integer :id
           string :name
           string :identity
           string :occupation
+          string :confirmation
+          integer :occupation_id
+          object :user do
+            integer :id
+            string :username
+            string :employee_name
+            string :occupation
+            boolean :confirmation
+            array :roles do
+              items do
+                object do
+                  integer :id
+                  string :name
+                end
+              end
+            end
+          end
         end
         object :status do
           integer :id

@@ -17,7 +17,7 @@ describe 'Authentications', type: :request do
       }
 
       response '200', 'Sucesso' do
-        let(:user) { create(:user) }
+        let(:user) { create(:user, :driver_user) }
         let(:user_credentials) { { username: user.username, password: user.password } }
         schema type: :object,
                properties: {

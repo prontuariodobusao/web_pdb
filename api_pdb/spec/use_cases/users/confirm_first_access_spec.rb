@@ -11,7 +11,7 @@ describe Users::ConfirmFirstAccess do
   end
 
   context 'on success' do
-    let(:user) { create(:user) }
+    let(:user) { create(:user, :driver_user) }
 
     before do
       @result = described_class.call(user: user, attributes: attributes)

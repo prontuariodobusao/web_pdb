@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   context 'Create valid user' do
-    subject(:user) { create(:user) }
+    subject(:user) { create(:user, :driver_user) }
     it { expect(user).to be_valid }
   end
 
   context 'validations' do
-    subject { create(:user) }
+    subject { create(:user, :driver_user) }
 
     it { is_expected.to validate_presence_of(:username) }
     it { is_expected.to validate_presence_of(:password_confirmation) }
@@ -24,21 +24,21 @@ RSpec.describe User, type: :model do
 
   describe '#unlocked?' do
     context 'when the user is created it is expected to be unlocked' do
-      let(:user_unlocked) { create(:user) }
+      let(:user_unlocked) { create(:user, :driver_user) }
       it { expect(user_unlocked.unlocked?).to be_truthy }
     end
   end
 
   describe '#confirmed?' do
     context 'when user was created is expected to be unconfirmed' do
-      let(:user_unlocked) { create(:user) }
+      let(:user_unlocked) { create(:user, :driver_user) }
       it { expect(user_unlocked.confirmed?).to be_falsey }
     end
   end
 
   context 'check type User' do
     context 'Driver' do
-      let(:driver_user) { create(:user) }
+      let(:driver_user) { create(:user, :driver_user) }
 
       it { expect(driver_user.employee.occupation_type_occupation).to eql 'driver' }
     end
