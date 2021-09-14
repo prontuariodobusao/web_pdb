@@ -146,14 +146,15 @@ paths:
                         type: string
                       confirmation:
                         type: boolean
-                  meta:
-                    type: object
-                    properties:
-                      links:
-                        type: object
-                        properties:
-                          self:
-                            type: string
+                      roles:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
         '403':
           description: Acesso negado - Token inválido
           content:
@@ -245,8 +246,34 @@ paths:
                             type: string
                           identity:
                             type: string
+                          confirmation:
+                            type: string
                           occupation:
                             type: string
+                          occupation_id:
+                            type: integer
+                          user:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              confirmation:
+                                type: boolean
+                              employee_name:
+                                type: string
+                              occupation:
+                                type: string
+                              username:
+                                type: string
+                              roles:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                    name:
+                                      type: string
                       meta:
                         type: object
                         properties:
@@ -320,10 +347,36 @@ paths:
                         type: integer
                       name:
                         type: string
+                      confirmation:
+                        type: string
                       identity:
                         type: string
                       occupation:
                         type: string
+                      occupation_id:
+                        type: integer
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          occupation:
+                            type: string
+                          username:
+                            type: string
+                          roles:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
                   meta:
                     type: object
                     properties:
@@ -369,7 +422,7 @@ paths:
         schema:
           type: string
       responses:
-        '204':
+        '200':
           description: Not Content
         '403':
           description: Forbidden
@@ -404,15 +457,16 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/employee_params"
-  "/manager/employees?page=3&per_page=5":
-    get:
-      summary: Obter lista de funcionários
+  "/manager/employees/datatable":
+    post:
+      summary: Datatable funcionários
       tags:
       - Funcionários
-      description: Rota para lista de OS por usuário, essa rota pode ser executada
-        por usuário gerente ou RH
+      description: Rota para datatable, essa rota pode ser executada por usuário gerente
+        ou RH
       security:
       - Authorization: []
+      parameters: []
       responses:
         '200':
           description: Sucesso
@@ -421,9 +475,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  draw:
+                    type: integer
+                  totalRecords:
+                    type: integer
                   data:
                     type: array
-                    maxItems: 5
                     items:
                       type: object
                       properties:
@@ -431,35 +488,38 @@ paths:
                           type: integer
                         name:
                           type: string
+                        confirmation:
+                          type: string
                         identity:
                           type: string
                         occupation:
                           type: string
-                  meta:
-                    type: object
-                    properties:
-                      links:
-                        type: object
-                        properties:
-                          self:
-                            type: string
-                          first:
-                            type: string
-                          last:
-                            type: string
-                          next:
-                            type: string
-                          prev:
-                            type: string
-                      meta:
-                        type: object
-                        properties:
-                          current_page:
-                            type: integer
-                          total_pages:
-                            type: integer
+                        occupation_id:
+                          type: integer
+                        user:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            confirmation:
+                              type: boolean
+                            employee_name:
+                              type: string
+                            occupation:
+                              type: string
+                            username:
+                              type: string
+                            roles:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  name:
+                                    type: string
         '403':
-          description: Forbidden
+          description: Acesso negado - Token inválido
           content:
             application/json:
               schema:
@@ -496,6 +556,11 @@ paths:
                           type: string
                         details:
                           type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/datatable_params"
   "/manager/orders/{id}/edit":
     get:
       summary: API para obter lista de rescursos para edição do gerente
@@ -615,6 +680,15 @@ paths:
                             type: string
                           occupation:
                             type: string
+                          roles:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
                       problem:
                         type: object
                         properties:
@@ -647,8 +721,34 @@ paths:
                             type: string
                           identity:
                             type: string
+                          confirmation:
+                            type: string
                           occupation:
                             type: string
+                          occupation_id:
+                            type: integer
+                          user:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              username:
+                                type: string
+                              employee_name:
+                                type: string
+                              occupation:
+                                type: string
+                              confirmation:
+                                type: boolean
+                              roles:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                    name:
+                                      type: string
                       car_mecanic:
                         type: object
                         properties:
@@ -660,6 +760,32 @@ paths:
                             type: string
                           occupation:
                             type: string
+                          confirmation:
+                            type: string
+                          occupation_id:
+                            type: integer
+                          user:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              username:
+                                type: string
+                              employee_name:
+                                type: string
+                              occupation:
+                                type: string
+                              confirmation:
+                                type: boolean
+                              roles:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: integer
+                                    name:
+                                      type: string
                       status:
                         type: object
                         properties:
@@ -896,6 +1022,15 @@ paths:
                             type: string
                           confirmation:
                             type: boolean
+                          roles:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
                       meta:
                         type: object
                         properties:
@@ -965,6 +1100,15 @@ paths:
                         type: string
                       confirmation:
                         type: boolean
+                      roles:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
                   meta:
                     type: object
                     properties:
@@ -1033,6 +1177,15 @@ paths:
                             type: string
                           confirmation:
                             type: boolean
+                          roles:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
                       meta:
                         type: object
                         properties:
@@ -1105,6 +1258,15 @@ paths:
                             type: string
                           occupation:
                             type: string
+                          roles:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
                       problem:
                         type: object
                         properties:
@@ -1329,6 +1491,15 @@ paths:
                             type: string
                           occupation:
                             type: string
+                          roles:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
                       problem:
                         type: object
                         properties:
@@ -1455,6 +1626,21 @@ components:
               type: integer
             is_user:
               type: boolean
+    datatable_params:
+      type: object
+      properties:
+        draw:
+          type: integer
+        page:
+          type: integer
+        per_page:
+          type: integer
+        sort_field:
+          type: string
+        sort_direction:
+          type: string
+        search_value:
+          type: string
 servers:
 - url: http://localhost:3003
   variables:
