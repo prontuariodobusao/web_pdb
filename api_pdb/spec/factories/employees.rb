@@ -6,19 +6,21 @@ FactoryBot.define do
     trait :driver do
       before(:create) do |employee|
         employee.occupation = create(:occupation, :driver)
+        employee.user = build(:user)
+        employee.user.add_role :normal
       end
     end
     trait :manager do
       before(:create) do |employee|
         employee.occupation = create(:occupation, :manager)
-        employee.user = create(:user)
+        employee.user = build(:user)
         employee.user.add_role :admin
       end
     end
     trait :mecanic do
       before(:create) do |employee|
         employee.occupation = create(:occupation, :mecanic)
-        employee.user = create(:user)
+        employee.user = build(:user)
         employee.user.add_role :normal
       end
     end
@@ -30,7 +32,7 @@ FactoryBot.define do
 
     trait :user do
       before(:create) do |employee|
-        employee.user = create(:user, :manager_user)
+        employee.user = build(:user, :manager_user)
       end
     end
 
