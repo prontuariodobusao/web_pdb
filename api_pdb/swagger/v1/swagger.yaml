@@ -1218,6 +1218,247 @@ paths:
                           type: string
         '403':
           description: Forbidden
+  "/manager/vehicles":
+    post:
+      summary: API para cradastro de Veículos
+      tags:
+      - Veículos
+      description: Rota para cadastro, essa rota pode ser executada por usuário gerente
+        ou RH
+      security:
+      - Authorization: []
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      car_line_id:
+                        type: integer
+                      km:
+                        type: integer
+                      car_number:
+                        type: string
+                      oil_date:
+                        type: string
+                      tire_date:
+                        type: string
+                      revision_date:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+        '406':
+          description: Not Acceptable
+        '415':
+          description: Unsupported Media Type
+        '403':
+          description: Forbidden - Token inválido
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  status:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          type: string
+                        field:
+                          type: string
+                        detail:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/vehicle_params"
+  "/manager/vehicles/datatable":
+    post:
+      summary: Datatable Veículos
+      tags:
+      - Veículos
+      description: Rota para datatable, essa rota pode ser executada por usuário gerente
+        ou RH
+      security:
+      - Authorization: []
+      parameters: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  draw:
+                    type: integer
+                  totalRecords:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        car_line_id:
+                          type: integer
+                        km:
+                          type: integer
+                        car_number:
+                          type: string
+                        oil_date:
+                          type: string
+                        tire_date:
+                          type: string
+                        revision_date:
+                          type: string
+        '403':
+          description: Acesso negado - Token inválido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/datatable_params"
+  "/manager/vehicles/{id}":
+    put:
+      summary: API para atualizar Veículos
+      tags:
+      - Veículos
+      description: Rota para atualizar, essa rota pode ser executada por usuário gerente
+        ou RH
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sucess
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      car_line_id:
+                        type: integer
+                      km:
+                        type: integer
+                      car_number:
+                        type: string
+                      oil_date:
+                        type: string
+                      tire_date:
+                        type: string
+                      revision_date:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+        '403':
+          description: Forbidden
+        '406':
+          description: Not Acceptable
+        '415':
+          description: Unsupported Media Type
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  status:
+                    type: string
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        resource:
+                          type: string
+                        field:
+                          type: string
+                        detail:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/vehicle_params"
   "/orders":
     post:
       summary: API para cradastro de ordens de serviços
@@ -1626,6 +1867,24 @@ components:
               type: integer
             is_user:
               type: boolean
+    vehicle_params:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            car_number:
+              type: string
+            km:
+              type: integer
+            car_line_id:
+              type: integer
+            oil_date:
+              type: string
+            tire_date:
+              type: string
+            revision_date:
+              type: string
     datatable_params:
       type: object
       properties:

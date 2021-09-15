@@ -1,4 +1,8 @@
 module SchemaFactory
+  def vehicle_response_schema
+    VehicleResponse.new
+  end
+  
   def resources_response_schema
     ResourcesResponse.new
   end
@@ -13,6 +17,10 @@ module SchemaFactory
   
   def employee_datatable_response_schema
     EmployeeDatatableResponse.new
+  end
+  
+  def vehicle_datatable_response_schema
+    VehicleDatatableResponse.new
   end
   
   def create_employee_response_schema

@@ -36,6 +36,11 @@ Rails.application.routes.draw do
       get 'report'
       post 'report_by_dates'
     end
+
+    resources :vehicles, except: :destroy
+    namespace :vehicles do
+      post 'datatable'
+    end
   end
 
   resources :orders, except: %i[destroy update]

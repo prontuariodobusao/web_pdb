@@ -101,6 +101,22 @@ RSpec.configure do |config|
               }
             }
           },
+          vehicle_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  car_number: { type: :string },
+                  km: { type: :integer },
+                  car_line_id: { type: :integer },
+                  oil_date: { type: :string },
+                  tire_date: { type: :string },
+                  revision_date: { type: :string }
+                }
+              }
+            }
+          },
           datatable_params: {
             type: :object,
             properties: {
