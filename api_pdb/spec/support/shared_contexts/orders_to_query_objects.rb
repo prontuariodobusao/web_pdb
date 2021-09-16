@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 shared_context 'query object models' do
-  let(:status1) { create(:status, name: 'Pendente', color: :orange) }
-  let(:status2) { create(:status, name: 'Manutenção', color: :blue) }
-  let(:status3) { create(:status, name: 'Cancelada', color: :red) }
-  let(:status4) { create(:status, name: 'Finalizada', color: :green) }
+  let(:status1) { Status.find 1 }
+  let(:status2) { Status.find 2 }
+  let(:status3) { Status.find 3 }
+  let(:status4) { Status.find 4 }
 
   let(:enginer) { create(:category, name: 'MOTOR') }
   let(:energy) { create(:category, name: 'ELÉTRICA') }
@@ -186,7 +186,7 @@ shared_context 'query object models' do
                    created_at: '11/08/2021', updated_at: '18/08/2021')
   end
   let(:order22) do
-    create(:order, reference: 'OS_00022/2021', km: 2345, state: 'opened', problem_id: problem2.id, vehicle_id: vehicle1.id, status_id: status1.id,
+    create(:order, reference: 'OS_00022/2021', km: 2345, state: 'opened', problem_id: problem2.id, vehicle_id: vehicle1.id, status_id: status4.id,
                    created_at: '03/09/2021', updated_at: '03/09/2021')
   end
   let(:order23) do
@@ -202,6 +202,447 @@ shared_context 'query object models' do
       created_at: '02/09/2021',
       updated_at: '02/09/2021'
     )
+  end
+
+  let(:history1) do
+    create(:history,
+           km: 100_000,
+           description: 'Elevador',
+           status_id: status1.id,
+           order_id: order1.id,
+           created_at: '11/08/2021')
+  end
+  let(:history2) do
+    create(:history,
+           km: 100_000,
+           description: 'Por favor, realizar...',
+           status_id: status2.id,
+           order_id: order1.id,
+           created_at: '11/08/2021')
+  end
+  let(:history3) do
+    create(:history,
+           km: 100_000,
+           description: 'Rampa não desce ou sobe',
+           status_id: status1.id,
+           order_id: order2.id,
+           created_at: '11/08/2021')
+  end
+  let(:history4) do
+    create(:history,
+           km: 150_000,
+           description: 'Acionador elétrico não funciona.',
+           status_id: status1.id,
+           order_id: order3.id,
+           created_at: '11/08/2021')
+  end
+  let(:history5) do
+    create(:history,
+           km: 238_700,
+           description: 'Sujeira (terra/poeira) nas engrenagem.',
+           status_id: status1.id,
+           order_id: order4.id,
+           created_at: '11/08/2021')
+  end
+  let(:history6) do
+    create(:history,
+           km: 302_090,
+           description: 'Vandalismo',
+           status_id: status1.id,
+           order_id: order5.id,
+           created_at: '11/08/2021')
+  end
+  let(:history7) do
+    create(:history,
+           km: 160_000,
+           description: 'Colisão na garagem.',
+           status_id: status1.id,
+           order_id: order6.id,
+           created_at: '11/08/2021')
+  end
+  let(:history8) do
+    create(:history,
+           km: 600_909,
+           description: 'Regulagem quebrada.',
+           status_id: status1.id,
+           order_id: order7.id,
+           created_at: '11/08/2021')
+  end
+  let(:history9) do
+    create(:history,
+           km: 588_000,
+           description: 'Problema no macaco hidráulico.',
+           status_id: status1.id,
+           order_id: order8.id,
+           created_at: '11/08/2021')
+  end
+  let(:history10) do
+    create(:history,
+           km: 588_000,
+           description: 'Vazamento de ar.',
+           status_id: status1.id,
+           order_id: order9.id,
+           created_at: '11/08/2021')
+  end
+  let(:history11) do
+    create(:history,
+           km: 485_000,
+           description: 'Relé queimado.',
+           status_id: status1.id,
+           order_id: order10.id,
+           created_at: '11/08/2021')
+  end
+  let(:history12) do
+    create(:history,
+           km: 298_987,
+           description: 'Fusível queimado.',
+           status_id: status1.id,
+           order_id: order11.id,
+           created_at: '11/08/2021')
+  end
+  let(:history13) do
+    create(:history,
+           km: 309_897,
+           description: 'Vandalismo.',
+           status_id: status1.id,
+           order_id: order12.id,
+           created_at: '11/08/2021')
+  end
+  let(:history14) do
+    create(:history,
+           km: 578_231,
+           description: 'Lampada queimada.',
+           status_id: status1.id,
+           order_id: order13.id,
+           created_at: '11/08/2021')
+  end
+  let(:history15) do
+    create(:history,
+           km: 400_000,
+           description: 'Problema no display.',
+           status_id: status1.id,
+           order_id: order14.id,
+           created_at: '11/08/2021')
+  end
+  let(:history16) do
+    create(:history,
+           km: 309_000,
+           description: 'Lampada queimada.',
+           status_id: status1.id,
+           order_id: order15.id,
+           created_at: '11/08/2021')
+  end
+  let(:history17) do
+    create(:history,
+           km: 500_211,
+           description: 'Amortecedor estourado.',
+           status_id: status1.id,
+           order_id: order16.id,
+           created_at: '11/08/2021')
+  end
+  let(:history18) do
+    create(:history,
+           km: 490_000,
+           description: 'Excesso de peso.',
+           status_id: status1.id,
+           order_id: order17.id,
+           created_at: '11/08/2021')
+  end
+  let(:history19) do
+    create(:history,
+           km: 601_098,
+           description: 'Óleo baixo.',
+           status_id: status1.id,
+           order_id: order18.id,
+           created_at: '11/08/2021')
+  end
+  let(:history20) do
+    create(:history,
+           km: 501_001,
+           description: 'Vazamento de óleo lubrificante.',
+           status_id: status1.id,
+           order_id: order19.id,
+           created_at: '11/08/2021')
+  end
+  let(:history21) do
+    create(:history,
+           km: 600_098,
+           description: 'Excesso de óleo.',
+           status_id: status1.id,
+           order_id: order20.id,
+           created_at: '11/08/2021')
+  end
+  let(:history22) do
+    create(:history,
+           km: 308_909,
+           description: 'Problema na turbina.',
+           status_id: status1.id,
+           order_id: order21.id,
+           created_at: '11/08/2021')
+  end
+  let(:history23) do
+    create(:history,
+           km: 150_000,
+           description: 'Cancelada...',
+           status_id: status3.id,
+           order_id: order3.id,
+           created_at: '17/08/2021')
+  end
+  let(:history24) do
+    create(:history,
+           km: 302_090,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order5.id,
+           created_at: '17/08/2021')
+  end
+  let(:history25) do
+    create(:history,
+           km: 302_090,
+           description: 'Realizado com sucesso...',
+           status_id: status4.id,
+           order_id: order5.id,
+           created_at: '17/08/2021')
+  end
+  let(:history26) do
+    create(:history,
+           km: 100_000,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order2.id,
+           created_at: '18/08/2021')
+  end
+  let(:history27) do
+    create(:history,
+           km: 600_909,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order7.id,
+           created_at: '18/08/2021')
+  end
+  let(:history28) do
+    create(:history,
+           km: 308_909,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order21.id,
+           created_at: '18/08/2021')
+  end
+  let(:history29) do
+    create(:history,
+           km: 308_909,
+           description: 'Realizar...',
+           status_id: status4.id,
+           order_id: order21.id,
+           created_at: '18/08/2021')
+  end
+  let(:history30) do
+    create(:history,
+           km: 238_700,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order4.id,
+           created_at: '19/08/2021')
+  end
+  let(:history31) do
+    create(:history,
+           km: 238_700,
+           description: 'Finalizada...',
+           status_id: status4.id,
+           order_id: order4.id,
+           created_at: '19/08/2021')
+  end
+  let(:history32) do
+    create(:history,
+           km: 588_000,
+           description: 'Cancelada...',
+           status_id: status3.id,
+           order_id: order8.id,
+           created_at: '19/08/2021')
+  end
+  let(:history33) do
+    create(:history,
+           km: 485_000,
+           description: 'Cancelada...',
+           status_id: status3.id,
+           order_id: order10.id,
+           created_at: '19/08/2021')
+  end
+  let(:history34) do
+    create(:history,
+           km: 309_897,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order12.id,
+           created_at: '19/08/2021')
+  end
+  let(:history35) do
+    create(:history,
+           km: 309_897,
+           description: 'Finalizada...',
+           status_id: status4.id,
+           order_id: order12.id,
+           created_at: '19/08/2021')
+  end
+  let(:history36) do
+    create(:history,
+           km: 400_000,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order14.id,
+           created_at: '19/08/2021')
+  end
+  let(:history37) do
+    create(:history,
+           km: 400_000,
+           description: 'Finalizada...',
+           status_id: status4.id,
+           order_id: order14.id,
+           created_at: '19/08/2021')
+  end
+  let(:history38) do
+    create(:history,
+           km: 500_211,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order16.id,
+           created_at: '19/08/2021')
+  end
+  let(:history39) do
+    create(:history,
+           km: 490_000,
+           description: 'Cancelada...',
+           status_id: status3.id,
+           order_id: order17.id,
+           created_at: '19/08/2021')
+  end
+  let(:history40) do
+    create(:history,
+           km: 160_000,
+           description: 'Cancelada...',
+           status_id: status3.id,
+           order_id: order6.id,
+           created_at: '20/08/2021')
+  end
+  let(:history41) do
+    create(:history,
+           km: 588_000,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order9.id,
+           created_at: '20/08/2021')
+  end
+  let(:history42) do
+    create(:history,
+           km: 588_000,
+           description: 'Finalizada...',
+           status_id: status4.id,
+           order_id: order9.id,
+           created_at: '20/08/2021')
+  end
+  let(:history43) do
+    create(:history,
+           km: 298_987,
+           description: 'Cancelada...',
+           status_id: status3.id,
+           order_id: order11.id,
+           created_at: '20/08/2021')
+  end
+  let(:history44) do
+    create(:history,
+           km: 578_231,
+           description: 'Cancelada...',
+           status_id: status3.id,
+           order_id: order13.id,
+           created_at: '20/08/2021')
+  end
+  let(:history45) do
+    create(:history,
+           km: 309_000,
+           description: 'Finalizada...',
+           status_id: status2.id,
+           order_id: order15.id,
+           created_at: '20/08/2021')
+  end
+  let(:history46) do
+    create(:history,
+           km: 309_000,
+           description: 'Finalizada...',
+           status_id: status4.id,
+           order_id: order15.id,
+           created_at: '20/08/2021')
+  end
+  let(:history47) do
+    create(:history,
+           km: 601_098,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order18.id,
+           created_at: '20/08/2021')
+  end
+  let(:history48) do
+    create(:history,
+           km: 600_098,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order20.id,
+           created_at: '20/08/2021')
+  end
+  let(:history49) do
+    create(:history,
+           km: 600_098,
+           description: 'Cancelada...',
+           status_id: status3.id,
+           order_id: order20.id,
+           created_at: '20/08/2021')
+  end
+  let(:history50) do
+    create(:history,
+           km: 501_001,
+           description: 'Manutencao...',
+           status_id: status2.id,
+           order_id: order19.id,
+           created_at: '20/08/2021')
+  end
+  let(:history51) do
+    create(:history,
+           km: 501_001,
+           description: 'Finalizada...',
+           status_id: status4.id,
+           order_id: order19.id,
+           created_at: '20/08/2021')
+  end
+  let(:history52) do
+    create(:history,
+           km: 56_555,
+           description: '',
+           status_id: status1.id,
+           order_id: order22.id,
+           created_at: '01/09/2021')
+  end
+  let(:history53) do
+    create(:history,
+           km: 9696,
+           description: 'O careo está pulando muito',
+           status_id: status1.id,
+           order_id: order23.id,
+           created_at: '02/09/2021')
+  end
+  let(:history54) do
+    create(:history,
+           km: 56_555,
+           description: 'Trocar e ajustar a mola',
+           status_id: status2.id,
+           order_id: order22.id,
+           created_at: '02/09/2021')
+  end
+  let(:history55) do
+    create(:history,
+           km: 56_555,
+           description: 'Foi aplicado um filtro no motor',
+           status_id: status4.id,
+           order_id: order22.id,
+           created_at: '02/09/2021')
   end
 
   let!(:orders) do
@@ -229,6 +670,65 @@ shared_context 'query object models' do
       order21,
       order22,
       order23
+    ]
+  end
+  let!(:histories) do
+    [
+      history1,
+      history2,
+      history3,
+      history4,
+      history5,
+      history6,
+      history7,
+      history8,
+      history9,
+      history10,
+      history11,
+      history12,
+      history13,
+      history14,
+      history15,
+      history16,
+      history17,
+      history18,
+      history19,
+      history20,
+      history21,
+      history22,
+      history23,
+      history24,
+      history25,
+      history26,
+      history27,
+      history28,
+      history29,
+      history30,
+      history31,
+      history32,
+      history33,
+      history34,
+      history35,
+      history36,
+      history37,
+      history38,
+      history39,
+      history40,
+      history41,
+      history42,
+      history43,
+      history44,
+      history45,
+      history46,
+      history47,
+      history48,
+      history49,
+      history50,
+      history51,
+      history52,
+      history53,
+      history54,
+      history55
     ]
   end
 end

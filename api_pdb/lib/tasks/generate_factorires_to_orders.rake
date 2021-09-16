@@ -3,8 +3,9 @@
 namespace :orders do
   desc 'Generate factories to orders'
   task generate_factories_to_orders: [:environment] do
-    vehicles = Vehicle.all
-    orders = Order.all
+    vehicles = Vehicle.order(:id)
+    orders = Order.order(:id)
+    histories = History.order(:id)
 
     vehicles.each do |v|
       puts <<~HEREDOC
@@ -18,6 +19,19 @@ namespace :orders do
       puts <<~HEREDOC
         let(:order#{o.id}) do
           create(:order, reference: '#{o.reference}', km: #{o.km}, state: #{o.state}, problem_id: #{o.problem_id}, vehicle_id: #{o.vehicle_id}, status_id: #{o.status_id}, created_at: '#{o.created_at.strftime('%d/%m/%Y')}', updated_at: '#{o.updated_at.strftime('%d/%m/%Y')}')
+        end
+      HEREDOC
+    end
+    
+    histories.each do |h|
+      puts <<~HEREDOC
+        let(:history#{h.id}) do
+          create(:history,
+            km: #{h.km},
+            description: '#{h.description}',
+            status_id: status#{h.status_id}.id,
+            order_id: order#{h.order_id}.id,
+            created_at: '#{h.created_at.strftime('%d/%m/%Y')}')
         end
       HEREDOC
     end
