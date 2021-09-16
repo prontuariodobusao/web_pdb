@@ -5,9 +5,16 @@ describe 'OrdersQueries::OrdersByCategoryQuery' do
 
   include_context 'query object models'
 
-  describe '#all' do
-    it 'returns all artists' do
-      expect(query).to eq(orders)
+  describe '.call' do
+    let(:result_expected) do
+      [
+        { name: 'SUSPENSÃO', y: 2 },
+        { name: 'MOTOR', y: 5 },
+        { name: 'ELÉTRICA', y: 6 },
+        { name: 'CARROCERIA', y: 9 }
+      ]
     end
+
+    it { expect(query.map { |q| { name: q.name, y: q.quantity } }).to eq(result_expected) }
   end
 end
