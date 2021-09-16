@@ -8,7 +8,7 @@ describe 'OrdersQueries::OrdersByCategoryQuery' do
   describe '.call' do
     let(:result_expected) do
       [
-        { name: 'SUSPENSÃO', y: 2 },
+        { name: 'SUSPENSÃO', y: 3 },
         { name: 'MOTOR', y: 5 },
         { name: 'ELÉTRICA', y: 6 },
         { name: 'CARROCERIA', y: 9 }

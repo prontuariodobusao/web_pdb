@@ -105,45 +105,61 @@ shared_context 'query object models' do
     create(:order, reference: 'OS_00001/2021', km: 100_000, state: 'opened', problem_id: problem17.id, vehicle_id: vehicle4.id, status_id: status2.id,
                    created_at: '11/08/2021', updated_at: '11/08/2021')
   end
-  let(:order3) do
-    create(:order, reference: 'OS_00003/2021', km: 150_000, state: 'closed', problem_id: problem17.id, vehicle_id: vehicle2.id, status_id: status3.id,
-                   created_at: '11/08/2021', updated_at: '17/08/2021')
-  end
-  let(:order5) do
-    create(:order, reference: 'OS_00005/2021', km: 302_090, state: 'closed', problem_id: problem13.id, vehicle_id: vehicle4.id, status_id: status4.id,
-                   created_at: '11/08/2021', updated_at: '17/08/2021')
-  end
   let(:order2) do
     create(:order, reference: 'OS_00002/2021', km: 100_000, state: 'opened', problem_id: problem17.id, vehicle_id: vehicle1.id, status_id: status2.id,
                    created_at: '11/08/2021', updated_at: '18/08/2021')
   end
-  let(:order7) do
-    create(:order, reference: 'OS_00007/2021', km: 600_909, state: 'opened', problem_id: problem14.id, vehicle_id: vehicle6.id, status_id: status2.id,
-                   created_at: '11/08/2021', updated_at: '18/08/2021')
-  end
-  let(:order21) do
-    create(:order, reference: 'OS_00021/2021', km: 308_909, state: 'closed', problem_id: problem6.id, vehicle_id: vehicle6.id, status_id: status4.id,
-                   created_at: '11/08/2021', updated_at: '18/08/2021')
+  let(:order3) do
+    create(:order, reference: 'OS_00003/2021', km: 150_000, state: 'closed', problem_id: problem17.id, vehicle_id: vehicle2.id, status_id: status3.id,
+                   created_at: '11/08/2021', updated_at: '17/08/2021')
   end
   let(:order4) do
     create(:order, reference: 'OS_00004/2021', km: 238_700, state: 'closed', problem_id: problem17.id, vehicle_id: vehicle3.id, status_id: status4.id,
                    created_at: '11/08/2021', updated_at: '19/08/2021')
   end
+  let(:order5) do
+    create(:order, reference: 'OS_00005/2021', km: 302_090, state: 'closed', problem_id: problem13.id, vehicle_id: vehicle4.id, status_id: status4.id,
+                   created_at: '11/08/2021', updated_at: '17/08/2021')
+  end
+  let(:order6) do
+    create(:order, reference: 'OS_00006/2021', km: 160_000, state: 'closed', problem_id: problem13.id, vehicle_id: vehicle5.id, status_id: status3.id,
+                   created_at: '11/08/2021', updated_at: '20/08/2021')
+  end
+  let(:order7) do
+    create(:order, reference: 'OS_00007/2021', km: 600_909, state: 'opened', problem_id: problem14.id, vehicle_id: vehicle6.id, status_id: status2.id,
+                   created_at: '11/08/2021', updated_at: '18/08/2021')
+  end
   let(:order8) do
     create(:order, reference: 'OS_00008/2021', km: 588_000, state: 'closed', problem_id: problem16.id, vehicle_id: vehicle7.id, status_id: status3.id,
                    created_at: '11/08/2021', updated_at: '19/08/2021')
+  end
+  let(:order9) do
+    create(:order, reference: 'OS_00009/2021', km: 588_000, state: 'closed', problem_id: problem16.id, vehicle_id: vehicle8.id, status_id: status4.id,
+                   created_at: '11/08/2021', updated_at: '20/08/2021')
   end
   let(:order10) do
     create(:order, reference: 'OS_00010/2021', km: 485_000, state: 'closed', problem_id: problem7.id, vehicle_id: vehicle9.id, status_id: status3.id,
                    created_at: '11/08/2021', updated_at: '19/08/2021')
   end
+  let(:order11) do
+    create(:order, reference: 'OS_00011/2021', km: 298_987, state: 'closed', problem_id: problem7.id, vehicle_id: vehicle1.id, status_id: status3.id,
+                   created_at: '11/08/2021', updated_at: '20/08/2021')
+  end
   let(:order12) do
     create(:order, reference: 'OS_00012/2021', km: 309_897, state: 'closed', problem_id: problem7.id, vehicle_id: vehicle1.id, status_id: status4.id,
                    created_at: '11/08/2021', updated_at: '19/08/2021')
   end
+  let(:order13) do
+    create(:order, reference: 'OS_00013/2021', km: 578_231, state: 'closed', problem_id: problem8.id, vehicle_id: vehicle1.id, status_id: status3.id,
+                   created_at: '11/08/2021', updated_at: '20/08/2021')
+  end
   let(:order14) do
     create(:order, reference: 'OS_00014/2021', km: 400_000, state: 'closed', problem_id: problem10.id, vehicle_id: vehicle1.id, status_id: status4.id,
                    created_at: '11/08/2021', updated_at: '19/08/2021')
+  end
+  let(:order15) do
+    create(:order, reference: 'OS_00015/2021', km: 309_000, state: 'closed', problem_id: problem11.id, vehicle_id: vehicle1.id, status_id: status4.id,
+                   created_at: '11/08/2021', updated_at: '20/08/2021')
   end
   let(:order16) do
     create(:order, reference: 'OS_00016/2021', km: 500_211, state: 'opened', problem_id: problem19.id, vehicle_id: vehicle1.id, status_id: status2.id,
@@ -153,41 +169,39 @@ shared_context 'query object models' do
     create(:order, reference: 'OS_00017/2021', km: 490_000, state: 'closed', problem_id: problem18.id, vehicle_id: vehicle2.id, status_id: status3.id,
                    created_at: '11/08/2021', updated_at: '19/08/2021')
   end
-  let(:order6) do
-    create(:order, reference: 'OS_00006/2021', km: 160_000, state: 'closed', problem_id: problem13.id, vehicle_id: vehicle5.id, status_id: status3.id,
-                   created_at: '11/08/2021', updated_at: '20/08/2021')
-  end
-  let(:order9) do
-    create(:order, reference: 'OS_00009/2021', km: 588_000, state: 'closed', problem_id: problem16.id, vehicle_id: vehicle8.id, status_id: status4.id,
-                   created_at: '11/08/2021', updated_at: '20/08/2021')
-  end
-  let(:order11) do
-    create(:order, reference: 'OS_00011/2021', km: 298_987, state: 'closed', problem_id: problem7.id, vehicle_id: vehicle1.id, status_id: status3.id,
-                   created_at: '11/08/2021', updated_at: '20/08/2021')
-  end
-  let(:order13) do
-    create(:order, reference: 'OS_00013/2021', km: 578_231, state: 'closed', problem_id: problem8.id, vehicle_id: vehicle1.id, status_id: status3.id,
-                   created_at: '11/08/2021', updated_at: '20/08/2021')
-  end
-  let(:order15) do
-    create(:order, reference: 'OS_00015/2021', km: 309_000, state: 'closed', problem_id: problem11.id, vehicle_id: vehicle1.id, status_id: status4.id,
-                   created_at: '11/08/2021', updated_at: '20/08/2021')
-  end
   let(:order18) do
     create(:order, reference: 'OS_00018/2021', km: 601_098, state: 'opened', problem_id: problem2.id, vehicle_id: vehicle3.id, status_id: status2.id,
-                   created_at: '11/08/2021', updated_at: '20/08/2021')
-  end
-  let(:order20) do
-    create(:order, reference: 'OS_00020/2021', km: 600_098, state: 'closed', problem_id: problem6.id, vehicle_id: vehicle5.id, status_id: status3.id,
                    created_at: '11/08/2021', updated_at: '20/08/2021')
   end
   let(:order19) do
     create(:order, reference: 'OS_00019/2021', km: 501_001, state: 'closed', problem_id: problem2.id, vehicle_id: vehicle4.id, status_id: status4.id,
                    created_at: '11/08/2021', updated_at: '20/08/2021')
   end
+  let(:order20) do
+    create(:order, reference: 'OS_00020/2021', km: 600_098, state: 'closed', problem_id: problem6.id, vehicle_id: vehicle5.id, status_id: status3.id,
+                   created_at: '11/08/2021', updated_at: '20/08/2021')
+  end
+  let(:order21) do
+    create(:order, reference: 'OS_00021/2021', km: 308_909, state: 'closed', problem_id: problem6.id, vehicle_id: vehicle6.id, status_id: status4.id,
+                   created_at: '11/08/2021', updated_at: '18/08/2021')
+  end
   let(:order22) do
     create(:order, reference: 'OS_00022/2021', km: 2345, state: 'opened', problem_id: problem2.id, vehicle_id: vehicle1.id, status_id: status1.id,
                    created_at: '03/09/2021', updated_at: '03/09/2021')
+  end
+  let(:order23) do
+    create(
+      :order,
+      reference: 'OS_00023/2021',
+      km: 9696,
+      description: 'O careo está pulando muito',
+      state: 'opened',
+      problem_id: problem18.id,
+      vehicle_id: vehicle1.id,
+      status_id: status1.id,
+      created_at: '02/09/2021',
+      updated_at: '02/09/2021'
+    )
   end
 
   let!(:orders) do
@@ -213,7 +227,8 @@ shared_context 'query object models' do
       order19,
       order20,
       order21,
-      order22
+      order22,
+      order23
     ]
   end
 end
