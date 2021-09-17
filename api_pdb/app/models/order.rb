@@ -51,6 +51,7 @@ class Order < ApplicationRecord
   scope :maintenance, -> { where(status_id: 2) }
   scope :canceled, -> { where(status_id: 3) }
   scope :finish, -> { where(status_id: 4) }
+  scope :by_mecanic, ->(mecanic_id) { where(car_mecanic_id: mecanic_id) }
   scope :by_categories, -> { OrdersQueries::OrdersByCategoryQuery.call }
   scope :by_problems, -> { OrdersQueries::OrdersByProblemQuery.call }
   scope :by_mecanics, -> { OrdersQueries::OrdersByMecanicQuery.call }
@@ -61,6 +62,14 @@ class Order < ApplicationRecord
                              type_report: type_report
                            )
                          }
+  scope :query_employee_problems_by_dates, lambda { |initial_date, end_date, employee_id, employee_type|
+                                             OrdersQueries::OrdersByDatesEmployeeTypeQuery.call(
+                                               initial_date: initial_date,
+                                               end_date: end_date,
+                                               employee_id: employee_id,
+                                               employee_type: employee_type
+                                             )
+                                           }
 
   scope :query_mecanic_by_dates, lambda { |initial_date, end_date|
                                    OrdersQueries::OrdersMecanicByDatesQuery.call(

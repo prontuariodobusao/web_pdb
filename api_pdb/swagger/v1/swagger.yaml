@@ -454,6 +454,77 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/charts_mecanic_report_params"
+  "/manager/charts/report_employee_problems_by_dates":
+    post:
+      summary: Obter dados para gráfico de mecânico por problemas ou motorista por
+        problemas
+      tags:
+      - Gráficos
+      description: Rota para obtenção de dados para gráficos por funcionário e datas,
+        essa pode ser executada por usuários autenticados
+      security:
+      - Authorization: []
+      parameters: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        y:
+                          type: integer
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/charts_employee_problems_report_params"
   "/manager/employees":
     post:
       summary: API para cradastro de Funcionários
@@ -2159,6 +2230,20 @@ components:
             initial_date:
               type: string
             end_date:
+              type: string
+    charts_employee_problems_report_params:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            initial_date:
+              type: string
+            end_date:
+              type: string
+            employee_id:
+              type: integer
+            employee_type:
               type: string
 servers:
 - url: http://localhost:3003

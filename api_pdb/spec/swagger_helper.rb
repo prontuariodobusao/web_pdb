@@ -142,6 +142,20 @@ RSpec.configure do |config|
                 }
               }
             }
+          },
+          charts_employee_problems_report_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  initial_date: { type: :string },
+                  end_date: { type: :string },
+                  employee_id: { type: :integer },
+                  employee_type: { type: :string }
+                }
+              }
+            }
           }
         }
       },
