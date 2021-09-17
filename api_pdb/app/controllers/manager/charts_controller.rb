@@ -27,7 +27,8 @@ module Manager
                         os_waiting: Order.waiting.count,
                         os_maintenance: Order.maintenance.count,
                         os_canceled: Order.canceled.count,
-                        os_finish: Order.finish.count
+                        os_finish: Order.finish.count,
+                        os_down_time: Orders::DownTime.call
                       },
                       categories: categories,
                       problems: problems
@@ -35,14 +36,15 @@ module Manager
     end
 
     def report_by_dates
-      report = Order.query_by_dates(dates_params[:initial_date], dates_params[:end_date],
-                                    dates_params[:type_report]).map do |problem|
+      reports = Order.query_by_dates(dates_params[:initial_date], dates_params[:end_date],
+                                    dates_params[:type_report]).map do |report|
         {
-          name: problem.name,
-          y: problem.quantity
+          name: report.name,
+          y: report.quantity
         }
       end
-      json_response({ report: report })
+
+      json_response({ report: reports })
     end
 
     private

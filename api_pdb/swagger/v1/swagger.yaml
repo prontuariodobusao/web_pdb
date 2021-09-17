@@ -216,6 +216,164 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/confirmation_params"
+  "/manager/charts/report":
+    get:
+      summary: Obter dados para gráficos
+      tags:
+      - Gráficos
+      description: Rota para obtenção de dados para gráficos, essa pode ser executada
+        por usuários autenticados
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  qtds:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      os_waiting:
+                        type: integer
+                      os_maintenance:
+                        type: integer
+                      os_canceled:
+                        type: integer
+                      os_finish:
+                        type: integer
+                      os_down_time:
+                        type: integer
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        y:
+                          type: integer
+                  problems:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        y:
+                          type: integer
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+  "/manager/charts/report_by_dates":
+    post:
+      summary: Obter dados para gráficos por datas
+      tags:
+      - Gráficos
+      description: Rota para obtenção de dados para gráficos por datas, essa pode
+        ser executada por usuários autenticados
+      security:
+      - Authorization: []
+      parameters: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  report:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        y:
+                          type: integer
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/charts_report_params"
   "/manager/employees":
     post:
       summary: API para cradastro de Funcionários
@@ -1900,6 +2058,18 @@ components:
           type: string
         search_value:
           type: string
+    charts_report_params:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            type_report:
+              type: integer
+            initial_date:
+              type: string
+            end_date:
+              type: string
 servers:
 - url: http://localhost:3003
   variables:
