@@ -36,8 +36,11 @@ module Manager
     end
 
     def report_by_dates
-      reports = Order.query_by_dates(dates_params[:initial_date], dates_params[:end_date],
-                                    dates_params[:type_report]).map do |report|
+      reports = Order.query_by_dates(
+        dates_params[:initial_date],
+        dates_params[:end_date],
+        dates_params[:type_report]
+      ).map do |report|
         {
           name: report.name,
           y: report.quantity
