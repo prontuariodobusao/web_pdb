@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     namespace :charts do
       get 'report'
       post 'report_by_dates'
+      post 'report_mecanic_by_dates'
     end
 
     resources :vehicles, except: :destroy

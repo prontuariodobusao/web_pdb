@@ -130,6 +130,18 @@ RSpec.configure do |config|
                 }
               }
             }
+          },
+          charts_mecanic_report_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  initial_date: { type: :string },
+                  end_date: { type: :string }
+                }
+              }
+            }
           }
         }
       },

@@ -1,4 +1,8 @@
 module SchemaFactory
+  def charts_mecanic_report_by_dates_response_schema
+    ChartsMecanicReportByDatesResponse.new
+  end
+
   def charts_report_by_dates_response_schema
     ChartsReportByDatesResponse.new
   end

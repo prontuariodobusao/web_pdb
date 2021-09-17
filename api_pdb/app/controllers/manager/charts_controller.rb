@@ -50,6 +50,28 @@ module Manager
       json_response({ report: reports })
     end
 
+    def report_mecanic_by_dates
+      orders_maintenance = Order.query_mecanic_by_dates(dates_params[:initial_date], dates_params[:end_date])
+                                .maintenance
+                                .map do |report|
+        {
+          name: report.name,
+          y: report.quantity
+        }
+      end
+
+      orders_finish = Order.query_mecanic_by_dates(dates_params[:initial_date], dates_params[:end_date])
+                           .finish
+                           .map do |report|
+        {
+          name: report.name,
+          y: report.quantity
+        }
+      end
+
+      json_response({ orders_maintenance: orders_maintenance, orders_finish: orders_finish })
+    end
+
     private
 
     def dates_params

@@ -22,6 +22,12 @@ Style/Documentation:
 
 Metrics/MethodLength:
   Max: 20
+
+Metrics/AbcSize:
+  Max: 20
+
+Layout/LineLength:
+  Max: 150
   
 Metrics/BlockLength:
   IgnoredMethods: ['describe', 'context', 'feature', 'scenario', 'let', 'path', 'post', 'get', 'put', 'response', 'patch']

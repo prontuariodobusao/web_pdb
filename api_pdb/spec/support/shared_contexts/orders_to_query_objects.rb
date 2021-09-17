@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 shared_context 'query object models' do
+  let!(:s1) { create(:status, name: 'Aguardando') }
+  let!(:s2) { create(:status, name: 'Manutenção') }
+  let!(:s3) { create(:status, name: 'Cancelada') }
+  let!(:s4) { create(:status, name: 'Finalizada') }
+
   let(:status1) { Status.find 1 }
   let(:status2) { Status.find 2 }
   let(:status3) { Status.find 3 }

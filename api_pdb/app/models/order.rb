@@ -55,8 +55,19 @@ class Order < ApplicationRecord
   scope :by_problems, -> { OrdersQueries::OrdersByProblemQuery.call }
   scope :by_mecanics, -> { OrdersQueries::OrdersByMecanicQuery.call }
   scope :query_by_dates, lambda { |initial_date, end_date, type_report|
-                           OrdersQueries::OrdersByDatesAndTypesQuery.call(initial_date: initial_date, end_date: end_date, type_report: type_report)
+                           OrdersQueries::OrdersByDatesAndTypesQuery.call(
+                             initial_date: initial_date,
+                             end_date: end_date,
+                             type_report: type_report
+                           )
                          }
+
+  scope :query_mecanic_by_dates, lambda { |initial_date, end_date|
+                                   OrdersQueries::OrdersMecanicByDatesQuery.call(
+                                     initial_date: initial_date,
+                                     end_date: end_date
+                                   )
+                                 }
 
   def image_url
     # get url path

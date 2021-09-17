@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 shared_context 'create orders histories' do
+  let!(:s1) { create(:status, name: 'Aguardando') }
+  let!(:s2) { create(:status, name: 'Manutenção') }
+  let!(:s3) { create(:status, name: 'Cancelada') }
+  let!(:s4) { create(:status, name: 'Finalizada') }
   let(:status2) { Status.find 2 }
   let(:status4) { Status.find 4 }
   
