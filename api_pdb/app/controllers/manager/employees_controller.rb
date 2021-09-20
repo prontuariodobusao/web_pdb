@@ -5,11 +5,12 @@ module Manager
 
     # GET /manager/employees
     def index
-      employees = Employee.page(current_page).per_page(per_page)
-
-      options = pagination_meta_generator(request, employees.total_pages)
-
-      json_response serializer_blueprint(:employee, employees, meta: options)
+      employees = if params[:type_occupation].present?
+                    Employee.select(:id, :name).by_occupation(params[:type_occupation])
+                  else
+                    Employee.select(:id, :name)
+                  end
+      json_response employees
     end
 
     def datatable

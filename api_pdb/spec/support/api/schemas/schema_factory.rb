@@ -27,6 +27,10 @@ module SchemaFactory
     EmployeeResponse.new
   end
 
+  def employee_list_response_schema
+    EmployeeListResponse.new
+  end
+
   def employee_datatable_response_schema
     EmployeeDatatableResponse.new
   end

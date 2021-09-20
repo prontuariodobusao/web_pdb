@@ -870,6 +870,67 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/datatable_params"
+  "/manager/employees/list":
+    get:
+      summary: Lista de funcionários
+      tags:
+      - Funcionários
+      description: Rota para lista de funcionários completa ou por cargo, essa rota
+        pode ser executada por usuário gerente ou RH
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+        '403':
+          description: Acesso negado - Token inválido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
   "/manager/orders/{id}/edit":
     get:
       summary: API para obter lista de rescursos para edição do gerente

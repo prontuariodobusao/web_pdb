@@ -25,9 +25,11 @@ Rails.application.routes.draw do
       get 'edit', on: :member
     end
 
-    resources :employees, except: :destroy do
+    resources :employees, except: %i[destroy index] do
       resources :users, only: :create
+      get '/list(/:type_occupation)', to: 'employees#index', on: :collection
     end
+
     namespace :employees do
       post 'datatable'
     end
