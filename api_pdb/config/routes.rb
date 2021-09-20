@@ -28,10 +28,7 @@ Rails.application.routes.draw do
     resources :employees, except: %i[destroy index] do
       resources :users, only: :create
       get '/list(/:type_occupation)', to: 'employees#index', on: :collection
-    end
-
-    namespace :employees do
-      post 'datatable'
+      post 'datatable', to: 'employees#datatable', on: :collection
     end
 
     namespace :charts do
@@ -41,9 +38,8 @@ Rails.application.routes.draw do
       post 'report_employee_problems_by_dates'
     end
 
-    resources :vehicles, except: :destroy
-    namespace :vehicles do
-      post 'datatable'
+    resources :vehicles, except: :destroy do
+      post 'datatable', to: 'vehicles#datatable', on: :collection
     end
   end
 
