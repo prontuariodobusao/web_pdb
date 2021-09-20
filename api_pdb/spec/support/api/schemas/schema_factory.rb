@@ -63,6 +63,10 @@ module SchemaFactory
     ListOrdersOpenedsAndClosedsResponse.new
   end
 
+  def list_orders_to_panel_response_schema
+    ListOrdersToPanelResponse.new
+  end
+
   def problems_and_vehicles_response_schema
     ProblemsAndVehiclesResponse.new
   end

@@ -89,7 +89,12 @@ class OrderManagerResponse
         end
         object :vehicle do
           integer :id
+          integer :km
+          integer :car_line_id
           string :car_number
+          string :oil_date
+          string :tire_date
+          string :revision_date
         end
       end
       object :meta do

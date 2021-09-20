@@ -177,6 +177,46 @@ describe 'Manager::Orders', type: :request do
     end
   end
 
+  path '/manager/orders/panel' do
+    get 'Obter lista ordens para painel' do
+      tags 'Gerente Ordens de Serviço'
+      description 'Rota para lista de OS para o painel, essa pode ser executada por usuários autenticados'
+      security [Authorization: []]
+      produces 'application/json'
+
+      response('200', 'Sucesso') do
+        schema list_orders_to_panel_response_schema.schema.as_json
+
+        context 'list of orders' do
+          before do |example|
+            user = create(:user, :manager_user)
+            response = Auth::Authenticate.call(username: user.username, password: user.password)
+            status = Status.find 2
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10), status_id: status.id)
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10), status_id: status.id)
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10), status_id: status.id)
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10), status_id: status.id)
+            create(:order, owner: user, reference: Faker::Alphanumeric.unique.alphanumeric(number: 10), status_id: status.id)
+            @auth_token = response.data[:token]
+            submit_request(example.metadata)
+          end
+
+          let(:Authorization) { @auth_token }
+
+          it_behaves_like 'a json endpoint response', 200 do
+            let(:expected_response_schema) { list_orders_to_panel_response_schema }
+          end
+        end
+      end
+      include_context 'with errors response test'
+
+      response '403', 'Forbidden' do
+        let(:Authorization) { authenticate_header[:Authorization] }
+        run_test!
+      end
+    end
+  end
+
   path '/manager/orders/{id}' do
     put 'API para atualizar ordens de servio pelo Gerente' do
       tags 'Gerente Ordens de Serviço'

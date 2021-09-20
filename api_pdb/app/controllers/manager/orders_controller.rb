@@ -19,6 +19,11 @@ module Manager
       )
     end
 
+    def panel
+      orders = Order.includes(:car_mecanic, :owner, :status, problem: :category).maintenance
+      json_response OrderBlueprint.render(orders, root: :data, view: :panel)
+    end
+
     def index
       orders_openeds = Order.to_managers(:opened).order('problems.priority ASC', reference: :desc)
       orders_closeds = Order.to_managers(:closed).order('problems.priority ASC', reference: :desc)

@@ -3,8 +3,8 @@ class VehicleBlueprint < Blueprinter::Base
 
   fields :car_number,
          :km,
-         :car_line_id,
-         :oil_date,
-         :tire_date,
-         :revision_date
+         :car_line_id
+  field :oil_date, datetime_format: '%d/%m/%Y'
+  field :tire_date, datetime_format: '%d/%m/%Y'
+  field :revision_date, datetime_format: '%d/%m/%Y'
 end

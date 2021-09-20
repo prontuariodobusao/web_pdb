@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
     resources :orders, except: %i[destroy create] do
       get 'edit', on: :member
+      get '/panel', to: 'orders#panel', on: :collection
     end
 
     resources :employees, except: %i[destroy index] do
