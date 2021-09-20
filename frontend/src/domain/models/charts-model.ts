@@ -18,3 +18,8 @@ export type ReportChartModel = {
 export type ReportModel = {
   report: ChartModel[]
 }
+
+export type ReportOrderByMecanic = {
+  orders_maintenance: ChartModel[]
+  orders_finish: ChartModel[]
+}
