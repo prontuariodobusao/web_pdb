@@ -28,7 +28,8 @@ Rails.application.routes.draw do
 
     resources :employees, except: %i[destroy index] do
       resources :users, only: :create
-      get '/list(/:type_occupation)', to: 'employees#index', on: :collection
+      # get '/list(/:type_occupation)', to: 'employees#index', on: :collection
+      get '/list', to: 'employees#index', on: :collection
       post 'datatable', to: 'employees#datatable', on: :collection
     end
 

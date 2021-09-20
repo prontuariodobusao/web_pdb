@@ -227,6 +227,11 @@ describe 'Manager::Employees', type: :request do
       security [Authorization: []]
       consumes 'application/json'
       produces 'application/json'
+      parameter name: :type_occupation,
+                in: :query,
+                description: 'As consultas por cargos podem ser feitas usando esse parâmetro. Ex: mecanic, driver, manager, rh e visitor',
+                type: :string,
+                required: false
 
       response '200', 'Sucesso' do
         schema employee_list_response_schema.schema.as_json

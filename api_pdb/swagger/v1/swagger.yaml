@@ -879,6 +879,14 @@ paths:
         pode ser executada por usuário gerente ou RH
       security:
       - Authorization: []
+      parameters:
+      - name: type_occupation
+        in: query
+        description: 'As consultas por cargos podem ser feitas usando esse parâmetro.
+          Ex: mecanic, driver, manager, rh e visitor'
+        required: false
+        schema:
+          type: string
       responses:
         '200':
           description: Sucesso
@@ -1170,7 +1178,17 @@ paths:
                         properties:
                           id:
                             type: integer
+                          km:
+                            type: integer
+                          car_line_id:
+                            type: integer
                           car_number:
+                            type: string
+                          oil_date:
+                            type: string
+                          tire_date:
+                            type: string
+                          revision_date:
                             type: string
                   meta:
                     type: object
@@ -1315,6 +1333,80 @@ paths:
                         reference:
                           type: string
                         status:
+                          type: string
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+        '406':
+          description: Not Acceptable
+        '422':
+          description: Token não informado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
+  "/manager/orders/panel":
+    get:
+      summary: Obter lista ordens para painel
+      tags:
+      - Gerente Ordens de Serviço
+      description: Rota para lista de OS para o painel, essa pode ser executada por
+        usuários autenticados
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        reference:
+                          type: string
+                        category:
+                          type: string
+                        description:
+                          type: string
+                        status:
+                          type: string
+                        mecanic:
+                          type: string
+                        owner:
                           type: string
         '403':
           description: Forbidden
@@ -1908,7 +2000,17 @@ paths:
                         properties:
                           id:
                             type: integer
+                          km:
+                            type: integer
+                          car_line_id:
+                            type: integer
                           car_number:
+                            type: string
+                          oil_date:
+                            type: string
+                          tire_date:
+                            type: string
+                          revision_date:
                             type: string
                   meta:
                     type: object
@@ -2141,7 +2243,17 @@ paths:
                         properties:
                           id:
                             type: integer
+                          km:
+                            type: integer
+                          car_line_id:
+                            type: integer
                           car_number:
+                            type: string
+                          oil_date:
+                            type: string
+                          tire_date:
+                            type: string
+                          revision_date:
                             type: string
                   meta:
                     type: object
