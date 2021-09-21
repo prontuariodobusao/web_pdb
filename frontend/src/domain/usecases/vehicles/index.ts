@@ -1,4 +1,3 @@
-export * from './create-employee'
-export * from './employee-datatable'
-export * from './edit-employee'
-export * from './get-employee'
+export * from './create-vehicle'
+export * from './vehicle-datatable'
+export * from './update-vehicle'

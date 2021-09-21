@@ -3,7 +3,7 @@ import {DetailError} from '../../../../domain/errors'
 import {HttpClient, StatusCode} from '../../../../domain/protocols/http'
 import {
   UpdateVehicle,
-  VehicleParams,
+  VehicleUpateParams,
 } from '../../../../domain/usecases/vehicles/update-vehicle'
 import {VehicleDataModel} from '../../../../domain/models/vehicle-model'
 
@@ -15,7 +15,7 @@ export class RemoteUpateVehicle implements UpdateVehicle {
     >,
   ) {}
 
-  async update(params: VehicleParams): Promise<VehicleDataModel> {
+  async update(params: VehicleUpateParams): Promise<VehicleDataModel> {
     const httpResponse = await this.httpClient.request({
       url: this.url,
       method: 'put',

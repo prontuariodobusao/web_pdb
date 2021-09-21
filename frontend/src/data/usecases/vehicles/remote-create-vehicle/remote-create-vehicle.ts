@@ -3,7 +3,7 @@ import {DetailError} from '../../../../domain/errors'
 import {HttpClient, StatusCode} from '../../../../domain/protocols/http'
 import {
   CreateVehicle,
-  VehicleParams,
+  VehicleCreateParams,
 } from '../../../../domain/usecases/vehicles/create-vehicle'
 import {VehicleDataModel} from '../../../../domain/models/vehicle-model'
 
@@ -15,7 +15,7 @@ export class RemoteCreateVehicle implements CreateVehicle {
     >,
   ) {}
 
-  async create(params: VehicleParams): Promise<VehicleDataModel> {
+  async create(params: VehicleCreateParams): Promise<VehicleDataModel> {
     const httpResponse = await this.httpClient.request({
       url: this.url,
       method: 'post',

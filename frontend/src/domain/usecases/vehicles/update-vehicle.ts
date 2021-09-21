@@ -1,6 +1,6 @@
 import {VehicleDataModel} from '../../models/vehicle-model'
 
-export type VehicleParams = {
+export type VehicleUpateParams = {
   data: {
     car_number: string
     km: number
@@ -12,5 +12,5 @@ export type VehicleParams = {
 }
 
 export interface UpdateVehicle {
-  update: (params: VehicleParams) => Promise<VehicleDataModel>
+  update: (params: VehicleUpateParams) => Promise<VehicleDataModel>
 }
