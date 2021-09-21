@@ -152,6 +152,34 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
         </Col>
       </Row>
       <Row>
+        <Col md={6} xl={3}>
+          <Card>
+            <Card.Body>
+              <h5 className="f-13">Tempo médio (em dias) de manutenção </h5>
+              <div className="row d-flex align-items-center">
+                <div className="col-6">
+                  <h3 className="f-w-300 d-flex align-items-center m-b-0">
+                    <i className="ion ion-document-text text-c-green-white f-70 m-r-5" />
+                  </h3>
+                </div>
+
+                <div className="col-6 text-right">
+                  {loading ? (
+                    <Spinner animation="grow" variant="info" />
+                  ) : (
+                    <>
+                      <span className="m-b-0 card-number text-c-green-white">
+                        {state.qtds.os_down_time}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
         <Col md={6}>
           <Card>
             <Card.Header>
