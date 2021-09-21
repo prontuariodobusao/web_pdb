@@ -1,6 +1,11 @@
 import React, {ReactNode, useState} from 'react'
 import {Row, Col, Card, Form, Spinner} from 'react-bootstrap'
-import {InputDatePicker, SubmitButton, HiPierChart} from '../../../components'
+import {
+  InputDatePicker,
+  SubmitButton,
+  HiPierChart,
+  HiBarChart,
+} from '../../../components'
 import {ChartsReportByDates} from '../../../../domain/usecases/charts/charts-report-by-dates'
 import {ReportModel} from '../../../../domain/models/charts-model'
 import {dateFormatStr} from '../../../../services'
@@ -30,7 +35,7 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
     component: <HiPierChart data={chart.report} title="Categorias" />,
   })
 
-  const loadChartByDates = async (): Promise<void> => {
+  const loadPierChartByDates = async (): Promise<void> => {
     const response = await chartsReportByDates.post({
       data: {
         type_report: parseInt(state.typeReport),
@@ -41,9 +46,12 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
     setState({
       ...state,
       showChart: true,
-      component: (
-        <HiPierChart data={response.report} title={state.titleReport} />
-      ),
+      component:
+        state.typeReport === '2' ? (
+          <HiBarChart data={response.report} title={state.titleReport} />
+        ) : (
+          <HiPierChart data={response.report} title={state.titleReport} />
+        ),
     })
   }
 
@@ -51,7 +59,7 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
     setLoading(true)
     setState({...state, showChart: false})
     try {
-      loadChartByDates()
+      await loadPierChartByDates()
     } catch (error) {
       console.error(error)
     } finally {
@@ -112,8 +120,6 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
                     <option value="3">Status</option>
                   </Form.Control>
                 </Form.Group>
-              </Form.Row>
-              <Form.Row>
                 <Form.Group as={Col} md="3">
                   <Form.Label>Data inicial</Form.Label>
                   <InputDatePicker

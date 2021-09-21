@@ -207,7 +207,7 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
               {loading ? (
                 <Spinner animation="grow" variant="info" />
               ) : (
-                <HiBarChart data={state.problems} />
+                <HiBarChart data={state.problems} title="Problemas" />
               )}
             </Card.Body>
           </Card>

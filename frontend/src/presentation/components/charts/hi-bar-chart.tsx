@@ -8,11 +8,12 @@ import {ChartModel} from '../../../domain/models/charts-model'
 // interfaces like Options come from the Highcharts module itself.
 
 type Props = {
+  title: string
   data: ChartModel[]
   props?: HighchartsReact.Props
 }
 
-const HiBarChart: React.FC<Props> = ({data, props}: Props) => {
+const HiBarChart: React.FC<Props> = ({data, props, title}: Props) => {
   const options = {
     credits: {
       enabled: false,
@@ -22,7 +23,7 @@ const HiBarChart: React.FC<Props> = ({data, props}: Props) => {
     },
     colors: ['#1de9b6'],
     title: {
-      text: 'Problemas',
+      text: title,
     },
     accessibility: {
       announceNewData: {
