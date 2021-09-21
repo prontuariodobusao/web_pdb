@@ -1,10 +1,6 @@
-import React, {useState} from 'react'
+import React, {ReactNode, useState} from 'react'
 import {Row, Col, Card, Form, Spinner} from 'react-bootstrap'
-import {
-  InputDatePicker,
-  SubmitButton,
-  PanelPierChart,
-} from '../../../components'
+import {InputDatePicker, SubmitButton, HiPierChart} from '../../../components'
 import {ChartsReportByDates} from '../../../../domain/usecases/charts/charts-report-by-dates'
 import {ReportModel} from '../../../../domain/models/charts-model'
 import {dateFormatStr} from '../../../../services'
@@ -19,6 +15,7 @@ type InitialState = {
   typeReport: string
   titleReport: string
   showChart: boolean
+  component: ReactNode
 }
 
 const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
@@ -30,21 +27,31 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
     startDate: new Date(),
     endDate: new Date(),
     showChart: false,
+    component: <HiPierChart data={chart.report} title="Categorias" />,
   })
+
+  const loadChartByDates = async (): Promise<void> => {
+    const response = await chartsReportByDates.post({
+      data: {
+        type_report: parseInt(state.typeReport),
+        initial_date: dateFormatStr(state.startDate),
+        end_date: dateFormatStr(state.endDate),
+      },
+    })
+    setState({
+      ...state,
+      showChart: true,
+      component: (
+        <HiPierChart data={response.report} title={state.titleReport} />
+      ),
+    })
+  }
 
   const loadChart = async (): Promise<void> => {
     setLoading(true)
     setState({...state, showChart: false})
     try {
-      const response = await chartsReportByDates.post({
-        data: {
-          type_report: parseInt(state.typeReport),
-          initial_date: dateFormatStr(state.startDate),
-          end_date: dateFormatStr(state.endDate),
-        },
-      })
-      setChart(response)
-      setState({...state, showChart: true})
+      loadChartByDates()
     } catch (error) {
       console.error(error)
     } finally {
@@ -52,7 +59,7 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
     }
   }
 
-  const handleTipeChart = (e: React.ChangeEvent<any>) => {
+  const handleTypeChart = (e: React.ChangeEvent<any>) => {
     switch (e.target.value) {
       case '1':
         setState({
@@ -92,61 +99,63 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
               </Card.Title>
             </Card.Header>
             <Card.Body>
-              <Form>
-                <Form.Row>
-                  <Form.Group as={Col} md="3">
-                    <Form.Label>Informe o tipo de indicador</Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="occupation_id"
-                      value={state.typeReport}
-                      onChange={event => handleTipeChart(event)}>
-                      <option value="1">Categorias</option>
-                      <option value="2">Problemas</option>
-                      <option value="3">Status</option>
-                    </Form.Control>
-                  </Form.Group>
-                  <Form.Group as={Col} md="3">
-                    <Form.Label>Data inicial</Form.Label>
-                    <InputDatePicker
-                      selected={state.startDate}
-                      onChanche={(date: Date) =>
-                        setState({...state, startDate: date})
-                      }
-                    />
-                  </Form.Group>
-                  <Form.Group as={Col} md="3">
-                    <Form.Label>Data final</Form.Label>
-                    <InputDatePicker
-                      selected={state.endDate}
-                      onChanche={(date: Date) =>
-                        setState({...state, endDate: date})
-                      }
-                    />
-                  </Form.Group>
-                </Form.Row>
-                <SubmitButton
-                  loading={loading}
-                  disabled={loading}
-                  onClick={loadChart}>
-                  Gerar Indicador <i className="feather icon-bar-chart-2" />
-                </SubmitButton>
-              </Form>
+              <Form.Row>
+                <Form.Group as={Col} md="3">
+                  <Form.Label>Informe o tipo de indicador</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="occupation_id"
+                    value={state.typeReport}
+                    onChange={event => handleTypeChart(event)}>
+                    <option value="1">Categorias</option>
+                    <option value="2">Problemas</option>
+                    <option value="3">Status</option>
+                  </Form.Control>
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group as={Col} md="3">
+                  <Form.Label>Data inicial</Form.Label>
+                  <InputDatePicker
+                    selected={state.startDate}
+                    onChanche={(date: Date) =>
+                      setState({...state, startDate: date})
+                    }
+                  />
+                </Form.Group>
+                <Form.Group as={Col} md="3">
+                  <Form.Label>Data final</Form.Label>
+                  <InputDatePicker
+                    selected={state.endDate}
+                    onChanche={(date: Date) =>
+                      setState({...state, endDate: date})
+                    }
+                  />
+                </Form.Group>
+              </Form.Row>
+              <SubmitButton
+                loading={loading}
+                disabled={loading}
+                onClick={loadChart}>
+                Gerar Indicador <i className="feather icon-bar-chart-2" />
+              </SubmitButton>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-      {loading && <Spinner animation="grow" variant="info" />}
-      {state.showChart && (
-        <Row>
-          <Col md={12}>
-            <PanelPierChart
-              titleReport={state.titleReport}
-              report={chart.report}
-            />
-          </Col>
-        </Row>
-      )}
+      <Row>
+        <Col md={12}>
+          <Card>
+            <Card.Header>
+              <Card.Title as="h5">Indicador</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              {loading && <Spinner animation="grow" variant="info" />}
+              {state.showChart && state.component}
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </>
   )
 }
