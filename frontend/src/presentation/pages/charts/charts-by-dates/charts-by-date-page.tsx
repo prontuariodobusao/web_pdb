@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
-import {Row, Col, Card, Form, Spinner, FormControlProps} from 'react-bootstrap'
-import {InputDatePicker, SubmitButton, HiPierChart} from '../../../components'
+import {Row, Col, Card, Form, Spinner} from 'react-bootstrap'
+import {
+  InputDatePicker,
+  SubmitButton,
+  PanelPierChart,
+} from '../../../components'
 import {ChartsReportByDates} from '../../../../domain/usecases/charts/charts-report-by-dates'
 import {ReportModel} from '../../../../domain/models/charts-model'
 import {dateFormatStr} from '../../../../services'
-import {initialState} from 'presentation/store/accountReducer'
 
 type Props = {
   chartsReportByDates: ChartsReportByDates
@@ -133,25 +136,17 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
           </Card>
         </Col>
       </Row>
-      <Row>
-        <Col md={12}>
-          <Card>
-            <Card.Header>
-              <Card.Title as="h5">Indicador</Card.Title>
-            </Card.Header>
-            <Card.Body>
-              {loading && <Spinner animation="grow" variant="info" />}
-              {state.showChart && (
-                <HiPierChart
-                  data={chart.report}
-                  title={state.titleReport}
-                  format="{point.name}<br> Qtd: {point.y}"
-                />
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      {loading && <Spinner animation="grow" variant="info" />}
+      {state.showChart && (
+        <Row>
+          <Col md={12}>
+            <PanelPierChart
+              titleReport={state.titleReport}
+              report={chart.report}
+            />
+          </Col>
+        </Row>
+      )}
     </>
   )
 }
