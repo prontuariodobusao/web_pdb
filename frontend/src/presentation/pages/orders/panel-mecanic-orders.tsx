@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {PanelOrders} from '../../../domain/usecases/orders/panel-orders'
 import {OrderPanelModel} from '../../../domain/models/order-model'
 import {Table, Row, Col, Card, Spinner} from 'react-bootstrap'
+import {choseImgCategory} from '../../helpers'
 
 type Props = {
   panelOrders: PanelOrders
@@ -53,7 +54,12 @@ const PanelMecanicOrders: React.FC<Props> = ({panelOrders}: Props) => {
                   <>
                     {state.data.map(order => (
                       <tr key={order.id}>
-                        <td>{order.id}</td>
+                        <td>
+                          <img
+                            style={{width: '40px'}}
+                            src={choseImgCategory(order.category_id)}
+                          />
+                        </td>
                         <td>{order.reference}</td>
                         <td>{order.description}</td>
                         <td>{order.category}</td>

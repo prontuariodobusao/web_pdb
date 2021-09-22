@@ -73,6 +73,7 @@ export type OrderPanelModel = {
       id: number
       reference: string
       category: string
+      category_id: number
       description: string
       status: string
       mecanic: string

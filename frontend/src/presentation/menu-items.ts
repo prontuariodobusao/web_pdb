@@ -14,7 +14,7 @@ const menuItems = {
           icon: 'feather icon-home',
         },
         {
-          id: 'dashboard',
+          id: 'panel',
           title: 'Painel Mecânicos',
           type: 'item',
           url: '/panel',
