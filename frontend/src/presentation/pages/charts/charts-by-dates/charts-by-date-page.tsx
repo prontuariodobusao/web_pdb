@@ -5,6 +5,7 @@ import {
   SubmitButton,
   HiPierChart,
   HiBarChart,
+  SelectField,
 } from '../../../components'
 import {ChartsReportByDates} from '../../../../domain/usecases/charts/charts-report-by-dates'
 import {ChartsReportMecanicByDates} from '../../../../domain/usecases/charts/charts-report-mecanic-by-dates'
@@ -254,27 +255,18 @@ const ChartsByDatePage: React.FC<Props> = ({
                     <option value="6">Motorista X Problema</option>
                   </Form.Control>
                 </Form.Group>
-                {state.isChartEmployeeProblem && !loading && (
-                  <Form.Group as={Col} md="3">
-                    <Form.Label>Informe o funcionário</Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="employee_id"
-                      value={String(state.employeeId)}
-                      onChange={e =>
-                        setState({
-                          ...state,
-                          employeeId: Number(e.target.value),
-                        })
-                      }>
-                      <option value="">Selecione o funcionário</option>
-                      {listEmployeeSelect.map(employee => (
-                        <option key={employee.id} value={employee.id}>
-                          {employee.name}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
+                {state.isChartEmployeeProblem && (
+                  <SelectField
+                    isSelected={String(state.employeeId)}
+                    label="Selecione o funcionário"
+                    options={listEmployeeSelect}
+                    onChangeValue={e =>
+                      setState({
+                        ...state,
+                        employeeId: Number(e.target.value),
+                      })
+                    }
+                  />
                 )}
                 <Form.Group as={Col} md="3">
                   <Form.Label>Data inicial</Form.Label>
