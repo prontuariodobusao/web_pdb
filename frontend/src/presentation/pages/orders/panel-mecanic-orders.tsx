@@ -49,7 +49,7 @@ const PanelMecanicOrders: React.FC<Props> = ({panelOrders}: Props) => {
               </thead>
               <tbody>
                 {loading ? (
-                  <Spinner animation="grow" />
+                  <Spinner animation="grow" variant="info" />
                 ) : (
                   <>
                     {state.data.map(order => (

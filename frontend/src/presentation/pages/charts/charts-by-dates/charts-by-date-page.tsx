@@ -57,14 +57,11 @@ const ChartsByDatePage: React.FC<Props> = ({
   })
 
   const loadListEmployee = async (occupation: string): Promise<void> => {
-    setLoading(true)
     try {
       const response = await listEmployee.list(occupation)
       setListEmployeeSelect(response)
     } catch (error) {
       console.error(error)
-    } finally {
-      setLoading(false)
     }
   }
 
