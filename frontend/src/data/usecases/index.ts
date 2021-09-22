@@ -13,3 +13,4 @@ export * from './charts/remote-charts-report-employee-problems-by-dates/remote-c
 export * from './charts/remote-charts-report-mecanic-by-dates/remote-charts-report-mecanic-by-dates'
 export * from './remote-check-token-valid/remote-check-token-valid'
 export * from './employees/remote-list-employee/remote-list-employee'
+export * from './orders/remote-panel-orders/remote-panel-orders'
