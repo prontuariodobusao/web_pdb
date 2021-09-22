@@ -7,11 +7,17 @@ import {
   HiBarChart,
 } from '../../../components'
 import {ChartsReportByDates} from '../../../../domain/usecases/charts/charts-report-by-dates'
+import {ChartsReportMecanicByDates} from '../../../../domain/usecases/charts/charts-report-mecanic-by-dates'
+import {ChartsReportEmployeeProblemsByDates} from '../../../../domain/usecases/charts/charts-report_employee_problems_by_dates'
+import {ListEmployee} from '../../../../domain/usecases/employees/list-employee'
 import {ReportModel} from '../../../../domain/models/charts-model'
 import {dateFormatStr} from '../../../../services'
 
 type Props = {
   chartsReportByDates: ChartsReportByDates
+  chartsReportMecanicByDates: ChartsReportMecanicByDates
+  chartsReportEmployeeProblemsByDates: ChartsReportEmployeeProblemsByDates
+  listEmployee: ListEmployee
 }
 
 type InitialState = {
@@ -20,10 +26,17 @@ type InitialState = {
   typeReport: string
   titleReport: string
   showChart: boolean
+  isChartMecanic: boolean
+  isChartMecanicEmployeeProble: boolean
   component: ReactNode
 }
 
-const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
+const ChartsByDatePage: React.FC<Props> = ({
+  chartsReportByDates,
+  chartsReportMecanicByDates,
+  chartsReportEmployeeProblemsByDates,
+  listEmployee,
+}: Props) => {
   const [loading, setLoading] = useState(false)
   const [chart, setChart] = useState<ReportModel>({} as ReportModel)
   const [state, setState] = useState<InitialState>({
@@ -32,8 +45,18 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
     startDate: new Date(),
     endDate: new Date(),
     showChart: false,
+    isChartMecanic: false,
+    isChartMecanicEmployeeProble: false,
     component: <HiPierChart data={chart.report} title="Categorias" />,
   })
+
+  const loadListEmployee = async (): Promise<void> => {
+    try {
+      const response = await listEmployee.list()
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const loadPierChartByDates = async (): Promise<void> => {
     const response = await chartsReportByDates.post({
@@ -55,11 +78,44 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
     })
   }
 
+  const loadBarChartMecanics = async (): Promise<void> => {
+    const response = await chartsReportMecanicByDates.post({
+      data: {
+        initial_date: dateFormatStr(state.startDate),
+        end_date: dateFormatStr(state.endDate),
+      },
+    })
+    setState({
+      ...state,
+      showChart: true,
+      component: (
+        <>
+          <HiBarChart
+            data={response.orders_finish}
+            title="Quantidade de OS atendida (FINALIZADAS) por mecânico"
+          />
+          <HiBarChart
+            data={response.orders_maintenance}
+            title="Quantidade de OS em atendimento (em MANUTENÇÃO) por mecânico"
+          />
+        </>
+      ),
+    })
+  }
+
   const loadChart = async (): Promise<void> => {
     setLoading(true)
     setState({...state, showChart: false})
     try {
-      await loadPierChartByDates()
+      if (
+        state.typeReport === '1' ||
+        state.typeReport === '2' ||
+        state.typeReport === '3'
+      ) {
+        await loadPierChartByDates()
+      } else if (state.typeReport === '4') {
+        await loadBarChartMecanics()
+      }
     } catch (error) {
       console.error(error)
     } finally {
@@ -75,6 +131,8 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
           typeReport: String(e.target.value),
           showChart: false,
           titleReport: 'Categorias',
+          isChartMecanic: false,
+          isChartMecanicEmployeeProble: false,
         })
         break
       case '2':
@@ -83,6 +141,8 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
           typeReport: String(e.target.value),
           showChart: false,
           titleReport: 'Problemas',
+          isChartMecanic: false,
+          isChartMecanicEmployeeProble: false,
         })
         break
       case '3':
@@ -91,6 +151,18 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
           typeReport: String(e.target.value),
           showChart: false,
           titleReport: 'Status',
+          isChartMecanic: false,
+          isChartMecanicEmployeeProble: false,
+        })
+        break
+      case '4':
+        setState({
+          ...state,
+          typeReport: String(e.target.value),
+          showChart: false,
+          titleReport: 'Quantidade de OS atendida por mecânico',
+          isChartMecanic: false,
+          isChartMecanicEmployeeProble: false,
         })
         break
     }
@@ -118,6 +190,7 @@ const ChartsByDatePage: React.FC<Props> = ({chartsReportByDates}: Props) => {
                     <option value="1">Categorias</option>
                     <option value="2">Problemas</option>
                     <option value="3">Status</option>
+                    <option value="4">OS por mecânico</option>
                   </Form.Control>
                 </Form.Group>
                 <Form.Group as={Col} md="3">
