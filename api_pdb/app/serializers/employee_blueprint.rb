@@ -8,7 +8,7 @@ class EmployeeBlueprint < Blueprinter::Base
     when 'driver'
       'Motorista'
     when 'mecanic'
-      'Mecãnico'
+      'Mecânico'
     when 'manager'
       'Gerente'
     when 'rh'

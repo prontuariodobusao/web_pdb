@@ -181,7 +181,7 @@ const EmployeeEdit: React.FC<Props> = ({
                     <option value="">Selecione o Cargo</option>
                     <option value="1">Motorista</option>
                     <option value="2">Gerente</option>
-                    <option value="3">Mecãnico</option>
+                    <option value="3">Mecânico</option>
                     <option value="4">RH</option>
                     <option value="5">Visitante</option>
                   </Form.Control>

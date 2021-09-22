@@ -18,7 +18,7 @@ export class RemoteListEmployee implements ListEmployee {
       : this.url
 
     const httpResponse = await this.httpClient.request({
-      url: url,
+      url,
       method: 'get',
     })
 
