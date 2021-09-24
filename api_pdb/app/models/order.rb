@@ -51,6 +51,7 @@ class Order < ApplicationRecord
   scope :maintenance, -> { where(status_id: 2) }
   scope :canceled, -> { where(status_id: 3) }
   scope :finish, -> { where(status_id: 4) }
+  scope :maintenance_and_finish, -> { where(status_id: [2, 4]) }
   scope :by_mecanic, ->(mecanic_id) { where(car_mecanic_id: mecanic_id) }
   scope :by_categories, -> { OrdersQueries::OrdersByCategoryQuery.call }
   scope :by_problems, -> { OrdersQueries::OrdersByProblemQuery.call }
