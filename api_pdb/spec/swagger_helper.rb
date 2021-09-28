@@ -11,17 +11,7 @@ end
 
 RSpec.configure do |config|
   include SchemaFactory
-  # Specify a root folder where Swagger JSON files are generated
-  # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
-  # to ensure that it's configured to serve Swagger from the same folder
   config.swagger_root = Rails.root.join('swagger').to_s
-
-  # Define one or more Swagger documents and provide global metadata for each one
-  # When you run the 'rswag:specs:swaggerize' rake task, the complete Swagger will
-  # be generated at the provided relative path under swagger_root
-  # By default, the operations defined in spec files are added to the first
-  # document below. You can override this behavior by adding a swagger_doc tag to the
-  # the root example_group in your specs, e.g. describe '...', swagger_doc: 'v2/swagger.json'
   config.swagger_docs = {
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
@@ -101,6 +91,22 @@ RSpec.configure do |config|
               }
             }
           },
+          vehicle_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  car_number: { type: :string },
+                  km: { type: :integer },
+                  car_line_id: { type: :integer },
+                  oil_date: { type: :string },
+                  tire_date: { type: :string },
+                  revision_date: { type: :string }
+                }
+              }
+            }
+          },
           datatable_params: {
             type: :object,
             properties: {
@@ -112,6 +118,45 @@ RSpec.configure do |config|
               search_value: { type: :string }
             }
           },
+          charts_report_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  type_report: { type: :integer },
+                  initial_date: { type: :string },
+                  end_date: { type: :string }
+                }
+              }
+            }
+          },
+          charts_mecanic_report_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  initial_date: { type: :string },
+                  end_date: { type: :string }
+                }
+              }
+            }
+          },
+          charts_employee_problems_report_params: {
+            type: :object,
+            properties: {
+              data: {
+                type: :object,
+                properties: {
+                  initial_date: { type: :string },
+                  end_date: { type: :string },
+                  employee_id: { type: :integer },
+                  employee_type: { type: :string }
+                }
+              }
+            }
+          }
         }
       },
       servers: [

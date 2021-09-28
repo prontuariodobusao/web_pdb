@@ -14,6 +14,13 @@ const menuItems = {
           icon: 'feather icon-home',
         },
         {
+          id: 'panel',
+          title: 'Painel Mecânicos',
+          type: 'item',
+          url: '/panel',
+          icon: 'feather icon-file-text',
+        },
+        {
           id: 'chart',
           title: 'Indicadores',
           type: 'item',

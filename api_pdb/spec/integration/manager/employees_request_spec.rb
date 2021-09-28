@@ -220,6 +220,75 @@ describe 'Manager::Employees', type: :request do
     end
   end
 
+  path '/manager/employees/list' do
+    get 'Lista de funcionários' do
+      tags 'Funcionários'
+      description 'Rota para lista de funcionários completa ou por cargo, essa rota pode ser executada por usuário gerente ou RH'
+      security [Authorization: []]
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :type_occupation,
+                in: :query,
+                description: 'As consultas por cargos podem ser feitas usando esse parâmetro. Ex: mecanic, driver, manager, rh e visitor',
+                type: :string,
+                required: false
+
+      response '200', 'Sucesso' do
+        schema employee_list_response_schema.schema.as_json
+
+        context 'list of employees' do
+          before do |example|
+            employee = create(:manager_employee)
+            response = Auth::Authenticate.call(username: employee.user.username, password: employee.user.password)
+            create_list(:manager_employee, 5)
+            @auth_token = response.data[:token]
+            submit_request(example.metadata)
+          end
+
+          let(:Authorization) { @auth_token }
+
+          it_behaves_like 'a json endpoint response', 200 do
+            let(:expected_response_schema) { employee_list_response_schema }
+          end
+        end
+      end
+
+      response '403', 'Forbidden' do
+        let(:Authorization) { authenticate_header[:Authorization] }
+
+        run_test!
+      end
+
+      response '403', 'Acesso negado - Token inválido' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
+
+        schema new_errors_response.schema.as_json
+
+        it_behaves_like 'a error json endpoint', 403 do
+          let(:expected_response_schema) { new_errors_response }
+          let(:error_title) { 'Access Denied - Invalid Token' }
+        end
+      end
+
+      response '406', 'Not Acceptable' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
+        let(:Accept) { 'application/foo' }
+
+        run_test!
+      end
+
+      response '422', 'Token não informado' do
+        let(:Authorization) { nil }
+        schema new_errors_response.schema.as_json
+
+        it_behaves_like 'a error json endpoint', 422 do
+          let(:expected_response_schema) { new_errors_response }
+          let(:error_title) { 'Missing Token' }
+        end
+      end
+    end
+  end
+
   path '/manager/employees/{id}' do
     put 'API para atualizar funcionários' do
       tags 'Funcionários'

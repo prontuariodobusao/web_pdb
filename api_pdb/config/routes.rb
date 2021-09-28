@@ -23,18 +23,25 @@ Rails.application.routes.draw do
 
     resources :orders, except: %i[destroy create] do
       get 'edit', on: :member
+      get '/panel', to: 'orders#panel', on: :collection
     end
 
-    resources :employees, except: :destroy do
+    resources :employees, except: %i[destroy index] do
       resources :users, only: :create
-    end
-    namespace :employees do
-      post 'datatable'
+      # get '/list(/:type_occupation)', to: 'employees#index', on: :collection
+      get '/list', to: 'employees#index', on: :collection
+      post 'datatable', to: 'employees#datatable', on: :collection
     end
 
     namespace :charts do
       get 'report'
       post 'report_by_dates'
+      post 'report_mecanic_by_dates'
+      post 'report_employee_problems_by_dates'
+    end
+
+    resources :vehicles, except: :destroy do
+      post 'datatable', to: 'vehicles#datatable', on: :collection
     end
   end
 

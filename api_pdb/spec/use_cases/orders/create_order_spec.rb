@@ -12,6 +12,7 @@ describe Orders::CreateOrder do
     context 'create valid Order' do
       it { expect(@result.success?).to be_truthy }
       it { expect(@result.data[:order]).to be_a Order }
+      it { expect(@result.data[:order].histories.count).to eql 1 }
     end
   end
 

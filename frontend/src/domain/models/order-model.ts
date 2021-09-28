@@ -66,3 +66,18 @@ export type ListOrdersOpenedsAndClosedsModel = {
 }
 
 export type OrdersModel = OrderListModel[]
+
+export type OrderPanelModel = {
+  data: [
+    {
+      id: number
+      reference: string
+      category: string
+      category_id: number
+      description: string
+      status: string
+      mecanic: string
+      owner: string
+    },
+  ]
+}

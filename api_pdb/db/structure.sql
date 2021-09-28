@@ -509,7 +509,11 @@ CREATE TABLE public.users_roles (
 CREATE TABLE public.vehicles (
     id bigint NOT NULL,
     car_number character varying NOT NULL,
-    car_line_id bigint NOT NULL
+    car_line_id bigint NOT NULL,
+    km integer,
+    oil_date timestamp without time zone,
+    tire_date timestamp without time zone,
+    revision_date timestamp without time zone
 );
 
 
@@ -1100,6 +1104,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210726122218'),
 ('20210805130020'),
 ('20210805171235'),
-('20210810001130');
+('20210810001130'),
+('20210914232758');
 
 

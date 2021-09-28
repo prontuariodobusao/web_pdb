@@ -46,3 +46,10 @@ export type EmployeeDataModel = {
     }
   }
 }
+
+type List = {
+  id: number
+  name: string
+}
+
+export type ListEmployeeData = List[]

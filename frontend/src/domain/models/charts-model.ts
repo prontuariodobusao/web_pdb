@@ -10,6 +10,7 @@ export type ReportChartModel = {
     os_maintenance: number
     os_canceled: number
     os_finish: number
+    os_down_time: number
   }
   categories: ChartModel[]
   problems: ChartModel[]
@@ -17,4 +18,9 @@ export type ReportChartModel = {
 
 export type ReportModel = {
   report: ChartModel[]
+}
+
+export type ReportOrderByMecanic = {
+  orders_maintenance: ChartModel[]
+  orders_finish: ChartModel[]
 }

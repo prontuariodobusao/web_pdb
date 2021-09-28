@@ -25,4 +25,21 @@ class OrderBlueprint < Blueprinter::Base
     association :manager, blueprint: EmployeeBlueprint
     association :car_mecanic, blueprint: EmployeeBlueprint
   end
+
+  view :panel do
+    field :problem_description, name: :description
+    field :status_name, name: :status
+    field :category_id do |order|
+      order.problem.category_id
+    end
+    field :category do |order|
+      order.problem.category_name
+    end
+    field :mecanic do |order|
+      order.car_mecanic.name
+    end
+    field :owner do |order|
+      order.owner.employee_name
+    end
+  end
 end

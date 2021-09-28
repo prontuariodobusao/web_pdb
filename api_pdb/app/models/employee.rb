@@ -9,4 +9,6 @@ class Employee < ApplicationRecord
   has_one :user
 
   attr_accessor :is_user
+
+  scope :by_occupation, ->(occuppation) { joins(:occupation).merge(Occupation.occupation_by_type(occuppation)) }
 end
