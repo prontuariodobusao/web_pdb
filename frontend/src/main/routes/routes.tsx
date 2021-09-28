@@ -7,6 +7,7 @@ import {
   CreateDashboard,
   CreateChartsByDate,
   CreatePanelMecanicOrdersPage,
+  CreatevehiclesDataTable,
 } from '../factories'
 import {ConfirmOrMenu} from '../../presentation/pages'
 import {AuthGuard, GuestGuard, Loader} from '../../presentation/components'
@@ -97,6 +98,11 @@ const routes: RouterProps[] = [
         exact: true,
         path: '/funcionarios',
         component: CreateEmployeeDataTable,
+      },
+      {
+        exact: true,
+        path: '/veículos',
+        component: CreatevehiclesDataTable,
       },
     ],
   },
