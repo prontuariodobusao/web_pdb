@@ -1,6 +1,6 @@
 module Manager
   class VehiclesController < ApplicationController
-    before_action :set_vehicle, only: :update
+    before_action :set_vehicle, only: %i[update show]
     before_action :autorize_manager_or_rh
 
     def datatable
@@ -21,6 +21,10 @@ module Manager
     # PATCH/PUT /manager/vehicles/1
     def update
       @vehicle.update!(vehicle_params)
+      json_response VehicleBlueprint.render(@vehicle, root: :data, meta: { links: links(@vehicle) })
+    end
+
+    def show
       json_response VehicleBlueprint.render(@vehicle, root: :data, meta: { links: links(@vehicle) })
     end
 

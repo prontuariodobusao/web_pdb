@@ -229,4 +229,47 @@ describe 'Manager::Vehicles', type: :request do
       end
     end
   end
+
+  path '/manager/vehicles/{id}' do
+    get 'API para visualizar veiculo' do
+      tags 'Veículos'
+      description 'Rota para visualizar, essa rota pode ser executada por usuário gerente ou RH'
+      produces 'application/json'
+      security [Authorization: []]
+      parameter name: :id, in: :path, type: :string
+
+      response '200', 'Success' do
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
+        let(:id) { resource.id }
+        schema vehicle_response_schema.schema.as_json
+
+        it_behaves_like 'a json endpoint response', 200 do
+          let(:expected_response_schema) { vehicle_response_schema }
+        end
+      end
+
+      response '403', 'Forbidden' do
+        let(:Authorization) { authenticate_header[:Authorization] }
+        let(:id) { resource.id }
+        run_test!
+      end
+
+      response '406', 'Not Acceptable' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
+        let(:id) { resource.id }
+        let(:Accept) { 'application/foo' }
+        run_test!
+      end
+
+      response '404', 'Not Found' do
+        let(:Authorization) { authenticate_rh_user[:Authorization] }
+        let(:id) { 30 }
+        schema new_errors_response.schema.as_json
+
+        it_behaves_like 'a error json endpoint', 404 do
+          let(:expected_response_schema) { new_errors_response }
+        end
+      end
+    end
+  end
 end

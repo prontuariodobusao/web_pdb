@@ -1921,6 +1921,75 @@ paths:
           application/json:
             schema:
               "$ref": "#/components/schemas/vehicle_params"
+    get:
+      summary: API para visualizar veiculo
+      tags:
+      - Veículos
+      description: Rota para visualizar, essa rota pode ser executada por usuário
+        gerente ou RH
+      security:
+      - Authorization: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      car_line_id:
+                        type: integer
+                      km:
+                        type: integer
+                      car_number:
+                        type: string
+                      oil_date:
+                        type: string
+                      tire_date:
+                        type: string
+                      revision_date:
+                        type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+        '403':
+          description: Forbidden
+        '406':
+          description: Not Acceptable
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        details:
+                          type: string
   "/orders":
     post:
       summary: API para cradastro de ordens de serviços

@@ -78,7 +78,9 @@ module Manager
         dates_params[:end_date],
         dates_params[:employee_id],
         dates_params[:employee_type]
-      ).map do |report|
+      )
+                     .maintenance_and_finish
+                     .map do |report|
         {
           name: report.name,
           y: report.quantity
@@ -87,7 +89,7 @@ module Manager
 
       json_response({ report: reports })
     end
-  
+
     private
 
     def dates_params
