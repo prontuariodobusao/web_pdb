@@ -1,1 +1,5 @@
-VALID_PASSWORD_REGEX = /\A(?=.*?[A-z])(?=.*?[0-9]).*\z/.freeze
+VALID_PASSWORD_REGEX = /\A(?=.*?[A-z])(?=.*?[0-9]).*\z/
+OIL_CHANGE = 15_000
+TIRE_CHANGE = 15_000
+REVISION_CHANGE = 15_000
+GAP_TO_CHANGE = 3_000
