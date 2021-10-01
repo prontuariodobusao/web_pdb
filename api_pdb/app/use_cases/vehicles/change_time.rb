@@ -19,7 +19,8 @@ module Vehicles
         next unless send(method, vehicle)
 
         {
-          car_number: vehicle.car_number,
+          id: vehicle.id,
+          number: vehicle.car_number,
           current_km: vehicle.km
         }
       end

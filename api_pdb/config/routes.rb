@@ -42,6 +42,7 @@ Rails.application.routes.draw do
 
     resources :vehicles, except: :destroy do
       post 'datatable', to: 'vehicles#datatable', on: :collection
+      get 'revisions', to: 'vehicles#revisions', on: :collection
     end
   end
 

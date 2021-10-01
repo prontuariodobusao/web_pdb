@@ -1990,6 +1990,60 @@ paths:
                           type: string
                         details:
                           type: string
+  "/manager/vehicles/revisions":
+    get:
+      summary: API para visualizar veiculo
+      tags:
+      - Veículos
+      description: Rota para visualizar veiculos para revisão, essa rota pode ser
+        executada por usuário gerente ou RH
+      security:
+      - Authorization: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vehicles_to_oil_change:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        current_km:
+                          type: integer
+                  vehicles_to_tire_change:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        current_km:
+                          type: integer
+                  vehicles_to_revision_change:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        current_km:
+                          type: integer
+        '403':
+          description: Forbidden
+        '406':
+          description: Not Acceptable
   "/orders":
     post:
       summary: API para cradastro de ordens de serviços
