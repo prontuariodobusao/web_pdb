@@ -12,3 +12,4 @@ export {default as CreateEmployeeUserPage} from './resource/users/create-employe
 export {default as ChartsByDatePage} from './charts/charts-by-dates/charts-by-date-page'
 export {default as PanelMecanicOrders} from './orders/panel-mecanic-orders'
 export {default as VehiclesDt} from './resource/vehicles/index/vehicles-dt'
+export {default as VehiclesEdit} from './resource/vehicles/edit/vehicles-edit'

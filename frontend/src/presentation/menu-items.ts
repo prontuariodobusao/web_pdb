@@ -47,6 +47,12 @@ const menuItems = {
               type: 'item',
               url: '/funcionarios',
             },
+            {
+              id: 'vehicles',
+              title: 'Veículos',
+              type: 'item',
+              url: '/veiculos',
+            },
           ],
         },
       ],

@@ -101,7 +101,7 @@ const routes: RouterProps[] = [
       },
       {
         exact: true,
-        path: '/veículos',
+        path: '/veiculos',
         component: CreatevehiclesDataTable,
       },
     ],
