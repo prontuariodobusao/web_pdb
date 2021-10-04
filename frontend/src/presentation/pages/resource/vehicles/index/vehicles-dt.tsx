@@ -1,4 +1,5 @@
-import {DataTable} from 'presentation/components'
+import {CreateVehiclesEdit, CreateVehiclesForm} from 'main/factories'
+import {DataTable, VerticallyCenteredModal} from 'presentation/components'
 import React, {useState} from 'react'
 import {Row, Col, Card, Button} from 'react-bootstrap'
 import {VehicleDataTable} from '../../../../../domain/usecases/vehicles/vehicle-datatable'
@@ -28,10 +29,31 @@ const VehiclesDt: React.FC<Props> = ({remoteVehiclesDataTable}: Props) => {
   return (
     <>
       <Row>
+        <Col>
+          <Button
+            className="btn button-plus label"
+            onClick={() => showModalCreate()}>
+            <i className="feather icon-user-plus" /> Cadastrar Veículo
+          </Button>
+        </Col>
+      </Row>
+      <VerticallyCenteredModal
+        title={stateEdit.modalEdit ? 'Editar Veículo' : 'Cadastrar Veículo'}
+        show={modalShow}
+        onHide={() => setModalShow(false)}>
+        {stateEdit.modalEdit ? (
+          <>
+            <CreateVehiclesEdit idParams={String(stateEdit.idResource)} />
+          </>
+        ) : (
+          <CreateVehiclesForm />
+        )}
+      </VerticallyCenteredModal>
+      <Row>
         <Col md={12}>
           <Card>
             <Card.Header>
-              <Card.Title as="h5">Lista de Funcionários</Card.Title>
+              <Card.Title as="h5">Lista de Veículos</Card.Title>
             </Card.Header>
             <Card.Body>
               <DataTable

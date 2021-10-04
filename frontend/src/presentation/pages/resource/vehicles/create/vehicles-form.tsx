@@ -30,6 +30,12 @@ const VehiclesForm: React.FC<Props> = ({remoteCreateVehicles}: Props) => {
     vehicles: {
       id: 0,
       car_number: '',
+      km: 0,
+      car_line_id: 0,
+      oil_date: '',
+      tire_date: '',
+      revision_date: '',
+
       // identity: '',
       // occupation: '',
     },
@@ -154,26 +160,11 @@ const VehiclesForm: React.FC<Props> = ({remoteCreateVehicles}: Props) => {
           <Form noValidate onSubmit={formik.handleSubmit}>
             <Form.Row>
               <Form.Group as={Col} md="6">
-                <Form.Label>Matricula</Form.Label>
+                <Form.Label>Número do carro</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Matricula"
+                  placeholder="Número do carro"
                   name="identity"
-                  value={formik.values.car_line_id}
-                  onChange={formik.handleChange}
-                  isInvalid={!!formik.errors.car_line_id}
-                />
-
-                <Form.Control.Feedback type="invalid">
-                  {formik.errors.car_line_id}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="6" controlId="validationCustom02">
-                <Form.Label>Nome</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Nome"
-                  name="name"
                   value={formik.values.car_number}
                   onChange={formik.handleChange}
                   isInvalid={!!formik.errors.car_number}
@@ -181,6 +172,66 @@ const VehiclesForm: React.FC<Props> = ({remoteCreateVehicles}: Props) => {
 
                 <Form.Control.Feedback type="invalid">
                   {formik.errors.car_number}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom02">
+                <Form.Label>Km (Quilometragem)</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Km (Quilometragem)"
+                  name="name"
+                  value={formik.values.km}
+                  onChange={formik.handleChange}
+                  isInvalid={!!formik.errors.km}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.km}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom03">
+                <Form.Label>Data da troca de óleo</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Data da troca de óleo"
+                  name="name"
+                  value={formik.values.oil_date}
+                  onChange={formik.handleChange}
+                  isInvalid={!!formik.errors.oil_date}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.oil_date}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom04">
+                <Form.Label>Data da revisão</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Data da revisão"
+                  name="name"
+                  value={formik.values.revision_date}
+                  onChange={formik.handleChange}
+                  isInvalid={!!formik.errors.revision_date}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.revision_date}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom05">
+                <Form.Label>Data da troca de pneu</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Data da troca de pneu"
+                  name="name"
+                  value={formik.values.tire_date}
+                  onChange={formik.handleChange}
+                  isInvalid={!!formik.errors.tire_date}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.tire_date}
                 </Form.Control.Feedback>
               </Form.Group>
             </Form.Row>

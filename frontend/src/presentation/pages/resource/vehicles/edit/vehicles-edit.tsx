@@ -4,19 +4,19 @@ import {SubmitButton} from '../../../../components'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import {
-  EditVehicles,
-  GetVehicles,
+  UpdateVehicle,
+  GetVehicle,
 } from '../../../../../domain/usecases/vehicles'
 import {VehicleModel} from '../../../../../domain/models/vehicle-model'
 import {DataTableContext} from '../../../../contexts'
-import {
-  CreateAddVehiclesUser,
-  CreateAddOrRemoveRolesPage,
-} from '../../../../../main/factories'
+// import {
+//   CreateAddVehiclesUser,
+//   CreateAddOrRemoveRolesPage,
+// } from '../../../../../main/factories'
 
 type Props = {
-  remoteEditVehicles: EditVehicles
-  remoteGetVehicles: GetVehicles
+  remoteEditVehicles: UpdateVehicle
+  remoteGetVehicles: GetVehicle
 }
 
 type StateComponent = {
@@ -40,6 +40,12 @@ const VehiclesEdit: React.FC<Props> = ({
     vehicles: {
       id: 0,
       car_number: '',
+      km: 0,
+      car_line_id: 0,
+      oil_date: '',
+      tire_date: '',
+      revision_date: '',
+      // submit: null,
     },
   })
 
@@ -58,7 +64,12 @@ const VehiclesEdit: React.FC<Props> = ({
     validationSchema: schema,
     enableReinitialize: true,
     initialValues: {
-      car_name: state.vehicles.car_number,
+      car_number: state.vehicles.car_number,
+      km: state.vehicles.km,
+      car_line_id: state.vehicles.car_line_id,
+      oil_date: state.vehicles.oil_date,
+      revision_date: state.vehicles.revision_date,
+      tire_date: state.vehicles.tire_date,
       //   identity: state.vehicles.identity,
       //   occupation_id: String(state.vehicles.occupation_id),
       submit: null,
@@ -67,10 +78,22 @@ const VehiclesEdit: React.FC<Props> = ({
       try {
         // const {name, identity} = values
         // const occupation_id = parseInt(values.occupation_id)
-        const {car_name} = values
-        const response = await remoteEditVehicles.edit({
+        const {
+          car_number,
+          km,
+          car_line_id,
+          oil_date,
+          revision_date,
+          tire_date,
+        } = values
+        const response = await remoteEditVehicles.update({
           data: {
-            car_name,
+            car_number,
+            km,
+            car_line_id,
+            oil_date,
+            revision_date,
+            tire_date,
             // identity,
             // occupation_id,
           },
@@ -136,33 +159,78 @@ const VehiclesEdit: React.FC<Props> = ({
           <Form noValidate onSubmit={formik.handleSubmit}>
             <Form.Row>
               <Form.Group as={Col} md="6">
-                <Form.Label>Matricula</Form.Label>
+                <Form.Label>Número do carro</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Número do carro"
                   name="identity"
-                  value={formik.values.car_name}
+                  value={formik.values.car_number}
                   onChange={formik.handleChange}
-                  isInvalid={!!formik.errors.car_name}
+                  isInvalid={!!formik.errors.car_number}
                 />
 
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.car_name}
+                  {formik.errors.car_number}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom02">
-                <Form.Label>Nome</Form.Label>
+                <Form.Label>Km (Quilometragem)</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Nome"
+                  placeholder="Km (Quilometragem)"
                   name="name"
-                  value={formik.values.car_name}
+                  value={formik.values.km}
                   onChange={formik.handleChange}
-                  isInvalid={!!formik.errors.car_name}
+                  isInvalid={!!formik.errors.km}
                 />
 
                 <Form.Control.Feedback type="invalid">
-                  {formik.errors.car_name}
+                  {formik.errors.km}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom03">
+                <Form.Label>Data da troca de óleo</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Data da troca de óleo"
+                  name="name"
+                  value={formik.values.oil_date}
+                  onChange={formik.handleChange}
+                  isInvalid={!!formik.errors.oil_date}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.oil_date}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom04">
+                <Form.Label>Data da revisão</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Data da revisão"
+                  name="name"
+                  value={formik.values.revision_date}
+                  onChange={formik.handleChange}
+                  isInvalid={!!formik.errors.revision_date}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.revision_date}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} md="6" controlId="validationCustom05">
+                <Form.Label>Data da troca de pneu</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Data da troca de pneu"
+                  name="name"
+                  value={formik.values.tire_date}
+                  onChange={formik.handleChange}
+                  isInvalid={!!formik.errors.tire_date}
+                />
+
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.tire_date}
                 </Form.Control.Feedback>
               </Form.Group>
             </Form.Row>
