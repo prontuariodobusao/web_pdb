@@ -1238,6 +1238,94 @@ paths:
       responses:
         '204':
           description: Not Content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      created_at:
+                        type: string
+                      reference:
+                        type: string
+                      owner:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          confirmation:
+                            type: boolean
+                          employee_name:
+                            type: string
+                          username:
+                            type: string
+                          occupation:
+                            type: string
+                          roles:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                name:
+                                  type: string
+                      problem:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          description:
+                            type: string
+                          priority:
+                            type: string
+                          category:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                      status:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          color:
+                            type: string
+                          name:
+                            type: string
+                      vehicle:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          km:
+                            type: integer
+                          car_line_id:
+                            type: integer
+                          car_number:
+                            type: string
+                          oil_date:
+                            type: string
+                          tire_date:
+                            type: string
+                          revision_date:
+                            type: string
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          self:
+                            type: string
+                          image_url:
+                            type: string
         '403':
           description: Forbidden
         '406':

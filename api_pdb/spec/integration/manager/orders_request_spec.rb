@@ -242,7 +242,7 @@ describe 'Manager::Orders', type: :request do
         let(:id) { resource.id }
         let(:data) { valid_order_attributes_update }
         let(:Authorization) { authenticate_manager_user[:Authorization] }
-        # schema order_response_schema.schema.as_json
+        schema order_response_schema.schema.as_json
 
         run_test!
       end

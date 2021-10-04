@@ -32,7 +32,7 @@ module Vehicles
     end
 
     def check_oil_change_time(vehicle)
-      last_change_order = vehicle.orders.oil_problem.last
+      last_change_order = vehicle.orders.oil_problem.finish.last
       return false if last_change_order.nil?
 
       next_change = last_change_order.km + OIL_CHANGE
@@ -40,7 +40,7 @@ module Vehicles
     end
 
     def check_tire_change_time(vehicle)
-      last_change_order = vehicle.orders.tire_problem.last
+      last_change_order = vehicle.orders.tire_problem.finish.last
       return false if last_change_order.nil?
 
       next_change = last_change_order.km + TIRE_CHANGE
@@ -48,7 +48,7 @@ module Vehicles
     end
 
     def check_revision_change_time(vehicle)
-      last_change_order = vehicle.orders.revision_problem.last
+      last_change_order = vehicle.orders.revision_problem.finish.last
       return false if last_change_order.nil?
 
       next_change = last_change_order.km + REVISION_CHANGE
