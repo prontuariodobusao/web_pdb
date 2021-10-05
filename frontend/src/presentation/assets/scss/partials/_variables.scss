@@ -48,6 +48,8 @@ $dark-color: #37474f;
 $inverse-color: $dark-color;
 $theme-border: #eaeaea;
 $green-white-color: #AAAD24;
+$light-pink-color: #FABBAD;
+$dark-blue-color: #322195;
 
 // header
 $brand-background: $primary-color;
@@ -92,8 +94,8 @@ $theme-background: #f4f7fa;
 $theme-font-color: #888;
 $theme-heading-color: #a6a6a6;
 
-$color-name: c-blue, c-red, c-green, c-yellow, c-purple, c-green-white;
-$color-color: $primary-color, $danger-color, $success-color, $warning-color, $purple-color, $green-white-color;
+$color-name: c-blue, c-red, c-green, c-yellow, c-purple, c-green-white, c-light-pink, c-dark-blue, c-info;
+$color-color: $primary-color, $danger-color, $success-color, $warning-color, $purple-color, $green-white-color, $light-pink-color, $dark-blue-color, $info-color;
 $color-bt-name: primary, danger, success, warning, info;
 $color-bt-color: $primary-color, $danger-color, $success-color, $warning-color, $info-color;
 

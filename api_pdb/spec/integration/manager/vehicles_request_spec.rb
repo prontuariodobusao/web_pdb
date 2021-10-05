@@ -272,4 +272,33 @@ describe 'Manager::Vehicles', type: :request do
       end
     end
   end
+
+  path '/manager/vehicles/revisions' do
+    get 'API para visualizar veiculo' do
+      tags 'Veículos'
+      description 'Rota para visualizar veiculos para revisão, essa rota pode ser executada por usuário gerente ou RH'
+      produces 'application/json'
+      security [Authorization: []]
+
+      response '200', 'Success' do
+        let(:Authorization) { authenticate_manager_user[:Authorization] }
+        schema vehicles_to_revision_response_schema.schema.as_json
+
+        it_behaves_like 'a json endpoint response', 200 do
+          let(:expected_response_schema) { vehicles_to_revision_response_schema }
+        end
+      end
+
+      response '403', 'Forbidden' do
+        let(:Authorization) { authenticate_header[:Authorization] }
+        run_test!
+      end
+
+      response '406', 'Not Acceptable' do
+        let(:Authorization) { "Bearer #{::Base64.strict_encode64('jsmith:jspass')}" }
+        let(:Accept) { 'application/foo' }
+        run_test!
+      end
+    end
+  end
 end

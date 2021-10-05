@@ -14,6 +14,10 @@ module SchemaFactory
   def vehicle_response_schema
     VehicleResponse.new
   end
+  
+  def vehicles_to_revision_response_schema
+    VehiclesToRevisionResponse.new
+  end
 
   def resources_response_schema
     ResourcesResponse.new

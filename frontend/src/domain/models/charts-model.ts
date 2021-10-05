@@ -11,6 +11,9 @@ export type ReportChartModel = {
     os_canceled: number
     os_finish: number
     os_down_time: number
+    vehicles_to_oil_change: number
+    vehicles_to_tire_change: number
+    vehicles_to_revision_change: number
   }
   categories: ChartModel[]
   problems: ChartModel[]

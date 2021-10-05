@@ -20,6 +20,9 @@ module Manager
           y: problem.quantity
         }
       end
+      vehicles_to_oil_change = Vehicles::ChangeTime.call(method: :check_oil_change_time)
+      vehicles_to_tire_change = Vehicles::ChangeTime.call(method: :check_tire_change_time)
+      vehicles_to_revision_change = Vehicles::ChangeTime.call(method: :check_revision_change_time)
 
       json_response({
                       qtds: {
@@ -28,7 +31,10 @@ module Manager
                         os_maintenance: Order.maintenance.count,
                         os_canceled: Order.canceled.count,
                         os_finish: Order.finish.count,
-                        os_down_time: Orders::DownTime.call
+                        os_down_time: Orders::DownTime.call,
+                        vehicles_to_oil_change: vehicles_to_oil_change.count,
+                        vehicles_to_tire_change: vehicles_to_tire_change.count,
+                        vehicles_to_revision_change: vehicles_to_revision_change.count
                       },
                       categories: categories,
                       problems: problems
