@@ -164,7 +164,7 @@ const VehiclesForm: React.FC<Props> = ({remoteCreateVehicles}: Props) => {
                 <Form.Control
                   type="text"
                   placeholder="Número do carro"
-                  name="identity"
+                  name="car_number"
                   value={formik.values.car_number}
                   onChange={formik.handleChange}
                   isInvalid={!!formik.errors.car_number}
@@ -179,7 +179,7 @@ const VehiclesForm: React.FC<Props> = ({remoteCreateVehicles}: Props) => {
                 <Form.Control
                   type="text"
                   placeholder="Km (Quilometragem)"
-                  name="name"
+                  name="km"
                   value={formik.values.km}
                   onChange={formik.handleChange}
                   isInvalid={!!formik.errors.km}
@@ -194,7 +194,7 @@ const VehiclesForm: React.FC<Props> = ({remoteCreateVehicles}: Props) => {
                 <Form.Control
                   type="text"
                   placeholder="Data da troca de óleo"
-                  name="name"
+                  name="oil_date"
                   value={formik.values.oil_date}
                   onChange={formik.handleChange}
                   isInvalid={!!formik.errors.oil_date}
@@ -209,7 +209,7 @@ const VehiclesForm: React.FC<Props> = ({remoteCreateVehicles}: Props) => {
                 <Form.Control
                   type="text"
                   placeholder="Data da revisão"
-                  name="name"
+                  name="revision_date"
                   value={formik.values.revision_date}
                   onChange={formik.handleChange}
                   isInvalid={!!formik.errors.revision_date}
@@ -224,7 +224,7 @@ const VehiclesForm: React.FC<Props> = ({remoteCreateVehicles}: Props) => {
                 <Form.Control
                   type="text"
                   placeholder="Data da troca de pneu"
-                  name="name"
+                  name="tire_date"
                   value={formik.values.tire_date}
                   onChange={formik.handleChange}
                   isInvalid={!!formik.errors.tire_date}
