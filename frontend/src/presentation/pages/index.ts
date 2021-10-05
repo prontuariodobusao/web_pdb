@@ -11,3 +11,6 @@ export {default as AddOrRemoveRolesPage} from './resource/users/add-or-remove-ro
 export {default as CreateEmployeeUserPage} from './resource/users/create-employee-user/create-employee-user-page'
 export {default as ChartsByDatePage} from './charts/charts-by-dates/charts-by-date-page'
 export {default as PanelMecanicOrders} from './orders/panel-mecanic-orders'
+export {default as VehiclesDt} from './resource/vehicles/index/vehicles-dt'
+export {default as VehiclesEdit} from './resource/vehicles/edit/vehicles-edit'
+export {default as VehiclesForm} from './resource/vehicles/create/vehicles-form'

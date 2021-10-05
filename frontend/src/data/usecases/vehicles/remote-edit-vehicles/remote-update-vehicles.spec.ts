@@ -3,7 +3,7 @@ import {HttpClientSpy, mockErrorsDetails} from '../../../../data/test'
 import {DetailError} from '../../../../domain/errors'
 import {StatusCode} from '../../../../domain/protocols/http'
 import {mockVehicleDataModel} from '../../../../domain/test/mock-vehicles'
-import {RemoteUpateVehicle} from './remote-update-employee'
+import {RemoteUpateVehicle} from './remote-update-vehicles'
 
 type SutTypes = {
   sut: RemoteUpateVehicle

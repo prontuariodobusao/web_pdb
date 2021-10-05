@@ -14,3 +14,7 @@ export * from './charts/remote-charts-report-mecanic-by-dates/remote-charts-repo
 export * from './remote-check-token-valid/remote-check-token-valid'
 export * from './employees/remote-list-employee/remote-list-employee'
 export * from './orders/remote-panel-orders/remote-panel-orders'
+export * from './vehicles/remote-vehicles-datatable/remote-vehicle-datatable'
+export * from './vehicles/remote-edit-vehicles/remote-update-vehicles'
+export * from './vehicles/remote-get-vehicles/remote-get-vehicle'
+export * from './vehicles/remote-create-vehicle/remote-create-vehicle'
