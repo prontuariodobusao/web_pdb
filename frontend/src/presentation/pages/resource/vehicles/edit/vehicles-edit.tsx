@@ -9,6 +9,8 @@ import {
 } from '../../../../../domain/usecases/vehicles'
 import {VehicleModel} from '../../../../../domain/models/vehicle-model'
 import {DataTableContext} from '../../../../contexts'
+import InputMask from 'react-input-mask'
+
 // import {
 //   CreateAddVehiclesUser,
 //   CreateAddOrRemoveRolesPage,
@@ -25,7 +27,11 @@ type StateComponent = {
 }
 
 const schema = Yup.object().shape({
-  car_name: Yup.string().required('Nome é obrigatório'),
+  car_number: Yup.string().required('Nome é obrigatório'),
+  km: Yup.number().required('Nome é obrigatório'),
+  oil_date: Yup.string().required('Nome é obrigatório'),
+  revision_date: Yup.string().required('Nome é obrigatório'),
+  tire_date: Yup.string().required('Nome é obrigatório'),
   //   identity: Yup.string().required('Matrícula é obrigatória'),
   //   occupation_id: Yup.string().required('Cargo é obrigatório'),
 })
@@ -41,7 +47,7 @@ const VehiclesEdit: React.FC<Props> = ({
       id: 0,
       car_number: '',
       km: 0,
-      car_line_id: 0,
+      car_line_id: 5,
       oil_date: '',
       tire_date: '',
       revision_date: '',
@@ -190,45 +196,51 @@ const VehiclesEdit: React.FC<Props> = ({
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom03">
                 <Form.Label>Data da troca de óleo</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Data da troca de óleo"
-                  name="oil_date"
+                <InputMask
+                  mask="99/99/9999"
                   value={formik.values.oil_date}
-                  onChange={formik.handleChange}
-                  isInvalid={!!formik.errors.oil_date}
-                />
-
+                  onChange={formik.handleChange}>
+                  <Form.Control
+                    type="text"
+                    placeholder="Data da troca de óleo"
+                    name="oil_date"
+                    isInvalid={!!formik.errors.oil_date}
+                  />
+                </InputMask>
                 <Form.Control.Feedback type="invalid">
                   {formik.errors.oil_date}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom04">
                 <Form.Label>Data da revisão</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Data da revisão"
-                  name="revision_date"
+                <InputMask
+                  mask="99/99/9999"
                   value={formik.values.revision_date}
-                  onChange={formik.handleChange}
-                  isInvalid={!!formik.errors.revision_date}
-                />
-
+                  onChange={formik.handleChange}>
+                  <Form.Control
+                    type="text"
+                    placeholder="Data da revisão"
+                    name="revision_date"
+                    isInvalid={!!formik.errors.revision_date}
+                  />
+                </InputMask>
                 <Form.Control.Feedback type="invalid">
                   {formik.errors.revision_date}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom05">
                 <Form.Label>Data da troca de pneu</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Data da troca de pneu"
-                  name="tire_date"
+                <InputMask
+                  mask="99/99/9999"
                   value={formik.values.tire_date}
-                  onChange={formik.handleChange}
-                  isInvalid={!!formik.errors.tire_date}
-                />
-
+                  onChange={formik.handleChange}>
+                  <Form.Control
+                    type="text"
+                    placeholder="Data da troca de pneu"
+                    name="tire_date"
+                    isInvalid={!!formik.errors.tire_date}
+                  />
+                </InputMask>
                 <Form.Control.Feedback type="invalid">
                   {formik.errors.tire_date}
                 </Form.Control.Feedback>

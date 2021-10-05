@@ -14,7 +14,7 @@ const remoteEditVehicles = (id: string): RemoteUpateVehicle => {
   )
 
   return new RemoteUpateVehicle(
-    `${basUrl}/manager/Vehicles/${id}`,
+    `${basUrl}/manager/vehicles/${id}`,
     authHttpClient,
   )
 }
