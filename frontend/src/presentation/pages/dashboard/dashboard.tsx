@@ -169,7 +169,7 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
                   ) : (
                     <>
                       <span className="m-b-0 card-number text-c-info">
-                        {state.qtds.vehicles_to_revision_change}
+                        {state.qtds.os_down_time}
                       </span>
                     </>
                   )}
@@ -195,7 +195,7 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
                   ) : (
                     <>
                       <span className="m-b-0 card-number text-c-green-white">
-                        {state.qtds.vehicles_to_oil_change}
+                        {state.qtds.vehicles_to_revision_change}
                       </span>
                     </>
                   )}
@@ -221,7 +221,7 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
                   ) : (
                     <>
                       <span className="m-b-0 card-number text-c-light-pink">
-                        {state.qtds.vehicles_to_tire_change}
+                        {state.qtds.vehicles_to_oil_change}
                       </span>
                     </>
                   )}
@@ -233,7 +233,9 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
         <Col md={6} xl={3}>
           <Card>
             <Card.Body>
-              <h5 className="f-13">Veículos que precisam de troca de pneu </h5>
+              <h5 className="f-13">
+                Veículos que precisam de revisão de pneu{' '}
+              </h5>
               <div className="row d-flex align-items-center">
                 <div className="col-6">
                   <h3 className="f-w-300 d-flex align-items-center m-b-0">
@@ -247,7 +249,7 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
                   ) : (
                     <>
                       <span className="m-b-0 card-number text-c-dark-blue">
-                        {state.qtds.os_down_time}
+                        {state.qtds.vehicles_to_tire_change}
                       </span>
                     </>
                   )}
