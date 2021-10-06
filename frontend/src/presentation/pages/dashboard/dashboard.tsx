@@ -1,6 +1,10 @@
-import React, {useState, useEffect} from 'react'
-import {Row, Col, Card, Spinner} from 'react-bootstrap'
-import {HiPierChart, HiBarChart} from '../../components'
+import React, {useState, useEffect, ReactNode} from 'react'
+import {Row, Col, Card, Spinner, Table} from 'react-bootstrap'
+import {
+  HiPierChart,
+  HiBarChart,
+  VerticallyCenteredModal,
+} from '../../components'
 import {ChartsReport} from '../../../domain/usecases/charts/charts_report'
 import {ReportChartModel} from '../../../domain/models/charts-model'
 import {SpanNumber, SpanText} from './styles'
@@ -9,9 +13,41 @@ type Props = {
   chartsReport: ChartsReport
 }
 
+type StateModal = {
+  title: string
+  content?: ReactNode
+  modalShow: boolean
+}
+
+type TableProps = {
+  data: any[]
+}
+
+const VehiclesRevisionsTable: React.FC<TableProps> = ({data}: TableProps) => (
+  <Table responsive>
+    <thead>
+      <tr>
+        <th>Nº do Veiculo</th>
+        <th>Km Atual</th>
+        <th>Km para próxima revisão</th>
+      </tr>
+    </thead>
+    <tbody>
+      {data.map(vehicle => (
+        <tr key={vehicle.id}>
+          <td>{vehicle.number}</td>
+          <td>{vehicle.current_km}</td>
+          <td>{vehicle.next_change}</td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+)
+
 const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
   const [loading, setLoading] = useState(true)
   const [state, setState] = useState<ReportChartModel>({} as ReportChartModel)
+  const [infoModal, setInfoModal] = useState<StateModal>({} as StateModal)
 
   const loadCharts = async (): Promise<void> => {
     try {
@@ -27,8 +63,40 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
     loadCharts()
   }, [])
 
+  const infoVehiclesRevision = (): void => {
+    setInfoModal({
+      title: 'Veiculos que precisam de revisão',
+      content: (
+        <VehiclesRevisionsTable data={state.vehicles_to_revision_change} />
+      ),
+      modalShow: true,
+    })
+  }
+
+  const infoVehiclesOilChange = (): void => {
+    setInfoModal({
+      title: 'Veiculos que precisam de troca de óleo',
+      content: <VehiclesRevisionsTable data={state.vehicles_to_oil_change} />,
+      modalShow: true,
+    })
+  }
+
+  const infoVehiclesTireChange = (): void => {
+    setInfoModal({
+      title: 'Veiculos que precisam de revisão de Pneus',
+      content: <VehiclesRevisionsTable data={state.vehicles_to_tire_change} />,
+      modalShow: true,
+    })
+  }
+
   return (
     <>
+      <VerticallyCenteredModal
+        title={infoModal.title}
+        show={infoModal.modalShow}
+        onHide={() => setInfoModal({...infoModal, modalShow: false})}>
+        {infoModal.content}
+      </VerticallyCenteredModal>
       <Row>
         <Col md={6}>
           <SpanText>Total de OS</SpanText>
@@ -194,7 +262,9 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
                     <Spinner animation="grow" variant="info" />
                   ) : (
                     <>
-                      <span className="m-b-0 card-number text-c-green-white">
+                      <span
+                        className="m-b-0 card-number text-c-green-white indicator"
+                        onClick={infoVehiclesRevision}>
                         {state.qtds.vehicles_to_revision_change}
                       </span>
                     </>
@@ -220,7 +290,9 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
                     <Spinner animation="grow" variant="info" />
                   ) : (
                     <>
-                      <span className="m-b-0 card-number text-c-light-pink">
+                      <span
+                        className="m-b-0 card-number text-c-light-pink indicator"
+                        onClick={infoVehiclesOilChange}>
                         {state.qtds.vehicles_to_oil_change}
                       </span>
                     </>
@@ -248,7 +320,9 @@ const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
                     <Spinner animation="grow" variant="info" />
                   ) : (
                     <>
-                      <span className="m-b-0 card-number text-c-dark-blue">
+                      <span
+                        className="m-b-0 card-number text-c-dark-blue indicator"
+                        onClick={infoVehiclesTireChange}>
                         {state.qtds.vehicles_to_tire_change}
                       </span>
                     </>

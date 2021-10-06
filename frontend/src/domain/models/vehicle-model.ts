@@ -24,3 +24,10 @@ export type VehicleDataModel = {
     }
   }
 }
+
+export type VehicleRevisionModel = {
+  id: number
+  number: string
+  current_km: number
+  next_change: number
+}

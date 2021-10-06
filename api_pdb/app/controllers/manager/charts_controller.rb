@@ -37,7 +37,10 @@ module Manager
                         vehicles_to_revision_change: vehicles_to_revision_change.count
                       },
                       categories: categories,
-                      problems: problems
+                      problems: problems,
+                      vehicles_to_oil_change: vehicles_to_oil_change,
+                      vehicles_to_tire_change: vehicles_to_tire_change,
+                      vehicles_to_revision_change: vehicles_to_revision_change
                     })
     end
 
