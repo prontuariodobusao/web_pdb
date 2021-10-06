@@ -4,6 +4,7 @@ import {
   HiPierChart,
   HiBarChart,
   VerticallyCenteredModal,
+  VehiclesRevisionsTable,
 } from '../../components'
 import {ChartsReport} from '../../../domain/usecases/charts/charts_report'
 import {ReportChartModel} from '../../../domain/models/charts-model'
@@ -18,31 +19,6 @@ type StateModal = {
   content?: ReactNode
   modalShow: boolean
 }
-
-type TableProps = {
-  data: any[]
-}
-
-const VehiclesRevisionsTable: React.FC<TableProps> = ({data}: TableProps) => (
-  <Table responsive>
-    <thead>
-      <tr>
-        <th>Nº do Veiculo</th>
-        <th>Km Atual</th>
-        <th>Km para próxima revisão</th>
-      </tr>
-    </thead>
-    <tbody>
-      {data.map(vehicle => (
-        <tr key={vehicle.id}>
-          <td>{vehicle.number}</td>
-          <td>{vehicle.current_km}</td>
-          <td>{vehicle.next_change}</td>
-        </tr>
-      ))}
-    </tbody>
-  </Table>
-)
 
 const Dashboard: React.FC<Props> = ({chartsReport}: Props) => {
   const [loading, setLoading] = useState(true)
