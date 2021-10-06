@@ -139,9 +139,9 @@ CarLine.create(name: 'Reserva', line_type: :reserve)
 
 puts 'Create Vehicles...'
 vehicle1 = Vehicle.create(km: 27_000, car_number: '04383', car_line: line1, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
-vehicle2 = Vehicle.create(km: 23_000, car_number: '04384', car_line: line2, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
-vehicle3 = Vehicle.create(km: 35_000, car_number: '04385', car_line: line3, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
-vehicle4 = Vehicle.create(km: 40_000, car_number: '04386', car_line: line4, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
+vehicle2 = Vehicle.create(km: 33_000, car_number: '04384', car_line: line2, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
+vehicle3 = Vehicle.create(km: 47_000, car_number: '04385', car_line: line3, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
+vehicle4 = Vehicle.create(km: 65_000, car_number: '04386', car_line: line4, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
 
 status = Status.find 4
 maintenance = Status.find 2

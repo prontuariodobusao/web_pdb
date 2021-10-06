@@ -16,13 +16,15 @@ module Vehicles
 
     def change_time
       vehicles_to_change = vehicles.map do |vehicle|
-        next unless send(method, vehicle)[:has_change]
+        result = send(method, vehicle)
+
+        next unless result[:has_change]
 
         {
           id: vehicle.id,
           number: vehicle.car_number,
           current_km: vehicle.km,
-          next_change: send(method, vehicle)[:next_change]
+          next_change: result[:next_change]
         }
       end
       vehicles_to_change.compact!
@@ -34,7 +36,7 @@ module Vehicles
 
     def check_oil_change_time(vehicle)
       last_change_order = vehicle.orders.oil_problem.finish.last
-      return false if last_change_order.nil?
+      return { has_change: false } if last_change_order.nil?
 
       next_change = last_change_order.km + OIL_CHANGE
       {
@@ -45,7 +47,7 @@ module Vehicles
 
     def check_tire_change_time(vehicle)
       last_change_order = vehicle.orders.tire_problem.finish.last
-      return false if last_change_order.nil?
+      return { has_change: false } if last_change_order.nil?
 
       next_change = last_change_order.km + TIRE_CHANGE
       {
@@ -56,7 +58,7 @@ module Vehicles
 
     def check_revision_change_time(vehicle)
       last_change_order = vehicle.orders.revision_problem.finish.last
-      return false if last_change_order.nil?
+      return { has_change: false } if last_change_order.nil?
 
       next_change = last_change_order.km + REVISION_CHANGE
       {

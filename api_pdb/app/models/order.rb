@@ -56,6 +56,7 @@ class Order < ApplicationRecord
   scope :tire_problem, -> { where(problem_id: 2) }
   scope :revision_problem, -> { where(problem_id: 3) }
   scope :by_mecanic, ->(mecanic_id) { where(car_mecanic_id: mecanic_id) }
+  scope :by_dates, ->(start_date, end_date) { where(created_at: start_date..end_date) }
   scope :by_categories, -> { OrdersQueries::OrdersByCategoryQuery.call }
   scope :by_problems, -> { OrdersQueries::OrdersByProblemQuery.call }
   scope :by_mecanics, -> { OrdersQueries::OrdersByMecanicQuery.call }
