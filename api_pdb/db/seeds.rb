@@ -109,9 +109,9 @@ problem23 = Problem.create(description: 'Barra estabilizadora', priority: :high,
 solution1 = Solution.create(description: 'Trocar o óleo', problem: problem1)
 solution2 = Solution.create(description: 'Revisar pneus', problem: problem2)
 solution3 = Solution.create(description: 'Revisar veículo', problem: problem3)
-Solution.create(description: 'Verificar injeção', problem: problem4)
-Solution.create(description: 'Completar água', problem: problem5)
-Solution.create(description: 'Verificar nível do óleo', problem: problem6)
+solution4 = Solution.create(description: 'Verificar injeção', problem: problem4)
+solution5 = Solution.create(description: 'Completar água', problem: problem5)
+solution6 = Solution.create(description: 'Verificar nível do óleo', problem: problem6)
 Solution.create(description: 'Verificar sistema de injeção', problem: problem7)
 Solution.create(description: 'Refazer o motor, ou verificar excesso de óleo nos pistões', problem: problem8)
 Solution.create(description: 'Fusível queimado', problem: problem9) 
@@ -142,6 +142,7 @@ vehicle1 = Vehicle.create(km: 27_000, car_number: '04383', car_line: line1, oil_
 vehicle2 = Vehicle.create(km: 33_000, car_number: '04384', car_line: line2, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
 vehicle3 = Vehicle.create(km: 47_000, car_number: '04385', car_line: line3, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
 vehicle4 = Vehicle.create(km: 65_000, car_number: '04386', car_line: line4, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
+vehicle5 = Vehicle.create(km: 70_000, car_number: '04387', car_line: line4, oil_date: Date.current, tire_date: Date.current, revision_date: Date.current)
 
 status = Status.find 4
 maintenance = Status.find 2
@@ -197,3 +198,16 @@ order11.histories.create!(km: order11.km, description: 'Finalização', status: 
 order12 = Order.create(km: 60_000, reference: 'OS_00012/2021', state: :closed, status: status, owner: u1, problem: problem3, vehicle: vehicle4, solution: solution3, manager: employee27, car_mecanic: mecanic3)
 order12.histories.create!(km: order12.km, description: 'Manutenção', status: maintenance, owner: order12.owner)
 order12.histories.create!(km: order12.km, description: 'Finalização', status: status, owner: order12.owner)
+
+puts 'Create orders of revisons to vehicle five'
+order13 = Order.create(km: 75_000, reference: 'OS_00013/2021', state: :closed, status: status, owner: u1, problem: problem4, vehicle: vehicle5, solution: solution4, manager: employee27, car_mecanic: mecanic1, created_at: 60.days.ago)
+order13.histories.create!(km: order13.km, description: 'Manutenção', status: maintenance, owner: order13.owner)
+order13.histories.create!(km: order13.km, description: 'Finalização', status: status, owner: order13.owner)
+
+order14 = Order.create(km: 85_000, reference: 'OS_00014/2021', state: :closed, status: status, owner: u1, problem: problem5, vehicle: vehicle5, solution: solution5, manager: employee27, car_mecanic: mecanic2, created_at: 30.days.ago)
+order14.histories.create!(km: order14.km, description: 'Manutenção', status: maintenance, owner: order14.owner)
+order14.histories.create!(km: order14.km, description: 'Finalização', status: status, owner: order14.owner)
+
+order15 = Order.create(km: 90_000, reference: 'OS_00015/2021', state: :closed, status: status, owner: u1, problem: problem6, vehicle: vehicle5, solution: solution6, manager: employee27, car_mecanic: mecanic3, created_at: DateTime.current)
+order15.histories.create!(km: order15.km, description: 'Manutenção', status: maintenance, owner: order15.owner)
+order15.histories.create!(km: order15.km, description: 'Finalização', status: status, owner: order15.owner)

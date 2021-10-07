@@ -16,7 +16,7 @@ module OrdersQueries
 
       OrdersQueries::OrdersByMecanicQuery
         .call
-        .where('orders.created_at between ? and ?', start, end_time)
+        .where('orders.created_at between ? and ?', start.beginning_of_day, end_time.end_of_day)
     end
   end
 end

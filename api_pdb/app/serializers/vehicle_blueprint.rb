@@ -7,4 +7,5 @@ class VehicleBlueprint < Blueprinter::Base
   field :oil_date, datetime_format: '%d/%m/%Y'
   field :tire_date, datetime_format: '%d/%m/%Y'
   field :revision_date, datetime_format: '%d/%m/%Y'
+  field :break_predictability
 end
