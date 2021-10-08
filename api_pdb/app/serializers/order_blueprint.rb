@@ -27,7 +27,8 @@ class OrderBlueprint < Blueprinter::Base
   end
 
   view :panel do
-    field :problem_description, name: :description
+    field :description
+    field :problem_description, name: :problem_description
     field :status_name, name: :status
     field :category_id do |order|
       order.problem.category_id

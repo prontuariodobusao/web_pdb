@@ -61,7 +61,7 @@ const PanelMecanicOrders: React.FC<Props> = ({panelOrders}: Props) => {
                           />
                         </td>
                         <td>{order.reference}</td>
-                        <td>{order.category}</td>
+                        <td>{order.problem_description}</td>
                         <td>{order.mecanic}</td>
                         <td>{order.owner}</td>
                         <td>{order.status}</td>
