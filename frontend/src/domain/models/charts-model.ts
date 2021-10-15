@@ -1,3 +1,5 @@
+import {VehicleRevisionModel} from './vehicle-model'
+
 export type ChartModel = {
   name: string
   y: number
@@ -17,6 +19,9 @@ export type ReportChartModel = {
   }
   categories: ChartModel[]
   problems: ChartModel[]
+  vehicles_to_oil_change: VehicleRevisionModel[]
+  vehicles_to_tire_change: VehicleRevisionModel[]
+  vehicles_to_revision_change: VehicleRevisionModel[]
 }
 
 export type ReportModel = {

@@ -41,10 +41,10 @@ const PanelMecanicOrders: React.FC<Props> = ({panelOrders}: Props) => {
                   <th></th>
                   <th>Nº da OS</th>
                   <th>PROBLEMA</th>
-                  <th>CATEGORIA</th>
                   <th>MECÂNICO</th>
                   <th>SOLICITANTE</th>
                   <th>STATUS</th>
+                  <th>DESCRIÇÃO</th>
                 </tr>
               </thead>
               <tbody>
@@ -61,11 +61,11 @@ const PanelMecanicOrders: React.FC<Props> = ({panelOrders}: Props) => {
                           />
                         </td>
                         <td>{order.reference}</td>
-                        <td>{order.description}</td>
-                        <td>{order.category}</td>
+                        <td>{order.problem_description}</td>
                         <td>{order.mecanic}</td>
                         <td>{order.owner}</td>
                         <td>{order.status}</td>
+                        <td>{order.description}</td>
                       </tr>
                     ))}
                   </>

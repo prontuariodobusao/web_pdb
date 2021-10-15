@@ -14,17 +14,17 @@ module OrdersQueries
 
     def call
       start = Date.strptime(initial_date, '%d/%m/%Y')
-      end_time = Date.strptime(end_date, '%d/%m/%Y') + 1.day
+      end_time = Date.strptime(end_date, '%d/%m/%Y')
 
       case employee_type
       when 'driver'
         OrdersQueries::OrdersByProblemsDriverQuery
           .call(driver_id: employee_id)
-          .where('orders.created_at between ? and ?', start, end_time)
+          .where('orders.created_at between ? and ?', start.beginning_of_day, end_time.end_of_day)
       when 'mecanic'
         OrdersQueries::OrdersByProblemsMecanicQuery
           .call(mecanic_id: employee_id)
-          .where('orders.created_at between ? and ?', start, end_time)
+          .where('orders.created_at between ? and ?', start.beginning_of_day, end_time.end_of_day)
       end
     end
   end

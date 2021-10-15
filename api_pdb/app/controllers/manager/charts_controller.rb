@@ -1,9 +1,11 @@
 module Manager
   class ChartsController < ApplicationController
     before_action :autorize_manager_or_rh
+    before_action :date_range_for_weekly_charts, only: :report
 
     def report
       categories = Order.by_categories
+                        .by_dates(@start_date, @end_date)
                         .map do |status|
         {
           name: status.name,
@@ -13,6 +15,7 @@ module Manager
 
       problems = Order
                  .by_problems
+                 .by_dates(@start_date, @end_date)
                  .limit(10)
                  .map do |problem|
         {
@@ -26,18 +29,21 @@ module Manager
 
       json_response({
                       qtds: {
-                        total: Order.count,
-                        os_waiting: Order.waiting.count,
-                        os_maintenance: Order.maintenance.count,
-                        os_canceled: Order.canceled.count,
-                        os_finish: Order.finish.count,
+                        total: Order.by_dates(@start_date, @end_date).count,
+                        os_waiting: Order.by_dates(@start_date, @end_date).waiting.count,
+                        os_maintenance: Order.by_dates(@start_date, @end_date).maintenance.count,
+                        os_canceled: Order.by_dates(@start_date, @end_date).canceled.count,
+                        os_finish: Order.by_dates(@start_date, @end_date).finish.count,
                         os_down_time: Orders::DownTime.call,
                         vehicles_to_oil_change: vehicles_to_oil_change.count,
                         vehicles_to_tire_change: vehicles_to_tire_change.count,
                         vehicles_to_revision_change: vehicles_to_revision_change.count
                       },
                       categories: categories,
-                      problems: problems
+                      problems: problems,
+                      vehicles_to_oil_change: vehicles_to_oil_change,
+                      vehicles_to_tire_change: vehicles_to_tire_change,
+                      vehicles_to_revision_change: vehicles_to_revision_change
                     })
     end
 
@@ -97,6 +103,12 @@ module Manager
     end
 
     private
+
+    def date_range_for_weekly_charts
+      current_date = Date.current
+      @start_date = current_date.beginning_of_week
+      @end_date = current_date.end_of_day
+    end
 
     def dates_params
       params.require(:data).permit(:type_report, :initial_date, :end_date, :employee_id, :employee_type)
