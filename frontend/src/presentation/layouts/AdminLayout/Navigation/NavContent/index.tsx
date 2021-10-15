@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {ListGroup} from 'react-bootstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import {AuthContext} from '../../../../contexts'
 
 import NavGroup from './NavGroup'
 
@@ -9,18 +10,27 @@ type TypeProps = {
 }
 
 const NavContent: React.FC<TypeProps> = ({navigation}: TypeProps) => {
+  const {getCurrentAccount} = useContext(AuthContext)
+  // const accessLevel = navigation.filter((item: any) => {
+  //   console.log(item)
+  //   item.access.includes('manager')
+  // })
+
   const navItems = navigation.map((item: any) => {
-    switch (item.type) {
-      case 'group':
-        return (
-          <NavGroup
-            layout="vertical"
-            key={'nav-group-' + item.id}
-            group={item}
-          />
-        )
-      default:
-        return false
+    if (item.access.includes(getCurrentAccount().role)) {
+      const filteredItems = item.children.filter((item: any) =>
+        item.access.includes(getCurrentAccount().role),
+      )
+      const filteredItem = {...item, children: filteredItems}
+      return (
+        <NavGroup
+          layout="vertical"
+          key={'nav-group-' + filteredItem.id}
+          group={filteredItem}
+        />
+      )
+    } else {
+      return false
     }
   })
 
