@@ -44,6 +44,26 @@ services:
     networks:
       - api_pdb_network
   
+  frontend:
+    image: pdb_frontend:latest
+    container_name: pdb_frontend
+    command: 'yarn start'
+    volumes:
+      - ./frontend:/home/node/app
+      - shared_data:/var/shared
+      - node_modules:/home/node/app/node_modules
+    ports:
+      - "8080:3000"
+    depends_on:
+      - api_pdb_dev
+    restart: always
+    environment:
+      NODE_ENV: development
+    tty: true
+    stdin_open: true
+    networks:
+      - api_pdb_network
+  
   api_pdb_test:
     image: api_pdb_dev:latest
     container_name: api_pdb_test
