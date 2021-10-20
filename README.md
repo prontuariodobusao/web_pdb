@@ -115,6 +115,6 @@ Feito pela equipe Pontuário do Busão para o projeto move Teresina da Prefeitur
 
 🚀 Equipe de desenvolvimento
 
-#### Jorge Luis Lima - Arquiteto de Software  [Contato](linkedin.com/in/jorge-lima-1a45a197)
+#### Jorge Luis Lima - Arquiteto de Software  [Contato](https://www.linkedin.com/in/jorge-lima-1a45a197)
 #### Thiago Aderaldo - Analista de sistemas  [Contato](https://www.linkedin.com/in/thiago-aderaldo-lessa-2b7b0646)
 #### Sebastião Jr. - Analista de negócio  [Contato](https://www.linkedin.com/in/sebasti%C3%A3o-junior-52b2b58a)
