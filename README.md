@@ -78,10 +78,12 @@ $ cp .env.sample .env.dev
 - Excute o script up_dev na raiz do projeto
 <br>
 💡 Obs: Este script exclui as imagens do backend e frontend e logo depois faz a criação dos mesmas.
+
 ```ruby
 $ sh up_dev.sh 
 ```
 - Verifique se todos os serviços foram iniciados
+
 ```ruby
 $ docker-compose logs -f -t 
 ```
