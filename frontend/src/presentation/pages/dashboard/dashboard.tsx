@@ -1,5 +1,5 @@
 import React, {useState, useEffect, ReactNode} from 'react'
-import {Row, Col, Card, Spinner, Table} from 'react-bootstrap'
+import {Row, Col, Card, Spinner} from 'react-bootstrap'
 import {
   HiPierChart,
   HiBarChart,

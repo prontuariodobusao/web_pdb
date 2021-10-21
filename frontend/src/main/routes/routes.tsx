@@ -9,7 +9,7 @@ import {
   CreatePanelMecanicOrdersPage,
   CreatevehiclesDataTable,
 } from '../factories'
-import {ConfirmOrMenu} from '../../presentation/pages'
+import {ConfirmOrMenu, Initial} from '../../presentation/pages'
 import {AuthGuard, GuestGuard, Loader} from '../../presentation/components'
 
 export type RoutesProps = {
@@ -79,6 +79,11 @@ const routes: RouterProps[] = [
     path: '*',
     layout: AdminLayout,
     routes: [
+      {
+        exact: true,
+        path: '/inicio',
+        component: Initial,
+      },
       {
         exact: true,
         path: '/dashboard',

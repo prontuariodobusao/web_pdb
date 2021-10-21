@@ -247,7 +247,7 @@ const ChartsByDatePage: React.FC<Props> = ({
                     <option value="1">Categorias</option>
                     <option value="2">Problemas</option>
                     <option value="3">Status</option>
-                    <option value="4">Qtd de OS por mecâncico</option>
+                    <option value="4">Qtd de OS por mecânico</option>
                     <option value="5">Mecânico X Problema</option>
                     <option value="6">Motorista X Problema</option>
                   </Form.Control>

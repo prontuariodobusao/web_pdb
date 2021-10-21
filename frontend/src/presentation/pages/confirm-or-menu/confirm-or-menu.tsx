@@ -7,7 +7,7 @@ const ConfirmOrMenu: React.FC = () => {
   const {user} = useContext(AuthContext)
 
   return user.confirmation ? (
-    <Redirect to="/dashboard" />
+    <Redirect to="/inicio" />
   ) : (
     <CreateConfirmPage userIdParams={user.id} />
   )

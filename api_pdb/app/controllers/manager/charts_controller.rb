@@ -1,6 +1,6 @@
 module Manager
   class ChartsController < ApplicationController
-    before_action :autorize_manager_or_rh
+    before_action :autorize_manager_or_visitor
     before_action :date_range_for_weekly_charts, only: :report
 
     def report
@@ -114,8 +114,8 @@ module Manager
       params.require(:data).permit(:type_report, :initial_date, :end_date, :employee_id, :employee_type)
     end
 
-    def autorize_manager_or_rh
-      authorize Employee, :admin_or_rh?
+    def autorize_manager_or_visitor
+      authorize Employee, :admin_or_visitor?
     end
   end
 end

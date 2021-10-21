@@ -5,6 +5,7 @@ const menuItems = {
       title: 'Menu',
       type: 'group',
       icon: 'icon-navigation',
+      access: ['manager', 'visitor'],
       children: [
         {
           id: 'dashboard',
@@ -12,6 +13,7 @@ const menuItems = {
           type: 'item',
           url: '/dashboard',
           icon: 'feather icon-home',
+          access: ['manager', 'visitor'],
         },
         {
           id: 'panel',
@@ -19,6 +21,7 @@ const menuItems = {
           type: 'item',
           url: '/panel',
           icon: 'feather icon-file-text',
+          access: ['manager'],
         },
         {
           id: 'chart',
@@ -26,6 +29,7 @@ const menuItems = {
           type: 'item',
           url: '/indicadores',
           icon: 'feather icon-pie-chart',
+          access: ['manager', 'visitor'],
         },
       ],
     },
@@ -34,12 +38,14 @@ const menuItems = {
       title: 'Cadastros',
       type: 'group',
       icon: 'icon-ui',
+      access: ['manager', 'rh'],
       children: [
         {
           id: 'basic',
           title: 'Cadastros',
           type: 'collapse',
           icon: 'feather icon-plus-square',
+          access: ['manager', 'rh'],
           children: [
             {
               id: 'workers',
